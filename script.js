@@ -372,7 +372,7 @@ function renderSnacks() {
     
     snacks.forEach((snack, index) => {
         const snackDiv = document.createElement('div');
-        snackDiv.style.marginBottom = '15px';
+        snackDiv.style.marginBottom = '20px';
         snackDiv.style.padding = '15px';
         snackDiv.style.background = '#f9f9f9';
         snackDiv.style.borderRadius = '8px';
@@ -382,18 +382,18 @@ function renderSnacks() {
         header.style.display = 'flex';
         header.style.justifyContent = 'space-between';
         header.style.alignItems = 'center';
-        header.style.marginBottom = '10px';
-        header.innerHTML = `<strong>Snack ${index + 1}</strong>`;
+        header.style.marginBottom = '15px';
+        header.innerHTML = `<strong style="font-size: 16px;">Snack ${index + 1}</strong>`;
         
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
-        deleteBtn.style.padding = '5px 10px';
+        deleteBtn.style.padding = '5px 15px';
         deleteBtn.style.background = '#f44336';
         deleteBtn.style.color = 'white';
         deleteBtn.style.border = 'none';
         deleteBtn.style.borderRadius = '4px';
         deleteBtn.style.cursor = 'pointer';
-        deleteBtn.style.fontSize = '12px';
+        deleteBtn.style.fontSize = '14px';
         deleteBtn.onclick = () => {
             if (!entries[dateKey].meals.snacks) return;
             entries[dateKey].meals.snacks.splice(index, 1);
@@ -402,35 +402,82 @@ function renderSnacks() {
         header.appendChild(deleteBtn);
         snackDiv.appendChild(header);
         
-        // Plan/Actual fields
-        const fieldsDiv = document.createElement('div');
-        fieldsDiv.className = 'meal-row';
-        
-        const planCol = document.createElement('div');
-        planCol.className = 'meal-col';
-        planCol.innerHTML = `
-            <label>Planned:</label>
-            <textarea rows="2" placeholder="What snack do you plan?">${snack.plan || ''}</textarea>
-        `;
-        planCol.querySelector('textarea').onchange = (e) => {
+        // Plan input
+        const planInput = document.createElement('input');
+        planInput.type = 'text';
+        planInput.placeholder = "What's the plan?";
+        planInput.value = snack.plan || '';
+        planInput.style.width = '100%';
+        planInput.style.padding = '10px';
+        planInput.style.marginBottom = '10px';
+        planInput.style.border = '1px solid #ddd';
+        planInput.style.borderRadius = '4px';
+        planInput.style.fontSize = '14px';
+        planInput.onchange = (e) => {
             if (!entries[dateKey].meals.snacks[index]) return;
             entries[dateKey].meals.snacks[index].plan = e.target.value;
         };
+        snackDiv.appendChild(planInput);
         
-        const actualCol = document.createElement('div');
-        actualCol.className = 'meal-col';
-        actualCol.innerHTML = `
-            <label>Actual:</label>
-            <textarea rows="2" placeholder="What did you actually eat?">${snack.actual || ''}</textarea>
-        `;
-        actualCol.querySelector('textarea').onchange = (e) => {
+        // Checkboxes
+        const optionsDiv = document.createElement('div');
+        optionsDiv.style.marginBottom = '10px';
+        
+        const asPlannedLabel = document.createElement('label');
+        asPlannedLabel.style.marginRight = '15px';
+        const asPlannedCheck = document.createElement('input');
+        asPlannedCheck.type = 'checkbox';
+        asPlannedCheck.checked = snack.asPlanned || false;
+        asPlannedCheck.onchange = (e) => {
+            if (!entries[dateKey].meals.snacks[index]) return;
+            entries[dateKey].meals.snacks[index].asPlanned = e.target.checked;
+            if (e.target.checked) {
+                entries[dateKey].meals.snacks[index].different = false;
+                differentCheck.checked = false;
+                actualInput.style.display = 'none';
+            }
+        };
+        asPlannedLabel.appendChild(asPlannedCheck);
+        asPlannedLabel.appendChild(document.createTextNode(' Ate as planned'));
+        
+        const differentLabel = document.createElement('label');
+        const differentCheck = document.createElement('input');
+        differentCheck.type = 'checkbox';
+        differentCheck.checked = snack.different || false;
+        differentCheck.onchange = (e) => {
+            if (!entries[dateKey].meals.snacks[index]) return;
+            entries[dateKey].meals.snacks[index].different = e.target.checked;
+            if (e.target.checked) {
+                entries[dateKey].meals.snacks[index].asPlanned = false;
+                asPlannedCheck.checked = false;
+                actualInput.style.display = 'block';
+            } else {
+                actualInput.style.display = 'none';
+            }
+        };
+        differentLabel.appendChild(differentCheck);
+        differentLabel.appendChild(document.createTextNode(' Ate something different'));
+        
+        optionsDiv.appendChild(asPlannedLabel);
+        optionsDiv.appendChild(differentLabel);
+        snackDiv.appendChild(optionsDiv);
+        
+        // Actual input (hidden by default)
+        const actualInput = document.createElement('textarea');
+        actualInput.placeholder = 'What did you actually eat?';
+        actualInput.value = snack.actual || '';
+        actualInput.rows = 2;
+        actualInput.style.width = '100%';
+        actualInput.style.padding = '10px';
+        actualInput.style.border = '1px solid #ddd';
+        actualInput.style.borderRadius = '4px';
+        actualInput.style.fontSize = '14px';
+        actualInput.style.display = snack.different ? 'block' : 'none';
+        actualInput.onchange = (e) => {
             if (!entries[dateKey].meals.snacks[index]) return;
             entries[dateKey].meals.snacks[index].actual = e.target.value;
         };
-        
-        fieldsDiv.appendChild(planCol);
-        fieldsDiv.appendChild(actualCol);
-        snackDiv.appendChild(fieldsDiv);
+        snackDiv.appendChild(actualInput);
         
         container.appendChild(snackDiv);
     });
