@@ -48,16 +48,6 @@ async function saveData() {
     }
 }
 
-function loadData() {
-    const saved = localStorage.getItem('healthTrackerData');
-    if (saved) {
-        entries = JSON.parse(saved);
-    }
-}
-
-// Save data to localStorage
-function saveData() {
-    localStorage.setItem('healthTrackerData', JSON.stringify(entries));
 }
 
 // Get Monday of the week for a given date
