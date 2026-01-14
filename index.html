@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Health & Food Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🗓️ Health & Food Tracker</h1>
+        
+        <div class="week-header">
+            <button id="prevWeek">← Previous Week</button>
+            <h2 id="weekRange">Week of Jan 13-19, 2026</h2>
+            <button id="nextWeek">Next Week →</button>
+        </div>
+
+        <div id="weekView" class="week-view">
+            <!-- Days will be generated here -->
+        </div>
+    </div>
+
+    <!-- Goals & Intention Modal -->
+    <div id="goalsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="goalsModalTitle">🎯 Goals & Intention - Monday, Jan 13</h2>
+                <button class="close-btn" onclick="closeModal('goalsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3>💡 Central Thought for the Day</h3>
+                    <input type="text" id="centralThought" placeholder="What's your main focus or intention today?">
+                </div>
+                
+                <div class="section">
+                    <h3>🎯 Goals</h3>
+                    <div id="goalsList"></div>
+                    <div class="add-item">
+                        <input type="text" id="newGoal" placeholder="Add a goal...">
+                        <button id="addGoal">+ Add Goal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveGoals()" class="save-btn">💾 Save Goals & Intention</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meals Modal -->
+    <div id="mealsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="mealsModalTitle">🍽️ Meals - Monday, Jan 13</h2>
+                <button class="close-btn" onclick="closeModal('mealsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Breakfast -->
+                <div class="meal-section">
+                    <h3>🌅 Breakfast</h3>
+                    <input type="text" id="breakfastPlan" placeholder="What's the plan?">
+                    <div class="meal-options">
+                        <label>
+                            <input type="checkbox" id="breakfastAsPlanned"> Ate as planned
+                        </label>
+                        <label>
+                            <input type="checkbox" id="breakfastDifferent"> Ate something different
+                        </label>
+                    </div>
+                    <textarea id="breakfastActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
+                </div>
+
+                <!-- Lunch -->
+                <div class="meal-section">
+                    <h3>☀️ Lunch</h3>
+                    <input type="text" id="lunchPlan" placeholder="What's the plan?">
+                    <div class="meal-options">
+                        <label>
+                            <input type="checkbox" id="lunchAsPlanned"> Ate as planned
+                        </label>
+                        <label>
+                            <input type="checkbox" id="lunchDifferent"> Ate something different
+                        </label>
+                    </div>
+                    <textarea id="lunchActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
+                </div>
+
+                <!-- Dinner -->
+                <div class="meal-section">
+                    <h3>🌙 Dinner</h3>
+                    <input type="text" id="dinnerPlan" placeholder="What's the plan?">
+                    <div class="meal-options">
+                        <label>
+                            <input type="checkbox" id="dinnerAsPlanned"> Ate as planned
+                        </label>
+                        <label>
+                            <input type="checkbox" id="dinnerDifferent"> Ate something different
+                        </label>
+                    </div>
+                    <textarea id="dinnerActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
+                </div>
+
+                <!-- Snacks -->
+                <div class="meal-section">
+                    <h3>🍿 Snacks</h3>
+                    <div id="snacksList"></div>
+                    <button id="addSnack" class="add-btn">+ Add Snack</button>
+                </div>
+
+                <!-- Overeating Section -->
+                <div class="meal-flags-section">
+                    <div class="flag-header">
+                        <label>
+                            <input type="checkbox" id="didOvereat"> Did I overeat?
+                        </label>
+                    </div>
+                    <div id="overeatSection" style="display:none;">
+                        <div id="overeatList"></div>
+                        <button id="addOvereat" class="add-btn-small">+ Add Overeating Entry</button>
+                    </div>
+                </div>
+
+                <!-- Binge Section -->
+                <div class="meal-flags-section">
+                    <div class="flag-header">
+                        <label>
+                            <input type="checkbox" id="didBinge"> Did I binge?
+                        </label>
+                    </div>
+                    <div id="bingeSection" style="display:none;">
+                        <div id="bingeList"></div>
+                        <button id="addBinge" class="add-btn-small">+ Add Binge Entry</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveMeals()" class="save-btn">💾 Save Meals</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Urges Modal -->
+    <div id="urgesModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="urgesModalTitle">💭 Urges - Monday, Jan 13</h2>
+                <button class="close-btn" onclick="closeModal('urgesModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="urgesList"></div>
+                <button id="addUrge" class="add-btn">+ Add New Urge</button>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveUrges()" class="save-btn">💾 Save Urges</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reflection Modal -->
+    <div id="reflectionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="reflectionModalTitle">🧠 Daily Reflection - Monday, Jan 13</h2>
+                <button class="close-btn" onclick="closeModal('reflectionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3>📝 Daily Reflection</h3>
+                    <textarea id="dailyReflection" placeholder="How did today go?"></textarea>
+                </div>
+                
+                <div class="section">
+                    <h3>💭 Are you proud of today's decisions?</h3>
+                    <div class="radio-group" style="margin-bottom: 10px;">
+                        <label>
+                            <input type="radio" name="proudDecisions" value="yes" id="proudYes"> Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="proudDecisions" value="no" id="proudNo"> No
+                        </label>
+                        <label>
+                            <input type="radio" name="proudDecisions" value="somewhat" id="proudSomewhat"> Somewhat
+                        </label>
+                    </div>
+                    <textarea id="proudExplanation" placeholder="Explain (optional)..." style="min-height: 60px;"></textarea>
+                </div>
+                
+                <div class="section">
+                    <h3>📚 What can you learn for tomorrow?</h3>
+                    <textarea id="learnTomorrow" placeholder="What insights or lessons can you take forward?"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveReflection()" class="save-btn">💾 Save Reflection</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
