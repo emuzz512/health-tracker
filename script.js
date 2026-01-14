@@ -961,3 +961,183 @@ document.getElementById('importFile').addEventListener('change', async (e) => {
 // Initialize
 loadData();
 generateWeekView();
+
+// Google Sheets Export
+document.getElementById('exportSheetsBtn').addEventListener('click', exportToSheets);
+
+function exportToSheets() {
+  if (!entries || Object.keys(entries).length === 0) {
+    alert('No data to export yet!');
+    return;
+  }
+
+  // Create CSV content for each tab
+  const sheets = {
+    goals: createGoalsCSV(),
+    meals: createMealsCSV(),
+    urges: createUrgesCSV(),
+    reflections: createReflectionsCSV()
+  };
+
+  // Create a combined CSV with instructions
+  let csvContent = 'HEALTH TRACKER DATA EXPORT\n';
+  csvContent += 'Instructions: Copy each section below into separate tabs in Google Sheets\n';
+  csvContent += '='.repeat(80) + '\n\n';
+
+  csvContent += 'TAB 1: GOALS & INTENTIONS\n';
+  csvContent += '='.repeat(80) + '\n';
+  csvContent += sheets.goals + '\n\n\n';
+
+  csvContent += 'TAB 2: MEALS\n';
+  csvContent += '='.repeat(80) + '\n';
+  csvContent += sheets.meals + '\n\n\n';
+
+  csvContent += 'TAB 3: URGES\n';
+  csvContent += '='.repeat(80) + '\n';
+  csvContent += sheets.urges + '\n\n\n';
+
+  csvContent += 'TAB 4: REFLECTIONS\n';
+  csvContent += '='.repeat(80) + '\n';
+  csvContent += sheets.reflections;
+
+  // Download as CSV
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `health-tracker-sheets-${new Date().toISOString().split('T')[0]}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+
+  alert('📊 Export complete!\n\nTo import to Google Sheets:\n1. Open Google Sheets\n2. Create a new spreadsheet\n3. File → Import → Upload\n4. Select the downloaded CSV file\n5. Follow the instructions in the file to organize into tabs');
+}
+
+function createGoalsCSV() {
+  let csv = 'Date,Day,Goals,Central Thought,Goals Completed\n';
+  
+  const sortedDates = Object.keys(entries).sort();
+  
+  for (const dateKey of sortedDates) {
+    const entry = entries[dateKey];
+    if (!entry.goals) continue;
+
+    const date = new Date(dateKey);
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const formattedDate = date.toLocaleDateString('en-US');
+    
+    const goals = entry.goals.goals || [];
+    const goalsText = goals.map(g => `${g.completed ? '✓' : '○'} ${g.text}`).join('; ');
+    const centralThought = (entry.goals.centralThought || '').replace(/"/g, '""');
+    const completedCount = goals.filter(g => g.completed).length;
+    const totalCount = goals.length;
+    const completionStatus = totalCount > 0 ? `${completedCount}/${totalCount}` : 'No goals';
+
+    csv += `"${formattedDate}","${dayName}","${goalsText}","${centralThought}","${completionStatus}"\n`;
+  }
+  
+  return csv;
+}
+
+function createMealsCSV() {
+  let csv = 'Date,Day,Meal,Planned,Actual,Snacks,Overeating Episodes,Binge Episodes\n';
+  
+  const sortedDates = Object.keys(entries).sort();
+  
+  for (const dateKey of sortedDates) {
+    const entry = entries[dateKey];
+    if (!entry.meals) continue;
+
+    const date = new Date(dateKey);
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const formattedDate = date.toLocaleDateString('en-US');
+    
+    const meals = entry.meals;
+    
+    // Breakfast
+    if (meals.breakfast?.plan || meals.breakfast?.actual) {
+      csv += `"${formattedDate}","${dayName}","Breakfast","${meals.breakfast.plan || ''}","${meals.breakfast.actual || ''}","","",""\n`;
+    }
+    
+    // Lunch
+    if (meals.lunch?.plan || meals.lunch?.actual) {
+      csv += `"${formattedDate}","${dayName}","Lunch","${meals.lunch.plan || ''}","${meals.lunch.actual || ''}","","",""\n`;
+    }
+    
+    // Dinner
+    if (meals.dinner?.plan || meals.dinner?.actual) {
+      csv += `"${formattedDate}","${dayName}","Dinner","${meals.dinner.plan || ''}","${meals.dinner.actual || ''}","","",""\n`;
+    }
+    
+    // Snacks
+    if (meals.snacks && meals.snacks.length > 0) {
+      const snacksText = meals.snacks.join('; ');
+      csv += `"${formattedDate}","${dayName}","Snacks","","","${snacksText}","",""\n`;
+    }
+    
+    // Overeating
+    if (meals.overeating && meals.overeating.length > 0) {
+      const overeatText = meals.overeating.map(o => `${o.time}: ${o.description}`).join('; ');
+      csv += `"${formattedDate}","${dayName}","Overeating","","","","${overeatText}",""\n`;
+    }
+    
+    // Binge
+    if (meals.binge && meals.binge.length > 0) {
+      const bingeText = meals.binge.map(b => `${b.time}: ${b.description}`).join('; ');
+      csv += `"${formattedDate}","${dayName}","Binge","","","","","${bingeText}"\n`;
+    }
+  }
+  
+  return csv;
+}
+
+function createUrgesCSV() {
+  let csv = 'Date,Day,Time,Hunger Scale,Really Hungry?,Feeling,Feeling Description,Activities Tried,Set Timer?,Acted On?,How Acted\n';
+  
+  const sortedDates = Object.keys(entries).sort();
+  
+  for (const dateKey of sortedDates) {
+    const entry = entries[dateKey];
+    if (!entry.urges || entry.urges.length === 0) continue;
+
+    const date = new Date(dateKey);
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const formattedDate = date.toLocaleDateString('en-US');
+    
+    for (const urge of entry.urges) {
+      const activities = [];
+      if (urge.activities) {
+        for (const [key, value] of Object.entries(urge.activities)) {
+          if (value && key !== 'other') activities.push(key.replace(/([A-Z])/g, ' $1').trim());
+        }
+        if (urge.activities.other && urge.otherActivity) {
+          activities.push(urge.otherActivity);
+        }
+      }
+      const activitiesText = activities.join('; ');
+      
+      csv += `"${formattedDate}","${dayName}","${urge.time || ''}","${urge.hungerScale || ''}","${urge.reallyHungry || ''}","${urge.feeling || ''}","${(urge.feelingDescription || '').replace(/"/g, '""')}","${activitiesText}","${urge.setTimer ? 'Yes' : 'No'}","${urge.actedOn || ''}","${(urge.howActed || '').replace(/"/g, '""')}"\n`;
+    }
+  }
+  
+  return csv;
+}
+
+function createReflectionsCSV() {
+  let csv = 'Date,Day,Proud of Decisions?,Proud Explanation,What Can You Learn for Tomorrow?,Daily Reflection\n';
+  
+  const sortedDates = Object.keys(entries).sort();
+  
+  for (const dateKey of sortedDates) {
+    const entry = entries[dateKey];
+    if (!entry.reflection) continue;
+
+    const date = new Date(dateKey);
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+    const formattedDate = date.toLocaleDateString('en-US');
+    
+    const ref = entry.reflection;
+    csv += `"${formattedDate}","${dayName}","${ref.proud || ''}","${(ref.proudExplanation || '').replace(/"/g, '""')}","${(ref.learnTomorrow || '').replace(/"/g, '""')}","${(ref.dailyReflection || '').replace(/"/g, '""')}"\n`;
+  }
+  
+  return csv;
+}
