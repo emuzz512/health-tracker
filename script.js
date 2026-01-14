@@ -371,116 +371,129 @@ function renderSnacks() {
     container.innerHTML = '';
     
     snacks.forEach((snack, index) => {
-        const snackDiv = document.createElement('div');
-        snackDiv.style.marginBottom = '20px';
-        snackDiv.style.padding = '15px';
-        snackDiv.style.background = '#f9f9f9';
-        snackDiv.style.borderRadius = '8px';
-        
-        // Header with snack number and delete button
-        const header = document.createElement('div');
-        header.style.display = 'flex';
-        header.style.justifyContent = 'space-between';
-        header.style.alignItems = 'center';
-        header.style.marginBottom = '15px';
-        header.innerHTML = `<strong style="font-size: 16px;">Snack ${index + 1}</strong>`;
-        
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.style.padding = '5px 15px';
-        deleteBtn.style.background = '#f44336';
-        deleteBtn.style.color = 'white';
-        deleteBtn.style.border = 'none';
-        deleteBtn.style.borderRadius = '4px';
-        deleteBtn.style.cursor = 'pointer';
-        deleteBtn.style.fontSize = '14px';
-        deleteBtn.onclick = () => {
-            if (!entries[dateKey].meals.snacks) return;
-            entries[dateKey].meals.snacks.splice(index, 1);
-            renderSnacks();
-        };
-        header.appendChild(deleteBtn);
-        snackDiv.appendChild(header);
-        
-        // Plan input
-        const planInput = document.createElement('input');
-        planInput.type = 'text';
-        planInput.placeholder = "What's the plan?";
-        planInput.value = snack.plan || '';
-        planInput.style.width = '100%';
-        planInput.style.padding = '10px';
-        planInput.style.marginBottom = '10px';
-        planInput.style.border = '1px solid #ddd';
-        planInput.style.borderRadius = '4px';
-        planInput.style.fontSize = '14px';
-        planInput.oninput = (e) => {
-            if (!entries[dateKey].meals.snacks[index]) return;
-            entries[dateKey].meals.snacks[index].plan = e.target.value;
-        };
-        snackDiv.appendChild(planInput);
-        
-        // Checkboxes
-        const optionsDiv = document.createElement('div');
-        optionsDiv.style.marginBottom = '10px';
-        
-        const asPlannedLabel = document.createElement('label');
-        asPlannedLabel.style.marginRight = '15px';
-        const asPlannedCheck = document.createElement('input');
-        asPlannedCheck.type = 'checkbox';
-        asPlannedCheck.checked = snack.asPlanned || false;
-        asPlannedCheck.onchange = (e) => {
-            if (!entries[dateKey].meals.snacks[index]) return;
-            entries[dateKey].meals.snacks[index].asPlanned = e.target.checked;
-            if (e.target.checked) {
-                entries[dateKey].meals.snacks[index].different = false;
-                differentCheck.checked = false;
-                actualInput.style.display = 'none';
-            }
-        };
-        asPlannedLabel.appendChild(asPlannedCheck);
-        asPlannedLabel.appendChild(document.createTextNode(' Ate as planned'));
-        
-        const differentLabel = document.createElement('label');
-        const differentCheck = document.createElement('input');
-        differentCheck.type = 'checkbox';
-        differentCheck.checked = snack.different || false;
-        differentCheck.onchange = (e) => {
-            if (!entries[dateKey].meals.snacks[index]) return;
-            entries[dateKey].meals.snacks[index].different = e.target.checked;
-            if (e.target.checked) {
-                entries[dateKey].meals.snacks[index].asPlanned = false;
-                asPlannedCheck.checked = false;
-                actualInput.style.display = 'block';
-            } else {
-                actualInput.style.display = 'none';
-            }
-        };
-        differentLabel.appendChild(differentCheck);
-        differentLabel.appendChild(document.createTextNode(' Ate something different'));
-        
-        optionsDiv.appendChild(asPlannedLabel);
-        optionsDiv.appendChild(differentLabel);
-        snackDiv.appendChild(optionsDiv);
-        
-        // Actual input (hidden by default)
-        const actualInput = document.createElement('textarea');
-        actualInput.placeholder = 'What did you actually eat?';
-        actualInput.value = snack.actual || '';
-        actualInput.rows = 2;
-        actualInput.style.width = '100%';
-        actualInput.style.padding = '10px';
-        actualInput.style.border = '1px solid #ddd';
-        actualInput.style.borderRadius = '4px';
-        actualInput.style.fontSize = '14px';
-        actualInput.style.display = snack.different ? 'block' : 'none';
-        actualInput.oninput = (e) => {
-            if (!entries[dateKey].meals.snacks[index]) return;
-            entries[dateKey].meals.snacks[index].actual = e.target.value;
-        };
-        snackDiv.appendChild(actualInput);
-        
-        container.appendChild(snackDiv);
+        renderSingleSnack(index);
     });
+}
+
+function renderSingleSnack(index) {
+    const dateKey = getDateKey(currentDay);
+    const entry = entries[dateKey] || {};
+    const snacks = entry.meals?.snacks || [];
+    const snack = snacks[index];
+    
+    if (!snack) return;
+    
+    const container = document.getElementById('snacksList');
+    
+    const snackDiv = document.createElement('div');
+    snackDiv.style.marginBottom = '20px';
+    snackDiv.style.padding = '15px';
+    snackDiv.style.background = '#f9f9f9';
+    snackDiv.style.borderRadius = '8px';
+    
+    // Header with snack number and delete button
+    const header = document.createElement('div');
+    header.style.display = 'flex';
+    header.style.justifyContent = 'space-between';
+    header.style.alignItems = 'center';
+    header.style.marginBottom = '15px';
+    header.innerHTML = `<strong style="font-size: 16px;">Snack ${index + 1}</strong>`;
+    
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.style.padding = '5px 15px';
+    deleteBtn.style.background = '#f44336';
+    deleteBtn.style.color = 'white';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.borderRadius = '4px';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '14px';
+    deleteBtn.onclick = () => {
+        if (!entries[dateKey].meals.snacks) return;
+        entries[dateKey].meals.snacks.splice(index, 1);
+        renderSnacks();
+    };
+    header.appendChild(deleteBtn);
+    snackDiv.appendChild(header);
+    
+    // Plan input
+    const planInput = document.createElement('input');
+    planInput.type = 'text';
+    planInput.placeholder = "What's the plan?";
+    planInput.value = snack.plan || '';
+    planInput.style.width = '100%';
+    planInput.style.padding = '10px';
+    planInput.style.marginBottom = '10px';
+    planInput.style.border = '1px solid #ddd';
+    planInput.style.borderRadius = '4px';
+    planInput.style.fontSize = '14px';
+    planInput.oninput = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].plan = e.target.value;
+    };
+    snackDiv.appendChild(planInput);
+    
+    // Checkboxes
+    const optionsDiv = document.createElement('div');
+    optionsDiv.style.marginBottom = '10px';
+    
+    const asPlannedLabel = document.createElement('label');
+    asPlannedLabel.style.marginRight = '15px';
+    const asPlannedCheck = document.createElement('input');
+    asPlannedCheck.type = 'checkbox';
+    asPlannedCheck.checked = snack.asPlanned || false;
+    asPlannedCheck.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].asPlanned = e.target.checked;
+        if (e.target.checked) {
+            entries[dateKey].meals.snacks[index].different = false;
+            differentCheck.checked = false;
+            actualInput.style.display = 'none';
+        }
+    };
+    asPlannedLabel.appendChild(asPlannedCheck);
+    asPlannedLabel.appendChild(document.createTextNode(' Ate as planned'));
+    
+    const differentLabel = document.createElement('label');
+    const differentCheck = document.createElement('input');
+    differentCheck.type = 'checkbox';
+    differentCheck.checked = snack.different || false;
+    differentCheck.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].different = e.target.checked;
+        if (e.target.checked) {
+            entries[dateKey].meals.snacks[index].asPlanned = false;
+            asPlannedCheck.checked = false;
+            actualInput.style.display = 'block';
+        } else {
+            actualInput.style.display = 'none';
+        }
+    };
+    differentLabel.appendChild(differentCheck);
+    differentLabel.appendChild(document.createTextNode(' Ate something different'));
+    
+    optionsDiv.appendChild(asPlannedLabel);
+    optionsDiv.appendChild(differentLabel);
+    snackDiv.appendChild(optionsDiv);
+    
+    // Actual input (hidden by default)
+    const actualInput = document.createElement('textarea');
+    actualInput.placeholder = 'What did you actually eat?';
+    actualInput.value = snack.actual || '';
+    actualInput.rows = 2;
+    actualInput.style.width = '100%';
+    actualInput.style.padding = '10px';
+    actualInput.style.border = '1px solid #ddd';
+    actualInput.style.borderRadius = '4px';
+    actualInput.style.fontSize = '14px';
+    actualInput.style.display = snack.different ? 'block' : 'none';
+    actualInput.oninput = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].actual = e.target.value;
+    };
+    snackDiv.appendChild(actualInput);
+    
+    container.appendChild(snackDiv);
 }
 
 document.getElementById('addSnack').addEventListener('click', () => {
@@ -489,8 +502,12 @@ document.getElementById('addSnack').addEventListener('click', () => {
     if (!entries[dateKey].meals) entries[dateKey].meals = {};
     if (!entries[dateKey].meals.snacks) entries[dateKey].meals.snacks = [];
     
-    entries[dateKey].meals.snacks.push({ plan: '', actual: '' });
-    renderSnacks();
+    const newIndex = entries[dateKey].meals.snacks.length;
+    entries[dateKey].meals.snacks.push({ plan: '', asPlanned: false, different: false, actual: '' });
+    
+    // Render just the new snack instead of all snacks
+    renderSingleSnack(newIndex);
+});
 });
 
 // Render overeating entries
