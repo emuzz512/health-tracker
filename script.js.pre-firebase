@@ -3,51 +3,7 @@ let currentWeekStart = getWeekStart(new Date());
 let currentDay = null;
 let entries = {};
 
-// Load data from Firestore
-async function loadData() {
-    if (!window.currentUser || !window.firebaseDb) return;
-    
-    try {
-        // Import Firestore functions
-        const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-        
-        const userDocRef = doc(window.firebaseDb, 'users', window.currentUser.uid);
-        const userDoc = await getDoc(userDocRef);
-        
-        if (userDoc.exists()) {
-            const data = userDoc.data();
-            entries = data.entries || {};
-        }
-    } catch (error) {
-        console.error('Error loading data:', error);
-    }
-}
-
-// This function will be called when user logs in
-window.loadUserData = async function() {
-    await loadData();
-    generateWeekView();
-};
-
-// Save data to Firestore
-async function saveData() {
-    if (!window.currentUser || !window.firebaseDb) return;
-    
-    try {
-        // Import Firestore functions
-        const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-        
-        const userDocRef = doc(window.firebaseDb, 'users', window.currentUser.uid);
-        await setDoc(userDocRef, {
-            entries: entries,
-            lastUpdated: new Date()
-        }, { merge: true });
-    } catch (error) {
-        console.error('Error saving data:', error);
-        alert('Error saving data. Please try again.');
-    }
-}
-
+// Load data from localStorage
 function loadData() {
     const saved = localStorage.getItem('healthTrackerData');
     if (saved) {
