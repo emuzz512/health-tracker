@@ -47,7 +47,6 @@ async function saveData() {
         alert('Error saving data. Please try again.');
     }
 }
-}
 
 // Get Monday of the week for a given date
 function getWeekStart(date) {
