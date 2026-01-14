@@ -508,7 +508,6 @@ document.getElementById('addSnack').addEventListener('click', () => {
     // Render just the new snack instead of all snacks
     renderSingleSnack(newIndex);
 });
-});
 
 // Render overeating entries
 function renderOvereatEntries(entries) {
