@@ -1141,3 +1141,262 @@ function createReflectionsCSV() {
   
   return csv;
 }
+
+// PDF Report Generation
+document.getElementById('exportPdfBtn').addEventListener('click', generateReport);
+
+function generateReport() {
+  if (!entries || Object.keys(entries).length === 0) {
+    alert('No data to generate report yet!');
+    return;
+  }
+
+  const sortedDates = Object.keys(entries).sort();
+  const startDate = new Date(sortedDates[0]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const endDate = new Date(sortedDates[sortedDates.length - 1]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  let html = `
+    <div class="report-header">
+      <h1>🌟 Health Tracker Report</h1>
+      <div class="date-range">${startDate} - ${endDate}</div>
+    </div>
+  `;
+
+  // Summary Section
+  html += generateSummary(sortedDates);
+
+  // Goals Section
+  html += generateGoalsSection(sortedDates);
+
+  // Meals Section
+  html += generateMealsSection(sortedDates);
+
+  // Urges Section
+  html += generateUrgesSection(sortedDates);
+
+  // Reflections Section
+  html += generateReflectionsSection(sortedDates);
+
+  document.getElementById('reportContent').innerHTML = html;
+  document.getElementById('reportContainer').classList.add('active');
+}
+
+function closeReport() {
+  document.getElementById('reportContainer').classList.remove('active');
+}
+
+function generateSummary(dates) {
+  let totalGoals = 0;
+  let completedGoals = 0;
+  let totalUrges = 0;
+  let urgesActedOn = 0;
+  let daysWithReflection = 0;
+
+  for (const dateKey of dates) {
+    const entry = entries[dateKey];
+    
+    if (entry.goals?.goals) {
+      totalGoals += entry.goals.goals.length;
+      completedGoals += entry.goals.goals.filter(g => g.completed).length;
+    }
+    
+    if (entry.urges) {
+      totalUrges += entry.urges.length;
+      urgesActedOn += entry.urges.filter(u => u.actedOn === 'Yes').length;
+    }
+    
+    if (entry.reflection?.dailyReflection) {
+      daysWithReflection++;
+    }
+  }
+
+  const goalCompletionRate = totalGoals > 0 ? Math.round((completedGoals / totalGoals) * 100) : 0;
+  const urgeResistanceRate = totalUrges > 0 ? Math.round(((totalUrges - urgesActedOn) / totalUrges) * 100) : 0;
+
+  return `
+    <div class="report-summary">
+      <h3>📊 Summary</h3>
+      <div class="report-item"><strong>Days Tracked:</strong> ${dates.length}</div>
+      <div class="report-item"><strong>Goal Completion Rate:</strong> ${goalCompletionRate}% (${completedGoals}/${totalGoals} goals)</div>
+      <div class="report-item"><strong>Urge Resistance Rate:</strong> ${urgeResistanceRate}% (resisted ${totalUrges - urgesActedOn}/${totalUrges} urges)</div>
+      <div class="report-item"><strong>Days with Reflection:</strong> ${daysWithReflection}</div>
+    </div>
+  `;
+}
+
+function generateGoalsSection(dates) {
+  let html = '<div class="report-section"><h2>🎯 Goals & Intentions</h2>';
+  
+  for (const dateKey of dates) {
+    const entry = entries[dateKey];
+    if (!entry.goals) continue;
+
+    const date = new Date(dateKey);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    
+    html += `<div class="report-day">`;
+    html += `<div class="report-day-header">${formattedDate}</div>`;
+    
+    if (entry.goals.centralThought) {
+      html += `<div class="report-item"><strong>Central Thought:</strong> ${entry.goals.centralThought}</div>`;
+    }
+    
+    if (entry.goals.goals && entry.goals.goals.length > 0) {
+      html += `<div class="report-item"><strong>Goals:</strong><ul style="margin: 5px 0;">`;
+      entry.goals.goals.forEach(goal => {
+        html += `<li>${goal.completed ? '✅' : '⭕'} ${goal.text}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+    
+    html += `</div>`;
+  }
+  
+  html += '</div>';
+  return html;
+}
+
+function generateMealsSection(dates) {
+  let html = '<div class="report-section"><h2>🍽️ Meals & Eating</h2>';
+  
+  for (const dateKey of dates) {
+    const entry = entries[dateKey];
+    if (!entry.meals) continue;
+
+    const date = new Date(dateKey);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    
+    html += `<div class="report-day">`;
+    html += `<div class="report-day-header">${formattedDate}</div>`;
+    
+    const meals = entry.meals;
+    
+    if (meals.breakfast?.plan || meals.breakfast?.actual) {
+      html += `<div class="report-item"><strong>Breakfast:</strong> `;
+      if (meals.breakfast.plan) html += `Planned: ${meals.breakfast.plan}`;
+      if (meals.breakfast.actual) html += ` | Actual: ${meals.breakfast.actual}`;
+      html += `</div>`;
+    }
+    
+    if (meals.lunch?.plan || meals.lunch?.actual) {
+      html += `<div class="report-item"><strong>Lunch:</strong> `;
+      if (meals.lunch.plan) html += `Planned: ${meals.lunch.plan}`;
+      if (meals.lunch.actual) html += ` | Actual: ${meals.lunch.actual}`;
+      html += `</div>`;
+    }
+    
+    if (meals.dinner?.plan || meals.dinner?.actual) {
+      html += `<div class="report-item"><strong>Dinner:</strong> `;
+      if (meals.dinner.plan) html += `Planned: ${meals.dinner.plan}`;
+      if (meals.dinner.actual) html += ` | Actual: ${meals.dinner.actual}`;
+      html += `</div>`;
+    }
+    
+    if (meals.snacks && meals.snacks.length > 0) {
+      html += `<div class="report-item"><strong>Snacks:</strong> ${meals.snacks.join(', ')}</div>`;
+    }
+    
+    if (meals.overeating && meals.overeating.length > 0) {
+      html += `<div class="report-item"><strong>⚠️ Overeating:</strong><ul style="margin: 5px 0;">`;
+      meals.overeating.forEach(o => {
+        html += `<li>${o.time}: ${o.description}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+    
+    if (meals.binge && meals.binge.length > 0) {
+      html += `<div class="report-item"><strong>🚨 Binge:</strong><ul style="margin: 5px 0;">`;
+      meals.binge.forEach(b => {
+        html += `<li>${b.time}: ${b.description}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+    
+    html += `</div>`;
+  }
+  
+  html += '</div>';
+  return html;
+}
+
+function generateUrgesSection(dates) {
+  let html = '<div class="report-section"><h2>😰 Urges & Coping</h2>';
+  
+  for (const dateKey of dates) {
+    const entry = entries[dateKey];
+    if (!entry.urges || entry.urges.length === 0) continue;
+
+    const date = new Date(dateKey);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    
+    html += `<div class="report-day">`;
+    html += `<div class="report-day-header">${formattedDate}</div>`;
+    
+    entry.urges.forEach((urge, index) => {
+      html += `<div style="margin-left: 15px; margin-bottom: 15px; padding: 10px; background: white; border-radius: 5px;">`;
+      html += `<div style="font-weight: bold; color: #4CAF50;">Urge #${index + 1} - ${urge.time || 'No time recorded'}</div>`;
+      
+      if (urge.hungerScale) html += `<div class="report-item"><strong>Hunger Scale:</strong> ${urge.hungerScale}/10</div>`;
+      if (urge.reallyHungry) html += `<div class="report-item"><strong>Really Hungry?</strong> ${urge.reallyHungry}</div>`;
+      if (urge.feeling) html += `<div class="report-item"><strong>Feeling:</strong> ${urge.feeling}</div>`;
+      if (urge.feelingDescription) html += `<div class="report-item"><strong>Description:</strong> ${urge.feelingDescription}</div>`;
+      
+      if (urge.activities) {
+        const activities = [];
+        for (const [key, value] of Object.entries(urge.activities)) {
+          if (value && key !== 'other') activities.push(key.replace(/([A-Z])/g, ' $1').trim());
+        }
+        if (urge.activities.other && urge.otherActivity) activities.push(urge.otherActivity);
+        if (activities.length > 0) {
+          html += `<div class="report-item"><strong>Activities Tried:</strong> ${activities.join(', ')}</div>`;
+        }
+      }
+      
+      html += `<div class="report-item"><strong>Acted On?</strong> ${urge.actedOn || 'Not specified'}</div>`;
+      if (urge.howActed) html += `<div class="report-item"><strong>How:</strong> ${urge.howActed}</div>`;
+      
+      html += `</div>`;
+    });
+    
+    html += `</div>`;
+  }
+  
+  html += '</div>';
+  return html;
+}
+
+function generateReflectionsSection(dates) {
+  let html = '<div class="report-section"><h2>💭 Daily Reflections</h2>';
+  
+  for (const dateKey of dates) {
+    const entry = entries[dateKey];
+    if (!entry.reflection) continue;
+
+    const date = new Date(dateKey);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    
+    html += `<div class="report-day">`;
+    html += `<div class="report-day-header">${formattedDate}</div>`;
+    
+    const ref = entry.reflection;
+    
+    if (ref.proud) {
+      html += `<div class="report-item"><strong>Proud of decisions?</strong> ${ref.proud}`;
+      if (ref.proudExplanation) html += ` - ${ref.proudExplanation}`;
+      html += `</div>`;
+    }
+    
+    if (ref.learnTomorrow) {
+      html += `<div class="report-item"><strong>Learning for tomorrow:</strong> ${ref.learnTomorrow}</div>`;
+    }
+    
+    if (ref.dailyReflection) {
+      html += `<div class="report-item"><strong>Reflection:</strong> ${ref.dailyReflection}</div>`;
+    }
+    
+    html += `</div>`;
+  }
+  
+  html += '</div>';
+  return html;
+}

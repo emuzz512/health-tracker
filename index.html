@@ -30,7 +30,9 @@
                 <div class="header-actions">
                     <button id="exportBtn" class="action-btn" title="Export your data">📤 Export</button>
         <button id="exportSheetsBtn" class="action-btn" title="Export to Google Sheets format">
-          📊 Export to Sheets
+        <button id="exportPdfBtn" class="action-btn" title="Generate printable report">
+          📄 Generate Report
+        </button>          📊 Export to Sheets
         </button>                    <button id="importBtn" class="action-btn" title="Import data">📥 Import</button>
                     <input type="file" id="importFile" accept=".json" style="display: none;">
                     <div class="user-info">
@@ -295,4 +297,12 @@
     </script>
     
     <script src="script.js"></script>
+  <!-- PDF Report Container -->
+  <div id="reportContainer" class="report-container">
+    <div class="report-actions">
+      <button class="report-btn print" onclick="window.print()">🖨️ Print/Save PDF</button>
+      <button class="report-btn close" onclick="closeReport()">✖ Close</button>
+    </div>
+    <div id="reportContent" class="report-content"></div>
+  </div>
 </body>
