@@ -27,14 +27,9 @@
         <div class="container">
             <div class="app-header">
                 <h1>🗓️ Health & Food Tracker</h1>
-                <div class="header-actions">
-                    <button id="exportBtn" class="action-btn" title="Export your data">📤 Export</button>
-                    <button id="importBtn" class="action-btn" title="Import data">📥 Import</button>
-                    <input type="file" id="importFile" accept=".json" style="display: none;">
-                    <div class="user-info">
-                        <span id="userEmail"></span>
-                        <button id="logoutBtn" class="logout-btn">Logout</button>
-                    </div>
+                <div class="user-info">
+                    <span id="userEmail"></span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
                 </div>
             </div>
             
@@ -50,7 +45,7 @@
         </div>
     </div>
 
-    <!-- All the modals remain the same -->
+    <!-- All the modals (Goals, Meals, Urges, Reflection) -->
     <div id="goalsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -294,3 +289,4 @@
     
     <script src="script.js"></script>
 </body>
+</html>
