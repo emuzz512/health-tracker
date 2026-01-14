@@ -413,7 +413,7 @@ function renderSnacks() {
         planInput.style.border = '1px solid #ddd';
         planInput.style.borderRadius = '4px';
         planInput.style.fontSize = '14px';
-        planInput.onchange = (e) => {
+        planInput.oninput = (e) => {
             if (!entries[dateKey].meals.snacks[index]) return;
             entries[dateKey].meals.snacks[index].plan = e.target.value;
         };
@@ -473,7 +473,7 @@ function renderSnacks() {
         actualInput.style.borderRadius = '4px';
         actualInput.style.fontSize = '14px';
         actualInput.style.display = snack.different ? 'block' : 'none';
-        actualInput.onchange = (e) => {
+        actualInput.oninput = (e) => {
             if (!entries[dateKey].meals.snacks[index]) return;
             entries[dateKey].meals.snacks[index].actual = e.target.value;
         };
