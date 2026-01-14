@@ -1,3 +1,4 @@
+// Fixed syntax error - version 2
 // Current week tracking
 let currentWeekStart = getWeekStart(new Date());
 let currentDay = null;
