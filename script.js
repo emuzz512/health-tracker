@@ -318,7 +318,7 @@ function openMealsModal(date) {
     document.getElementById('dinnerActual').style.display = meals.dinnerDifferent ? 'block' : 'none';
     
     // Load snacks
-    renderSnacks(meals.snacks || []);
+    renderSnacks();
     
     // Load overeating
     document.getElementById('didOvereat').checked = meals.didOvereat || false;
@@ -362,33 +362,77 @@ document.getElementById('didBinge').addEventListener('change', function() {
     document.getElementById('bingeSection').style.display = this.checked ? 'block' : 'none';
 });
 
-function renderSnacks(snacks) {
-    const snacksList = document.getElementById('snacksList');
-    snacksList.innerHTML = '';
+function renderSnacks() {
+    const dateKey = getDateKey(currentDay);
+    const entry = entries[dateKey] || {};
+    const snacks = entry.meals?.snacks || [];
+    
+    const container = document.getElementById('snacksList');
+    container.innerHTML = '';
     
     snacks.forEach((snack, index) => {
-        const snackItem = document.createElement('div');
-        snackItem.className = 'snack-item';
+        const snackDiv = document.createElement('div');
+        snackDiv.style.marginBottom = '15px';
+        snackDiv.style.padding = '15px';
+        snackDiv.style.background = '#f9f9f9';
+        snackDiv.style.borderRadius = '8px';
         
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = snack;
-        input.placeholder = `Snack ${index + 1}`;
-        input.oninput = () => {
-            snacks[index] = input.value;
-        };
+        // Header with snack number and delete button
+        const header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+        header.style.marginBottom = '10px';
+        header.innerHTML = `<strong>Snack ${index + 1}</strong>`;
         
         const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.textContent = '✕';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.style.padding = '5px 10px';
+        deleteBtn.style.background = '#f44336';
+        deleteBtn.style.color = 'white';
+        deleteBtn.style.border = 'none';
+        deleteBtn.style.borderRadius = '4px';
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.style.fontSize = '12px';
         deleteBtn.onclick = () => {
-            snacks.splice(index, 1);
-            renderSnacks(snacks);
+            if (!entries[dateKey].meals.snacks) return;
+            entries[dateKey].meals.snacks.splice(index, 1);
+            renderSnacks();
+        };
+        header.appendChild(deleteBtn);
+        snackDiv.appendChild(header);
+        
+        // Plan/Actual fields
+        const fieldsDiv = document.createElement('div');
+        fieldsDiv.className = 'meal-row';
+        
+        const planCol = document.createElement('div');
+        planCol.className = 'meal-col';
+        planCol.innerHTML = `
+            <label>Planned:</label>
+            <textarea rows="2" placeholder="What snack do you plan?">${snack.plan || ''}</textarea>
+        `;
+        planCol.querySelector('textarea').onchange = (e) => {
+            if (!entries[dateKey].meals.snacks[index]) return;
+            entries[dateKey].meals.snacks[index].plan = e.target.value;
         };
         
-        snackItem.appendChild(input);
-        snackItem.appendChild(deleteBtn);
-        snacksList.appendChild(snackItem);
+        const actualCol = document.createElement('div');
+        actualCol.className = 'meal-col';
+        actualCol.innerHTML = `
+            <label>Actual:</label>
+            <textarea rows="2" placeholder="What did you actually eat?">${snack.actual || ''}</textarea>
+        `;
+        actualCol.querySelector('textarea').onchange = (e) => {
+            if (!entries[dateKey].meals.snacks[index]) return;
+            entries[dateKey].meals.snacks[index].actual = e.target.value;
+        };
+        
+        fieldsDiv.appendChild(planCol);
+        fieldsDiv.appendChild(actualCol);
+        snackDiv.appendChild(fieldsDiv);
+        
+        container.appendChild(snackDiv);
     });
 }
 
@@ -398,8 +442,8 @@ document.getElementById('addSnack').addEventListener('click', () => {
     if (!entries[dateKey].meals) entries[dateKey].meals = {};
     if (!entries[dateKey].meals.snacks) entries[dateKey].meals.snacks = [];
     
-    entries[dateKey].meals.snacks.push('');
-    renderSnacks(entries[dateKey].meals.snacks);
+    entries[dateKey].meals.snacks.push({ plan: '', actual: '' });
+    renderSnacks();
 });
 
 // Render overeating entries
@@ -544,7 +588,7 @@ function saveMeals() {
         dinnerDifferent: document.getElementById('dinnerDifferent').checked,
         dinnerActual: document.getElementById('dinnerActual').value,
         
-        snacks: snacks.filter(s => s.trim() !== ''),
+        snacks: snacks.filter(s => s.plan || s.actual),
         
         didOvereat: document.getElementById('didOvereat').checked,
         overeatEntries: overeatEntries.filter(e => e.what.trim() !== '' || e.feeling.trim() !== ''),
