@@ -136,6 +136,7 @@ function generateWeekView() {
         );
         buttonsDiv.appendChild(reflectionBtn);
         
+        console.log("Creating weight button for date:", date);
         const weightBtn = createTrackingButton(
             '⚖️ Weight',
             getWeightStatus(dayData),
@@ -1646,6 +1647,7 @@ function getWeightStatus(dayData) {
 }
 
 function openWeightModal(date) {
+  console.log("openWeightModal called with date:", date);
   currentDay = date;
   const dateKey = getDateKey(date);
   
