@@ -1569,7 +1569,7 @@ function openWeightModal(date) {
   currentDay = date;
   const dateKey = getDateKey(date);
   
-  document.getElementById('weightModalTitle').textContent = 
+  document.getElementById('scaleModalTitle').textContent = 
     `⚖️ Weight - ${getDayName(date)}, ${formatDate(date)}`;
   
   const entry = entries[dateKey] || {};
@@ -1596,7 +1596,7 @@ function openWeightModal(date) {
   
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
-  document.getElementById('weightModal').classList.add('show');
+  document.getElementById('scaleModal').classList.add('show');
 }
 
 function saveWeight() {
@@ -1617,7 +1617,7 @@ function saveWeight() {
   };
   
   saveData();
-  closeModal('weightModal');
+  closeModal('scaleModal');
   generateWeekView();
 }
 
