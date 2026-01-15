@@ -639,3 +639,86 @@ body {
     box-shadow: 0 3px 10px rgba(200, 131, 94, 0.25);
 }
 
+
+/* Collapsible Day Cards */
+.day-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.day-card.collapsed .day-buttons {
+    display: none;
+}
+
+.day-card.collapsed {
+    padding: 15px;
+    min-height: auto;
+}
+
+.day-card.collapsed .day-header {
+    margin-bottom: 8px;
+}
+
+.day-card.expanded {
+    padding: 20px;
+}
+
+.day-card.expanded .day-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Status indicators for collapsed view */
+.status-indicators {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.status-indicator {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #6a6a6a;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-indicator.complete {
+    background: #e8f0ed;
+    color: #4a6b5c;
+}
+
+.status-indicator.partial {
+    background: #fef3e8;
+    color: #c8835e;
+}
+
+/* Expand/collapse icon */
+.expand-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: #9ba192;
+    transition: transform 0.3s ease;
+}
+
+.day-card.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* Make week view grid more compact */
+.week-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+

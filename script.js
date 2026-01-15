@@ -91,8 +91,15 @@ function generateWeekView() {
         const dayData = entries[dateKey] || {};
         
         const dayCard = document.createElement('div');
-        dayCard.className = 'day-card';
+        dayCard.className = 'day-card collapsed';
         
+        // Expand icon
+        const expandIcon = document.createElement('div');
+        expandIcon.className = 'expand-icon';
+        expandIcon.textContent = '▼';
+        dayCard.appendChild(expandIcon);
+        
+        // Header
         const header = document.createElement('div');
         header.className = 'day-header-card';
         header.innerHTML = `
@@ -101,12 +108,52 @@ function generateWeekView() {
         `;
         dayCard.appendChild(header);
         
+        // Status indicators (shown when collapsed)
+        const statusDiv = document.createElement('div');
+        statusDiv.className = 'status-indicators';
+        
+        const goalsStatus = getGoalsStatus(dayData);
+        const mealsStatus = getMealsStatus(dayData);
+        const urgesStatus = getUrgesStatus(dayData);
+        const reflectionStatus = getReflectionStatus(dayData);
+        
+        if (goalsStatus !== 'Not set') {
+            const indicator = document.createElement('span');
+            indicator.className = 'status-indicator' + (goalsStatus.includes('complete') ? ' complete' : ' partial');
+            indicator.textContent = `🎯 ${goalsStatus}`;
+            statusDiv.appendChild(indicator);
+        }
+        
+        if (mealsStatus !== 'Not tracked') {
+            const indicator = document.createElement('span');
+            indicator.className = 'status-indicator' + (mealsStatus.includes('3/3') ? ' complete' : ' partial');
+            indicator.textContent = `🍽️ ${mealsStatus}`;
+            statusDiv.appendChild(indicator);
+        }
+        
+        if (urgesStatus !== 'No urges tracked') {
+            const indicator = document.createElement('span');
+            indicator.className = 'status-indicator partial';
+            indicator.textContent = `💭 ${urgesStatus}`;
+            statusDiv.appendChild(indicator);
+        }
+        
+        if (reflectionStatus !== 'Not filled') {
+            const indicator = document.createElement('span');
+            indicator.className = 'status-indicator complete';
+            indicator.textContent = `🧠 ${reflectionStatus}`;
+            statusDiv.appendChild(indicator);
+        }
+        
+        dayCard.appendChild(statusDiv);
+        
+        // Buttons (shown when expanded)
         const buttonsDiv = document.createElement('div');
-        buttonsDiv.className = 'tracking-buttons';
+        buttonsDiv.className = 'day-buttons';
         
         const goalsBtn = createTrackingButton(
             '🎯 Goals & Intention',
-            getGoalsStatus(dayData),
+            goalsStatus,
             () => openGoalsModal(date),
             (dayData.goals && dayData.goals.length > 0) || dayData.centralThought
         );
@@ -114,7 +161,7 @@ function generateWeekView() {
         
         const mealsBtn = createTrackingButton(
             '🍽️ Meals',
-            getMealsStatus(dayData),
+            mealsStatus,
             () => openMealsModal(date),
             dayData.meals && Object.keys(dayData.meals).length > 0
         );
@@ -122,7 +169,7 @@ function generateWeekView() {
         
         const urgesBtn = createTrackingButton(
             '💭 Urges',
-            getUrgesStatus(dayData),
+            urgesStatus,
             () => openUrgesModal(date),
             dayData.urges && dayData.urges.length > 0
         );
@@ -130,18 +177,26 @@ function generateWeekView() {
         
         const reflectionBtn = createTrackingButton(
             '🧠 Reflection',
-            getReflectionStatus(dayData),
+            reflectionStatus,
             () => openReflectionModal(date),
             dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)
         );
         buttonsDiv.appendChild(reflectionBtn);
         
-        
         dayCard.appendChild(buttonsDiv);
+        
+        // Toggle collapse/expand on click
+        dayCard.addEventListener('click', (e) => {
+            // Don't toggle if clicking a button
+            if (e.target.closest('.track-btn')) return;
+            
+            dayCard.classList.toggle('collapsed');
+            dayCard.classList.toggle('expanded');
+        });
+        
         weekView.appendChild(dayCard);
     }
 }
-
 function createTrackingButton(label, status, onClick, hasData) {
     const btn = document.createElement('button');
     btn.className = 'track-btn' + (hasData ? ' has-data' : '');
