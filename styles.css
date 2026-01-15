@@ -216,20 +216,22 @@ body {
 }
 
 .week-header button {
-    background: white;
-    border: 1.5px solid #e8d5c8;
+    background: #c8835e;
+    color: white;
+    border: none;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: #2c2c2c;
-    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
 }
 
 .week-header button:hover {
-    border-color: #c8835e;
-    background: #fafafa;
+    background: #d69570;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(200, 131, 94, 0.25);
 }
 
 /* Week View - Clean Grid */
