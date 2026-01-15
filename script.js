@@ -1397,7 +1397,7 @@ function generateReport() {
   html += generateReflectionsSection(sortedDates);
 
   document.getElementById('reportContent').innerHTML = html;
-  document.getElementById('reportContainer').classList.add('active');
+  document.getElementById('reportContainer').classList.add('show');
 }
 
 function closeReport() {
@@ -1677,7 +1677,7 @@ function openWeightModal(date) {
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
   
-  document.getElementById('weightModal').classList.add('active');
+  document.getElementById('weightModal').classList.add('show');
 }
 
 function saveWeight() {
