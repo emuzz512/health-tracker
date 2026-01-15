@@ -253,15 +253,28 @@
         console.log("Forcing weightModal to show...");
         setTimeout(() => {
             const wm = document.getElementById("weightModal");
+            const wmc = document.querySelector("#weightModal .modal-content");
             console.log("weightModal element:", wm);
+            console.log("modal-content element:", wmc);
             if (wm) {
                 wm.classList.add("show");
                 wm.style.display = "flex";
+                wm.style.justifyContent = "center";
+                wm.style.alignItems = "center";
                 wm.style.opacity = "1";
                 wm.style.zIndex = "99999";
                 console.log("weightModal classes after:", wm.className);
             }
+            if (wmc) {
+                wmc.style.width = "600px";
+                wmc.style.minHeight = "400px";
+                wmc.style.background = "white";
+                wmc.style.padding = "20px";
+                console.log("modal-content dimensions:", wmc.getBoundingClientRect());
+            }
         }, 1000);
+    </script>
+    <script>
     </script>
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
