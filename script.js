@@ -1,4 +1,4 @@
-// Fixed syntax error - version 2
+// Fixed syntax error - version 3 - weight tracking added
 // Current week tracking
 let currentWeekStart = getWeekStart(new Date());
 let currentDay = null;
