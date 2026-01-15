@@ -136,6 +136,7 @@ function generateWeekView() {
         );
         buttonsDiv.appendChild(reflectionBtn);
         
+        console.log("About to create weight button for date:", date);
         const weightBtn = createTrackingButton(
             '⚖️ Weight',
             getWeightStatus(dayData),
@@ -143,6 +144,7 @@ function generateWeekView() {
             dayData.weight && dayData.weight.value
         );
         buttonsDiv.appendChild(weightBtn);
+        console.log("Weight button created and appended:", weightBtn);
         
         dayCard.appendChild(buttonsDiv);
         weekView.appendChild(dayCard);
