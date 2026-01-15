@@ -136,13 +136,6 @@ function generateWeekView() {
         );
         buttonsDiv.appendChild(reflectionBtn);
         
-        const weightBtn = createTrackingButton(
-            '⚖️ Weight',
-            getWeightStatus(dayData),
-            () => openWeightModal(date),
-            dayData.weight && dayData.weight.value
-        );
-        buttonsDiv.appendChild(weightBtn);
         
         dayCard.appendChild(buttonsDiv);
         weekView.appendChild(dayCard);
@@ -1561,63 +1554,5 @@ function generateReflectionsSection(dates) {
 }
 
 // Weight Tracking Functions
-function getWeightStatus(dayData) {
-  if (!dayData.weight || !dayData.weight.value) return 'Not tracked';
-  return `${dayData.weight.value} lbs`;
-}
-function openWeightModal(date) {
-  currentDay = date;
-  const dateKey = getDateKey(date);
-  
-  document.getElementById('scaleModalTitle').textContent = 
-    `⚖️ Weight - ${getDayName(date)}, ${formatDate(date)}`;
-  
-  const entry = entries[dateKey] || {};
-  const weight = entry.weight || {};
-  
-  document.getElementById('weightValue').value = weight.value || '';
-  document.getElementById('weightNotes').value = weight.notes || '';
-  
-  // Load goal from most recent entry or this entry
-  let goalWeight = weight.goalWeight || '';
-  let goalDate = weight.goalDate || '';
-  
-  if (!goalWeight) {
-    // Find most recent goal
-    const sortedDates = Object.keys(entries).sort().reverse();
-    for (const dk of sortedDates) {
-      if (entries[dk]?.weight?.goalWeight) {
-        goalWeight = entries[dk].weight.goalWeight;
-        goalDate = entries[dk].weight.goalDate;
-        break;
-      }
-    }
-  }
-  
-  document.getElementById('goalWeight').value = goalWeight;
-  document.getElementById('goalWeightDate').value = goalDate;
-  document.getElementById('scaleModal').classList.add('show');
-}
 
-function saveWeight() {
-  const dateKey = getDateKey(currentDay);
-  
-  if (!entries[dateKey]) {
-    entries[dateKey] = {};
-  }
-  
-  const weightValue = document.getElementById('weightValue').value;
-  const goalWeight = document.getElementById('goalWeight').value;
-  
-  entries[dateKey].weight = {
-    value: weightValue,
-    notes: document.getElementById('weightNotes').value,
-    goalWeight: goalWeight,
-    goalDate: document.getElementById('goalWeightDate').value
-  };
-  
-  saveData();
-  closeModal('scaleModal');
-  generateWeekView();
-}
 
