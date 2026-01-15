@@ -951,27 +951,52 @@ h1 {
 
 /* Updated App Header */
 .app-header {
+    transition: background 0.2s;
+    display: block;
+}
+
+.menu-item:hover {
+    background: #f0f0f0;
+}
+
+.logout-item {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.logout-item:hover {
+    background: #ffebee;
+}
+
+/* Remove old header-actions styles */
+.header-actions {
+    display: none;
+}
+
+/* Fixed App Header - no overlap */
+.app-header {
     margin-bottom: 20px;
 }
 
 .header-top {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    position: relative;
+    gap: 20px;
 }
 
 .header-top h1 {
-    flex: 1;
+    grid-column: 2;
     text-align: center;
     margin: 0;
+    white-space: nowrap;
 }
 
 .user-menu {
-    position: absolute;
-    right: 0;
+    grid-column: 3;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
 }
 
@@ -998,8 +1023,8 @@ h1 {
 
 .dropdown-menu {
     position: absolute;
-    right: 0;
-    top: 60px;
+    right: 20px;
+    top: 70px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -1035,7 +1060,7 @@ h1 {
     background: #ffebee;
 }
 
-/* Remove old header-actions styles */
+/* Remove old styles */
 .header-actions {
     display: none;
 }
