@@ -282,7 +282,7 @@ body {
 .day-date {
     font-size: 14px;
     color: #999;
-    font-weight: 400;
+    font-weight: 400 !important;
 }
 
 /* Tracking Buttons - Clean & Flat */
@@ -293,11 +293,16 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.85rem;
-    font-weight: 400;
+    font-weight: 400 !important;
     letter-spacing: 0.01em;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
     color: #4a4a4a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-align: center;
 }
 
 .track-btn:hover {
@@ -508,7 +513,7 @@ label {
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 400 !important;
     cursor: pointer;
 }
 
@@ -627,7 +632,7 @@ h1, h2, h3 {
 }
 
 body {
-    font-weight: 400;
+    font-weight: 400 !important;
     letter-spacing: 0.01em;
 }
 
@@ -691,7 +696,7 @@ body {
 
 .status-indicator {
     font-size: 0.75rem;
-    font-weight: 400;
+    font-weight: 400 !important;
     padding: 4px 8px;
     border-radius: 4px;
     background: #f5f5f5;
@@ -1054,7 +1059,7 @@ body {
 .week-navigation h2 {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 400 !important;
     margin: 0;
     color: white;
     text-shadow: 0 2px 8px rgba(0,0,0,0.3);
@@ -1122,21 +1127,23 @@ body {
 
 /* Button text styling */
 .track-btn .btn-label {
-    font-weight: 500;
+    font-weight: 400 !important;
     font-size: 0.9rem;
+    display: block;
 }
 
 .track-btn .btn-status {
-    font-weight: 400;
+    font-weight: 300 !important;
     font-size: 0.8rem;
     opacity: 0.8;
+    display: block;
 }
 
 
 /* Modal content fonts */
 .modal-body {
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-weight: 400 !important;
 }
 
 .modal-body h3 {
@@ -1148,13 +1155,13 @@ body {
 
 .modal-body label {
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-weight: 400 !important;
     font-size: 0.9rem;
 }
 
 .modal-body input,
 .modal-body textarea {
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-weight: 400 !important;
 }
 
