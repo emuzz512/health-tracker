@@ -1568,9 +1568,9 @@ function getWeightStatus(dayData) {
   return `${dayData.weight.value} lbs`;
 }
 
-  console.log("openWeightModal called with date:", date);
 function openWeightModal(date) {
   currentDay = date;
+  console.log("openWeightModal called with date:", date);
   const dateKey = getDateKey(date);
   
   document.getElementById('weightModalTitle').textContent = 
