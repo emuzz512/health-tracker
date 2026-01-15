@@ -1598,11 +1598,6 @@ function openWeightModal(date) {
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
   const modal = document.getElementById('weightModal');
-  alert("Modal element exists: " + (modal !== null) + "\nModal classes before: " + (modal ? modal.className : "null"));
-  
-  document.getElementById('weightModal').classList.add('show');
-  const modalAfter = document.getElementById('weightModal');
-  alert("Modal classes after: " + (modalAfter ? modalAfter.className : "null") + "\nDisplay style: " + (modalAfter ? window.getComputedStyle(modalAfter).display : "null"));
 }
 
 function saveWeight() {
