@@ -136,7 +136,6 @@ function generateWeekView() {
         );
         buttonsDiv.appendChild(reflectionBtn);
         
-        console.log("About to create weight button for date:", date);
         const weightBtn = createTrackingButton(
             '⚖️ Weight',
             getWeightStatus(dayData),
@@ -144,7 +143,6 @@ function generateWeekView() {
             dayData.weight && dayData.weight.value
         );
         buttonsDiv.appendChild(weightBtn);
-        console.log("Weight button created and appended:", weightBtn);
         
         dayCard.appendChild(buttonsDiv);
         weekView.appendChild(dayCard);
@@ -1566,10 +1564,7 @@ function generateReflectionsSection(dates) {
 function getWeightStatus(dayData) {
   if (!dayData.weight || !dayData.weight.value) return 'Not tracked';
   return `${dayData.weight.value} lbs`;
-}
-
 function openWeightModal(date) {
-  console.log("openWeightModal called with date:", date);
   currentDay = date;
   const dateKey = getDateKey(date);
   
@@ -1600,10 +1595,7 @@ function openWeightModal(date) {
   
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
-  const modal = document.getElementById('weightModal');
-  modal.classList.add('show');
-  console.log("Modal element:", modal);
-  console.log("About to add show class");
+  document.getElementById('weightModal').classList.add('show');
 }
 
 function saveWeight() {
