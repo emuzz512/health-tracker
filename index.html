@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Health & Food Tracker</title>
-    <link rel="stylesheet" href="styles.css?v=15">
+    <link rel="stylesheet" href="styles.css?v=16">
 </head>
 <body>
     <!-- Login Screen -->
@@ -26,13 +26,11 @@
     <!-- Main App (hidden until logged in) -->
     <div id="mainApp" style="display: none;">
         <div class="container">
-            <div class="app-header">
-                <div class="header-top">
-                    <h1>💚🍎 Health & Food Tracker</h1>
-                    <div class="user-menu">
-                        <span id="userEmail"></span>
-                        <button id="menuToggle" class="menu-toggle">☰</button>
-                    </div>
+            <!-- Slim Top Bar -->
+            <div class="top-bar">
+                <div class="user-menu">
+                    <span id="userEmail"></span>
+                    <button id="menuToggle" class="menu-toggle">☰</button>
                 </div>
                 <div id="dropdownMenu" class="dropdown-menu" style="display: none;">
                     <button id="exportBtn" class="menu-item">📤 Export Data</button>
@@ -44,20 +42,20 @@
                     <button id="logoutBtn" class="menu-item logout-item">🚪 Logout</button>
                 </div>
             </div>
+            
+            <!-- Hero Section with Image -->
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>💚🍎 Health & Food Tracker</h1>
+                    <p class="hero-subtitle">Your journey to mindful eating</p>
+                    <div class="week-navigation">
+                        <button id="prevWeek">← Previous Week</button>
+                        <h2 id="weekRange">Week of Jan 13-19, 2026</h2>
+                        <button id="nextWeek">Next Week →</button>
                     </div>
                 </div>
             </div>
-            
-            <div class="week-header">
-                <button id="prevWeek">← Previous Week</button>
-                <h2 id="weekRange">Week of Jan 13-19, 2026</h2>
-                <button id="nextWeek">Next Week →</button>
-            </div>
-
-            <div id="weekView" class="week-view">
-                <!-- Days will be generated here -->
-            </div>
-        </div>
     </div>
 
     <!-- All the modals remain the same -->
