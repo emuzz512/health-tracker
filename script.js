@@ -1597,8 +1597,10 @@ function openWeightModal(date) {
   
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
+  alert("About to show weight modal!");
   
   document.getElementById('weightModal').classList.add('show');
+  alert("Just added show class to modal!");
 }
 
 function saveWeight() {
