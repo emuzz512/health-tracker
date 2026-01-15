@@ -1569,53 +1569,66 @@ function getWeightStatus(dayData) {
 }
 
 function openWeightModal(date) {
-  currentDay = date;
-  console.log("openWeightModal called with date:", date);
-  const dateKey = getDateKey(date);
-  
-  document.getElementById('weightModalTitle').textContent = 
-    `⚖️ Weight - ${getDayName(date)}, ${formatDate(date)}`;
-  console.log("Step 1: Set modal title");
-  
-  const entry = entries[dateKey] || {};
-  const weight = entry.weight || {};
-  console.log("Step 2: Got entry data");
-  
-  document.getElementById('weightValue').value = weight.value || '';
-  console.log("Step 3: Set weight value");
-  document.getElementById('weightNotes').value = weight.notes || '';
-  
-  console.log("Step 4: Set weight notes");
-  // Load goal from most recent entry or this entry
-  let goalWeight = weight.goalWeight || '';
-  let goalDate = weight.goalDate || '';
-  
-  if (!goalWeight) {
-    // Find most recent goal
-    const sortedDates = Object.keys(entries).sort().reverse();
-    for (const dk of sortedDates) {
-      if (entries[dk]?.weight?.goalWeight) {
-        goalWeight = entries[dk].weight.goalWeight;
-        goalDate = entries[dk].weight.goalDate;
-        break;
-      }
+  try {
+    currentDay = date;
+    console.log("openWeightModal called with date:", date);
+    const dateKey = getDateKey(date);
+    
+    console.log("About to set weightModalTitle");
+    const titleElement = document.getElementById('weightModalTitle');
+    console.log("titleElement:", titleElement);
+    
+    if (!titleElement) {
+      console.error("ERROR: weightModalTitle not found!");
+      return;
     }
-  console.log("Step 5: Processed goal data");
+    
+    titleElement.textContent = `⚖️ Weight - ${getDayName(date)}, ${formatDate(date)}`;
+    console.log("Step 1: Set modal title");
+    
+    const entry = entries[dateKey] || {};
+    const weight = entry.weight || {};
+    console.log("Step 2: Got entry data");
+    
+    document.getElementById('weightValue').value = weight.value || '';
+    console.log("Step 3: Set weight value");
+    document.getElementById('weightNotes').value = weight.notes || '';
+    
+    console.log("Step 4: Set weight notes");
+    // Load goal from most recent entry or this entry
+    let goalWeight = weight.goalWeight || '';
+    let goalDate = weight.goalDate || '';
+    
+    if (!goalWeight) {
+      // Find most recent goal
+      const sortedDates = Object.keys(entries).sort().reverse();
+      for (const dk of sortedDates) {
+        if (entries[dk]?.weight?.goalWeight) {
+          goalWeight = entries[dk].weight.goalWeight;
+          goalDate = entries[dk].weight.goalDate;
+          break;
+        }
+      }
+      console.log("Step 5: Processed goal data");
+    }
+    
+    document.getElementById('goalWeight').value = goalWeight;
+    document.getElementById('goalWeightDate').value = goalDate;
+    console.log("Step 6: Set goal fields");
+    
+    const modalElement = document.getElementById('weightModal');
+    console.log("Modal element found:", modalElement);
+    if (!modalElement) {
+      console.error("ERROR: weightModal element not found in DOM!");
+      return;
+    }
+    console.log("About to add show class to weightModal");
+    modalElement.classList.add('show');
+    console.log("Added show class - modal should be visible now");
+  } catch (error) {
+    console.error("ERROR in openWeightModal:", error);
+    console.error("Error stack:", error.stack);
   }
-  
-  document.getElementById('goalWeight').value = goalWeight;
-  document.getElementById('goalWeightDate').value = goalDate;
-  console.log("Step 6: Set goal fields");
-  
-  const modalElement = document.getElementById('weightModal');
-  console.log("Modal element found:", modalElement);
-  if (!modalElement) {
-    console.error("ERROR: weightModal element not found in DOM!");
-    return;
-  }
-  console.log("About to add show class to weightModal");
-  document.getElementById('weightModal').classList.add('show');
-  console.log("Added show class - modal should be visible now");
 }
 
 function saveWeight() {
