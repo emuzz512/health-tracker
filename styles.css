@@ -1165,3 +1165,31 @@ body {
     font-weight: 400 !important;
 }
 
+
+/* FORCE LIGHT FONTS - NEW CLASS */
+.light-text {
+    font-weight: 300 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.light-text-medium {
+    font-weight: 400 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Override ALL button text */
+button.track-btn,
+button.track-btn * {
+    font-weight: 400 !important;
+}
+
+button.track-btn .btn-label {
+    font-weight: 400 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+button.track-btn .btn-status {
+    font-weight: 300 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
