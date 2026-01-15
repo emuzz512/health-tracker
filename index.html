@@ -26,18 +26,23 @@
     <div id="mainApp" style="display: none;">
         <div class="container">
             <div class="app-header">
-                <h1>🗓️ Health & Food Tracker</h1>
-                <div class="header-actions">
-                    <button id="exportBtn" class="action-btn" title="Export your data">📤 Export</button>
-                    <button id="exportPdfBtn" class="action-btn" title="Generate printable report">📄 Generate Report</button>
-                    <button id="exportSheetsBtn" class="action-btn" title="Export to Google Sheets format">📊 Export to Sheets</button>
-                    <button id="importBtn" class="action-btn" title="Import data">📥 Import</button>
-                    <input type="file" id="importFile" accept=".json" style="display: none;">
-                    <div class="user-info">
+                <div class="header-top">
+                    <h1>🗓️ Health & Food Tracker</h1>
+                    <div class="user-menu">
                         <span id="userEmail"></span>
-                        <button id="logoutBtn" class="logout-btn">Logout</button>
+                        <button id="menuToggle" class="menu-toggle">☰</button>
                     </div>
                 </div>
+                <div id="dropdownMenu" class="dropdown-menu" style="display: none;">
+                    <button id="exportBtn" class="menu-item">📤 Export Data</button>
+                    <button id="exportPdfBtn" class="menu-item">📄 Generate Report</button>
+                    <button id="exportSheetsBtn" class="menu-item">📊 Export to Sheets</button>
+                    <button id="importBtn" class="menu-item">📥 Import Data</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+                    <button id="logoutBtn" class="menu-item logout-item">🚪 Logout</button>
+                </div>
+            </div>
                     </div>
                 </div>
             </div>

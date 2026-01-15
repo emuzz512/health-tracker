@@ -1634,3 +1634,26 @@ function generateReflectionsSection(dates) {
 // Weight Tracking Functions
 
 
+
+// Hamburger menu toggle
+document.getElementById('menuToggle').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const menu = document.getElementById('dropdownMenu');
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('dropdownMenu');
+    const toggle = document.getElementById('menuToggle');
+    if (!menu.contains(e.target) && e.target !== toggle) {
+        menu.style.display = 'none';
+    }
+});
+
+// Close menu after clicking a menu item
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.getElementById('dropdownMenu').style.display = 'none';
+    });
+});

@@ -948,3 +948,94 @@ h1 {
     background: #667eea;
     color: white;
 }
+
+/* Updated App Header */
+.app-header {
+    margin-bottom: 20px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-top h1 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.user-menu {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-menu #userEmail {
+    font-size: 0.9em;
+    color: #333;
+}
+
+.menu-toggle {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.3s;
+}
+
+.menu-toggle:hover {
+    background: #667eea;
+    color: white;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    padding: 10px;
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #333;
+    border-radius: 4px;
+    transition: background 0.2s;
+    display: block;
+}
+
+.menu-item:hover {
+    background: #f0f0f0;
+}
+
+.logout-item {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.logout-item:hover {
+    background: #ffebee;
+}
+
+/* Remove old header-actions styles */
+.header-actions {
+    display: none;
+}
