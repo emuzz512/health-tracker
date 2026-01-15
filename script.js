@@ -1567,6 +1567,7 @@ function getWeightStatus(dayData) {
 }
 
 function openWeightModal(date) {
+  console.log("openWeightModal called with date:", date);
   currentDay = date;
   const dateKey = getDateKey(date);
   
@@ -1599,6 +1600,8 @@ function openWeightModal(date) {
   document.getElementById('goalWeightDate').value = goalDate;
   const modal = document.getElementById('weightModal');
   modal.classList.add('show');
+  console.log("Modal element:", modal);
+  console.log("About to add show class");
 }
 
 function saveWeight() {
