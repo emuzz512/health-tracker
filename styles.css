@@ -741,3 +741,43 @@ body {
 .day-card.collapsed:hover .expand-icon {
     color: #4a6b5c;
 }
+
+/* Past days styling */
+.day-card.past-day {
+    background: #f9f6f3;
+    opacity: 0.85;
+}
+
+.day-card.past-day:hover {
+    opacity: 1;
+    background: #f5f0eb;
+}
+
+.day-card.past-day .day-name {
+    color: #a89d91;
+}
+
+.day-card.past-day .day-date {
+    color: #b5aca1;
+}
+
+.day-card.past-day .expand-icon {
+    color: #c5bdb3;
+}
+
+/* Today styling - make it stand out */
+.day-card.today {
+    border-left-color: #c8835e;
+    border-left-width: 5px;
+}
+
+.day-card.today .day-name {
+    color: #c8835e;
+    font-weight: 700;
+}
+
+/* Future days - keep normal */
+.day-card.future-day {
+    /* Keep default styling */
+}
+

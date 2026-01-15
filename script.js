@@ -91,7 +91,23 @@ function generateWeekView() {
         const dayData = entries[dateKey] || {};
         
         const dayCard = document.createElement('div');
-        dayCard.className = 'day-card collapsed';
+        
+        // Determine if day is past, today, or future
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const cardDate = new Date(date);
+        cardDate.setHours(0, 0, 0, 0);
+        
+        let dayClass = 'day-card collapsed';
+        if (cardDate < today) {
+            dayClass += ' past-day';
+        } else if (cardDate.getTime() === today.getTime()) {
+            dayClass += ' today';
+        } else {
+            dayClass += ' future-day';
+        }
+        
+        dayCard.className = dayClass;
         
         // Expand icon
         const expandIcon = document.createElement('div');
