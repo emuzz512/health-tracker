@@ -1575,13 +1575,17 @@ function openWeightModal(date) {
   
   document.getElementById('weightModalTitle').textContent = 
     `⚖️ Weight - ${getDayName(date)}, ${formatDate(date)}`;
+  console.log("Step 1: Set modal title");
   
   const entry = entries[dateKey] || {};
   const weight = entry.weight || {};
+  console.log("Step 2: Got entry data");
   
   document.getElementById('weightValue').value = weight.value || '';
+  console.log("Step 3: Set weight value");
   document.getElementById('weightNotes').value = weight.notes || '';
   
+  console.log("Step 4: Set weight notes");
   // Load goal from most recent entry or this entry
   let goalWeight = weight.goalWeight || '';
   let goalDate = weight.goalDate || '';
@@ -1596,10 +1600,12 @@ function openWeightModal(date) {
         break;
       }
     }
+  console.log("Step 5: Processed goal data");
   }
   
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
+  console.log("Step 6: Set goal fields");
   
   const modalElement = document.getElementById('weightModal');
   console.log("Modal element found:", modalElement);
