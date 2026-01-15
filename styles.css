@@ -277,8 +277,8 @@ body {
 
 /* Tracking Buttons - Clean & Flat */
 .track-btn {
-    background: white;
-    border: 1.5px solid #e8d5c8;
+    background: #e8f0ed;
+    border: 1.5px solid #c8ddd5;
     padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
@@ -287,14 +287,14 @@ body {
     letter-spacing: 0.02em;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
-    color: #4a4a4a;
+    color: #4a6b5c;
 }
 
 .track-btn:hover {
-    background: #fdfbf9;
-    border-color: #c8835e;
+    background: #d4e7df;
+    border-color: #5d7d6e;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(200, 131, 94, 0.15);
+    box-shadow: 0 2px 8px rgba(74, 107, 92, 0.15);
 }
 
 .track-btn.active {
