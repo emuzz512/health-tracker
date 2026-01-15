@@ -1102,7 +1102,18 @@ body {
 
 
 .top-bar-logo {
-    font-size: 1.5rem;
-    opacity: 0.8;
+    display: flex;
+    align-items: center;
+}
+
+.top-bar-logo svg {
+    width: 28px;
+    height: 28px;
+    stroke: #7d8a7a;
+    transition: stroke 0.3s ease;
+}
+
+.top-bar-logo:hover svg {
+    stroke: #4a6b5c;
 }
 
