@@ -249,6 +249,20 @@
 
     <!-- Firebase SDKs -->
     <!-- Weight Modal -->
+    <script>
+        console.log("Forcing weightModal to show...");
+        setTimeout(() => {
+            const wm = document.getElementById("weightModal");
+            console.log("weightModal element:", wm);
+            if (wm) {
+                wm.classList.add("show");
+                wm.style.display = "flex";
+                wm.style.opacity = "1";
+                wm.style.zIndex = "99999";
+                console.log("weightModal classes after:", wm.className);
+            }
+        }, 1000);
+    </script>
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
