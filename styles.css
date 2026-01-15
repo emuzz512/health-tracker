@@ -453,7 +453,7 @@ label {
 }
 
 .save-btn {
-    background: #4a6b5c;
+    background: #c8835e;
 }
 
 .add-btn {
@@ -463,9 +463,9 @@ label {
 }
 
 .save-btn:hover {
-    background: #5d7d6e;
+    background: #d69570;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(74, 107, 92, 0.25);
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.25);
 }
 
 .add-btn:hover {
@@ -622,9 +622,9 @@ body {
 }
 
 .save-btn:hover {
-    background: #5d7d6e;
+    background: #d69570;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(74, 107, 92, 0.25);
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.25);
 }
 
 
