@@ -202,8 +202,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
-    padding: 0 8px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8faf9 0%, #e8ede9 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(155, 161, 146, 0.1);
 }
 
 .week-header h2 {
@@ -243,11 +246,13 @@ body {
     padding: 20px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
+    border-left: 4px solid #9ba192;
 }
 
 .day-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(200, 131, 94, 0.15);
+    box-shadow: 0 4px 20px rgba(155, 161, 146, 0.2);
+    border-left-color: #7d8a7a;
 }
 
 .day-header {
@@ -263,7 +268,7 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #c8835e;
+    color: #7d8a7a;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 2px;
