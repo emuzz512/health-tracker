@@ -241,6 +241,8 @@ body {
 
 /* Day Cards - Modern & Minimal */
 .day-card {
+    cursor: pointer;
+    position: relative;
     background: white;
     border-radius: 12px;
     padding: 20px;
@@ -644,6 +646,12 @@ body {
 .day-card {
     cursor: pointer;
     position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    border-left: 4px solid #9ba192;
 }
 
 .day-card.collapsed .day-buttons {
@@ -702,11 +710,13 @@ body {
 /* Expand/collapse icon */
 .expand-icon {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.2rem;
+    top: 12px;
+    right: 12px;
+    font-size: 1rem;
     color: #9ba192;
     transition: transform 0.3s ease;
+    pointer-events: none;
+    font-weight: bold;
 }
 
 .day-card.expanded .expand-icon {
@@ -722,3 +732,12 @@ body {
     margin: 0 auto;
 }
 
+
+.day-card.collapsed:hover {
+    background: #fafafa;
+    box-shadow: 0 3px 15px rgba(155, 161, 146, 0.15);
+}
+
+.day-card.collapsed:hover .expand-icon {
+    color: #4a6b5c;
+}

@@ -187,9 +187,14 @@ function generateWeekView() {
         
         // Toggle collapse/expand on click
         dayCard.addEventListener('click', (e) => {
+            console.log('Card clicked!', e.target);
             // Don't toggle if clicking a button
-            if (e.target.closest('.track-btn')) return;
+            if (e.target.closest('.track-btn')) {
+                console.log('Button clicked, not toggling');
+                return;
+            }
             
+            console.log('Toggling collapse/expand');
             dayCard.classList.toggle('collapsed');
             dayCard.classList.toggle('expanded');
         });
