@@ -1567,7 +1567,6 @@ function getWeightStatus(dayData) {
 }
 function openWeightModal(date) {
   currentDay = date;
-  alert("Weight modal opening!");
   const dateKey = getDateKey(date);
   
   document.getElementById('weightModalTitle').textContent = 
