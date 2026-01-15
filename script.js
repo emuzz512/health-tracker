@@ -311,14 +311,26 @@ function openMealsModal(date) {
     document.getElementById('breakfastDifferent').checked = meals.breakfastDifferent || false;
     document.getElementById('breakfastActual').value = meals.breakfastActual || '';
     document.getElementById('breakfastActual').style.display = meals.breakfastDifferent ? 'block' : 'none';
+    document.getElementById('breakfastTime').value = meals.breakfastTime || '';
+    document.getElementById('breakfastOnTime').checked = meals.breakfastOnTime || false;
+    document.getElementById('breakfastEarly').checked = meals.breakfastEarly || false;
+    document.getElementById('breakfastLate').checked = meals.breakfastLate || false;
     
     // Load lunch
     document.getElementById('lunchPlan').value = meals.lunchPlan || '';
     document.getElementById('lunchAsPlanned').checked = meals.lunchAsPlanned || false;
+    document.getElementById('lunchTime').value = meals.lunchTime || '';
+    document.getElementById('lunchOnTime').checked = meals.lunchOnTime || false;
+    document.getElementById('lunchEarly').checked = meals.lunchEarly || false;
+    document.getElementById('lunchLate').checked = meals.lunchLate || false;
     document.getElementById('lunchDifferent').checked = meals.lunchDifferent || false;
     document.getElementById('lunchActual').value = meals.lunchActual || '';
     document.getElementById('lunchActual').style.display = meals.lunchDifferent ? 'block' : 'none';
     
+    document.getElementById('dinnerTime').value = meals.dinnerTime || '';
+    document.getElementById('dinnerOnTime').checked = meals.dinnerOnTime || false;
+    document.getElementById('dinnerEarly').checked = meals.dinnerEarly || false;
+    document.getElementById('dinnerLate').checked = meals.dinnerLate || false;
     // Load dinner
     document.getElementById('dinnerPlan').value = meals.dinnerPlan || '';
     document.getElementById('dinnerAsPlanned').checked = meals.dinnerAsPlanned || false;
@@ -650,14 +662,26 @@ function saveMeals() {
         breakfastDifferent: document.getElementById('breakfastDifferent').checked,
         breakfastActual: document.getElementById('breakfastActual').value,
         
+        breakfastTime: document.getElementById('breakfastTime').value,
+        breakfastOnTime: document.getElementById('breakfastOnTime').checked,
+        breakfastEarly: document.getElementById('breakfastEarly').checked,
+        breakfastLate: document.getElementById('breakfastLate').checked,
         lunchPlan: document.getElementById('lunchPlan').value,
         lunchAsPlanned: document.getElementById('lunchAsPlanned').checked,
         lunchDifferent: document.getElementById('lunchDifferent').checked,
         lunchActual: document.getElementById('lunchActual').value,
+        lunchTime: document.getElementById('lunchTime').value,
+        lunchOnTime: document.getElementById('lunchOnTime').checked,
+        lunchEarly: document.getElementById('lunchEarly').checked,
+        lunchLate: document.getElementById('lunchLate').checked,
         
         dinnerPlan: document.getElementById('dinnerPlan').value,
         dinnerAsPlanned: document.getElementById('dinnerAsPlanned').checked,
         dinnerDifferent: document.getElementById('dinnerDifferent').checked,
+        dinnerTime: document.getElementById('dinnerTime').value,
+        dinnerOnTime: document.getElementById('dinnerOnTime').checked,
+        dinnerEarly: document.getElementById('dinnerEarly').checked,
+        dinnerLate: document.getElementById('dinnerLate').checked,
         dinnerActual: document.getElementById('dinnerActual').value,
         
         snacks: snacks.filter(s => s.plan || s.actual),
@@ -1494,6 +1518,25 @@ function generateReflectionsSection(dates) {
     html += `<div class="report-day">`;
     html += `<div class="report-day-header">${formattedDate}</div>`;
     
+
+// Timing checkbox handlers - only one timing option can be selected
+['breakfast', 'lunch', 'dinner'].forEach(meal => {
+    ['OnTime', 'Early', 'Late'].forEach(timing => {
+        const checkbox = document.getElementById(`${meal}${timing}`);
+        if (checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    ['OnTime', 'Early', 'Late'].forEach(other => {
+                        if (other !== timing) {
+                            const otherCheckbox = document.getElementById(`${meal}${other}`);
+                            if (otherCheckbox) otherCheckbox.checked = false;
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
     const ref = entry.reflection;
     
     if (ref.proud) {
