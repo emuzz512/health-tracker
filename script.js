@@ -465,7 +465,7 @@ function renderSingleSnack(index) {
     timeInput.style.border = '1px solid #ddd';
     timeInput.style.borderRadius = '4px';
     timeInput.style.fontSize = '14px';
-    timeInput.onchange = (e) => {
+    timeInput.oninput = (e) => {
         if (!entries[dateKey].meals.snacks[index]) return;
         entries[dateKey].meals.snacks[index].time = e.target.value;
     };
