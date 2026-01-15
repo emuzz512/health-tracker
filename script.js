@@ -524,7 +524,7 @@ document.getElementById('addSnack').addEventListener('click', () => {
     if (!entries[dateKey].meals.snacks) entries[dateKey].meals.snacks = [];
     
     const newIndex = entries[dateKey].meals.snacks.length;
-    entries[dateKey].meals.snacks.push({ plan: '', asPlanned: false, different: false, actual: '' });
+    entries[dateKey].meals.snacks.push({ plan: '', time: '', asPlanned: false, different: false, actual: '', onTime: false, early: false, late: false });
     
     // Render just the new snack instead of all snacks
     renderSingleSnack(newIndex);
