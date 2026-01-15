@@ -218,7 +218,8 @@
             </div>
         </div>
 
-    <div id="weightModal" class="modal show">
+    <!-- Weight Modal -->
+    <div id="weightModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="weightModalTitle">⚖️ Weight - Monday, Jan 13</h2>
@@ -240,6 +241,7 @@
                     <label style="margin-top: 15px;">Target Date:</label>
                     <input type="date" id="goalWeightDate">
                 </div>
+                
             </div>
             <div class="modal-footer">
                 <button onclick="saveWeight()" class="save-btn">💾 Save Weight</button>
@@ -247,8 +249,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <!-- Weight Modal -->
     <script>
         console.log("Forcing weightModal to show...");
         setTimeout(() => {
