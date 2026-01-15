@@ -454,7 +454,24 @@ function renderSingleSnack(index) {
     };
     snackDiv.appendChild(planInput);
     
-    // Checkboxes
+    // TIME INPUT (NEW!)
+    const timeInput = document.createElement('input');
+    timeInput.type = 'time';
+    timeInput.value = snack.time || '';
+    timeInput.style.width = '100%';
+    timeInput.style.padding = '8px';
+    timeInput.style.marginTop = '10px';
+    timeInput.style.marginBottom = '10px';
+    timeInput.style.border = '1px solid #ddd';
+    timeInput.style.borderRadius = '4px';
+    timeInput.style.fontSize = '14px';
+    timeInput.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].time = e.target.value;
+    };
+    snackDiv.appendChild(timeInput);
+    
+    // Checkboxes for ate as planned / ate something different
     const optionsDiv = document.createElement('div');
     optionsDiv.style.marginBottom = '10px';
     
@@ -497,6 +514,69 @@ function renderSingleSnack(index) {
     optionsDiv.appendChild(differentLabel);
     snackDiv.appendChild(optionsDiv);
     
+    // TIMING CHECKBOXES (NEW!)
+    const timingDiv = document.createElement('div');
+    timingDiv.style.marginTop = '5px';
+    timingDiv.style.marginBottom = '10px';
+    
+    const onTimeLabel = document.createElement('label');
+    onTimeLabel.style.marginRight = '15px';
+    const onTimeCheck = document.createElement('input');
+    onTimeCheck.type = 'checkbox';
+    onTimeCheck.checked = snack.onTime || false;
+    onTimeCheck.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].onTime = e.target.checked;
+        if (e.target.checked) {
+            entries[dateKey].meals.snacks[index].early = false;
+            entries[dateKey].meals.snacks[index].late = false;
+            earlyCheck.checked = false;
+            lateCheck.checked = false;
+        }
+    };
+    onTimeLabel.appendChild(onTimeCheck);
+    onTimeLabel.appendChild(document.createTextNode(' Ate on time'));
+    
+    const earlyLabel = document.createElement('label');
+    earlyLabel.style.marginRight = '15px';
+    const earlyCheck = document.createElement('input');
+    earlyCheck.type = 'checkbox';
+    earlyCheck.checked = snack.early || false;
+    earlyCheck.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].early = e.target.checked;
+        if (e.target.checked) {
+            entries[dateKey].meals.snacks[index].onTime = false;
+            entries[dateKey].meals.snacks[index].late = false;
+            onTimeCheck.checked = false;
+            lateCheck.checked = false;
+        }
+    };
+    earlyLabel.appendChild(earlyCheck);
+    earlyLabel.appendChild(document.createTextNode(' Ate early'));
+    
+    const lateLabel = document.createElement('label');
+    const lateCheck = document.createElement('input');
+    lateCheck.type = 'checkbox';
+    lateCheck.checked = snack.late || false;
+    lateCheck.onchange = (e) => {
+        if (!entries[dateKey].meals.snacks[index]) return;
+        entries[dateKey].meals.snacks[index].late = e.target.checked;
+        if (e.target.checked) {
+            entries[dateKey].meals.snacks[index].onTime = false;
+            entries[dateKey].meals.snacks[index].early = false;
+            onTimeCheck.checked = false;
+            earlyCheck.checked = false;
+        }
+    };
+    lateLabel.appendChild(lateCheck);
+    lateLabel.appendChild(document.createTextNode(' Ate late'));
+    
+    timingDiv.appendChild(onTimeLabel);
+    timingDiv.appendChild(earlyLabel);
+    timingDiv.appendChild(lateLabel);
+    snackDiv.appendChild(timingDiv);
+    
     // Actual input (hidden by default)
     const actualInput = document.createElement('textarea');
     actualInput.placeholder = 'What did you actually eat?';
@@ -516,7 +596,6 @@ function renderSingleSnack(index) {
     
     container.appendChild(snackDiv);
 }
-
 document.getElementById('addSnack').addEventListener('click', () => {
     const dateKey = getDateKey(currentDay);
     if (!entries[dateKey]) entries[dateKey] = {};
