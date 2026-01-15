@@ -284,8 +284,8 @@ body {
 
 /* Tracking Buttons - Clean & Flat */
 .track-btn {
-    background: #e8f0ed;
-    border: 1.5px solid #c8ddd5;
+    background: white;
+    border: 1.5px solid #e8d5c8;
     padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
@@ -294,7 +294,7 @@ body {
     letter-spacing: 0.02em;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
-    color: #4a6b5c;
+    color: #4a4a4a;
 }
 
 .track-btn:hover {
@@ -779,5 +779,18 @@ body {
 /* Future days - keep normal */
 .day-card.future-day {
     /* Keep default styling */
+}
+
+
+/* Track buttons with data - light sage background */
+.track-btn.has-data {
+    background: #e8f0ed;
+    border-color: #c8ddd5;
+    color: #4a6b5c;
+}
+
+.track-btn.has-data:hover {
+    background: #d4e7df;
+    border-color: #5d7d6e;
 }
 
