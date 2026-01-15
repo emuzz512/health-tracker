@@ -1601,7 +1601,15 @@ function openWeightModal(date) {
   document.getElementById('goalWeight').value = goalWeight;
   document.getElementById('goalWeightDate').value = goalDate;
   
+  const modalElement = document.getElementById('weightModal');
+  console.log("Modal element found:", modalElement);
+  if (!modalElement) {
+    console.error("ERROR: weightModal element not found in DOM!");
+    return;
+  }
+  console.log("About to add show class to weightModal");
   document.getElementById('weightModal').classList.add('show');
+  console.log("Added show class - modal should be visible now");
 }
 
 function saveWeight() {
