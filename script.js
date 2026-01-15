@@ -1564,6 +1564,7 @@ function generateReflectionsSection(dates) {
 function getWeightStatus(dayData) {
   if (!dayData.weight || !dayData.weight.value) return 'Not tracked';
   return `${dayData.weight.value} lbs`;
+}
 function openWeightModal(date) {
   currentDay = date;
   const dateKey = getDateKey(date);
