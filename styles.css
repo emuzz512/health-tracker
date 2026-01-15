@@ -794,3 +794,151 @@ body {
     border-color: #5d7d6e;
 }
 
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet and below (768px and smaller) */
+@media (max-width: 768px) {
+    /* Stack days vertically */
+    .week-view {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    /* Adjust header for mobile */
+    .app-header {
+        padding: 15px;
+    }
+    
+    .header-top {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .app-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .user-menu {
+        justify-content: center;
+    }
+    
+    /* Week navigation */
+    .week-header {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .week-header h2 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .week-header button {
+        font-size: 0.85rem;
+        padding: 8px 16px;
+    }
+    
+    /* Day cards - more compact on mobile */
+    .day-card {
+        padding: 15px;
+    }
+    
+    .day-card.collapsed {
+        padding: 12px;
+    }
+    
+    .day-card.expanded {
+        padding: 15px;
+    }
+    
+    /* Day header */
+    .day-name {
+        font-size: 0.7rem;
+    }
+    
+    .day-date {
+        font-size: 0.9rem;
+    }
+    
+    /* Status indicators - wrap better on mobile */
+    .status-indicators {
+        gap: 6px;
+    }
+    
+    .status-indicator {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+    
+    /* Track buttons */
+    .track-btn {
+        padding: 10px 14px;
+        font-size: 0.8rem;
+    }
+    
+    /* Expand icon */
+    .expand-icon {
+        top: 10px;
+        right: 10px;
+        font-size: 0.9rem;
+    }
+    
+    /* Modals on mobile */
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        padding: 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* Form elements */
+    input[type="text"],
+    input[type="time"],
+    textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Buttons in modals */
+    .save-btn,
+    .add-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small mobile (480px and smaller) */
+@media (max-width: 480px) {
+    .app-header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .week-header h2 {
+        font-size: 1rem;
+    }
+    
+    .day-card {
+        padding: 12px;
+    }
+    
+    .day-card.collapsed {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 98%;
+        padding: 15px;
+    }
+    
+    .status-indicator {
+        font-size: 0.65rem;
+    }
+}
+
