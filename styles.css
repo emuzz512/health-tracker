@@ -140,7 +140,7 @@ body {
 
 .user-menu #userEmail {
     font-size: 14px;
-    color: var(--sage-dark);
+    color: #4a6b5c;
 }
 
 .menu-toggle {
@@ -263,7 +263,7 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--terracotta);
+    color: #c8835e;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 2px;
@@ -292,7 +292,7 @@ body {
 
 .track-btn:hover {
     background: #fdfbf9;
-    border-color: var(--terracotta);
+    border-color: #c8835e;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(200, 131, 94, 0.15);
 }
@@ -312,7 +312,7 @@ body {
 .btn-status {
     display: block;
     font-size: 13px;
-    color: var(--sage-dark);
+    color: #4a6b5c;
 }
 
 /* Modals - Clean & Modern */
@@ -349,7 +349,7 @@ body {
 }
 
 .modal-header {
-    border-bottom: 2px solid var(--peach-soft);
+    border-bottom: 2px solid #f4c9b3;
     padding-bottom: 15px;
     margin-bottom: 20px;
 }
@@ -368,7 +368,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-size: 20px;
-    color: var(--sage-dark);
+    color: #4a6b5c;
     transition: all 0.2s;
 }
 
@@ -440,26 +440,50 @@ label {
 /* Buttons - Clean & Minimal */
 .save-btn,
 .add-btn {
-    background: #c8835e;
-    color: white;
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    color: white;
 }
 
-.save-btn:hover,
-.add-btn:hover {
-    background: #6d5940;
-    transform: translateY(-1px);
+.save-btn {
+    background: #4a6b5c;
 }
 
 .add-btn {
-    width: 100%;
-    margin-top: 12px;
+    background: #c8835e;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.save-btn:hover {
+    background: #5d7d6e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 107, 92, 0.25);
+}
+
+.add-btn:hover {
+    background: #d69570;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(200, 131, 94, 0.25);
+}
+.add-btn {
+    background: #c8835e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
 }
 
 /* Meal Options - Clean Checkboxes */
@@ -596,3 +620,17 @@ body {
     font-weight: 400;
     letter-spacing: 0.01em;
 }
+
+.save-btn:hover {
+    background: #5d7d6e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 107, 92, 0.25);
+}
+
+
+.add-btn:hover {
+    background: #d69570;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(200, 131, 94, 0.25);
+}
+
