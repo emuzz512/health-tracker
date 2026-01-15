@@ -1,3 +1,4 @@
+console.log("🚀 script.js is loading...");
 // Fixed syntax error - version 3 - weight tracking added
 // Current week tracking
 let currentWeekStart = getWeekStart(new Date());
@@ -1625,3 +1626,4 @@ function saveWeight() {
   generateWeekView();
 }
 
+console.log("✅ script.js loaded successfully!");
