@@ -1350,8 +1350,8 @@ button.track-btn .btn-status {
 }
 
 .modal-header h2 svg {
-    width: 28px;
-    height: 28px;
+    width: 16px;
+    height: 16px;
     stroke: white;
     flex-shrink: 0;
 }
@@ -1444,11 +1444,10 @@ button.track-btn .btn-status {
 }
 
 /* Style for inline SVG icons (replacing emojis) */
-.day-status svg,
-.btn-label svg,
-.modal-header svg {
-    width: 14px;
-    height: 14px;
+/* Style for inline SVG icons (replacing emojis) */
+.day-status svg {
+    width: 12px !important;
+    height: 12px !important;
     display: inline-block;
     vertical-align: middle;
     margin-right: 4px;
@@ -1458,13 +1457,11 @@ button.track-btn .btn-status {
 
 /* Slightly larger in buttons */
 .btn-label svg {
-    width: 16px;
-    height: 16px;
+    width: 14px !important;
+    height: 14px !important;
+    display: inline-block;
+    vertical-align: middle;
     margin-right: 6px;
-}
-
-/* Consistent size in modal headers */
-.modal-header svg {
-    width: 16px;
-    height: 16px;
+    stroke: currentColor;
+    flex-shrink: 0;
 }
