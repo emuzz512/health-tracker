@@ -147,28 +147,28 @@ function generateWeekView() {
         if (goalsStatus !== 'Not set') {
             const indicator = document.createElement('span');
             indicator.className = 'status-indicator' + (goalsStatus.includes('complete') ? ' complete' : ' partial');
-            indicator.textContent = `🎯 ${goalsStatus}`;
+            indicator.innerHTML = `${icons.target} ${goalsStatus}`;
             statusDiv.appendChild(indicator);
         }
         
         if (mealsStatus !== 'Not tracked') {
             const indicator = document.createElement('span');
             indicator.className = 'status-indicator' + (mealsStatus.includes('3/3') ? ' complete' : ' partial');
-            indicator.textContent = `🍽️ ${mealsStatus}`;
+            indicator.innerHTML = `${icons.utensils} ${mealsStatus}`;
             statusDiv.appendChild(indicator);
         }
         
         if (urgesStatus !== 'No urges tracked') {
             const indicator = document.createElement('span');
             indicator.className = 'status-indicator partial';
-            indicator.textContent = `💭 ${urgesStatus}`;
+            indicator.innerHTML = `${icons.sparkles} ${urgesStatus}`;
             statusDiv.appendChild(indicator);
         }
         
         if (reflectionStatus !== 'Not filled') {
             const indicator = document.createElement('span');
             indicator.className = 'status-indicator complete';
-            indicator.textContent = `🧠 ${reflectionStatus}`;
+            indicator.innerHTML = `${icons.brain} ${reflectionStatus}`;
             statusDiv.appendChild(indicator);
         }
         
@@ -179,7 +179,7 @@ function generateWeekView() {
         buttonsDiv.className = 'day-buttons';
         
         const goalsBtn = createTrackingButton(
-            '🎯 Goals & Intention',
+            '${icons.target} Goals & Intention',
             goalsStatus,
             () => openGoalsModal(date),
             (dayData.goals && dayData.goals.length > 0) || dayData.centralThought
@@ -187,7 +187,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(goalsBtn);
         
         const mealsBtn = createTrackingButton(
-            '🍽️ Meals',
+            '${icons.utensils} Meals',
             mealsStatus,
             () => openMealsModal(date),
             dayData.meals && Object.keys(dayData.meals).length > 0
@@ -195,7 +195,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(mealsBtn);
         
         const urgesBtn = createTrackingButton(
-            '💭 Urges',
+            '${icons.sparkles} Urges',
             urgesStatus,
             () => openUrgesModal(date),
             dayData.urges && dayData.urges.length > 0
@@ -203,7 +203,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(urgesBtn);
         
         const reflectionBtn = createTrackingButton(
-            '🧠 Reflection',
+            '${icons.brain} Reflection',
             reflectionStatus,
             () => openReflectionModal(date),
             dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)
@@ -323,7 +323,7 @@ function openGoalsModal(date) {
     const dayData = entries[dateKey] || {};
     
     document.getElementById('goalsModalTitle').innerHTML = icons.target + ' Goals & Intention - ' + formatDayName(date);
-        `🎯 Goals & Intention - ${getDayName(date)}, ${formatDate(date)}`;
+        `${icons.target} Goals & Intention - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('centralThought').value = dayData.centralThought || '';
     renderGoals(dayData.goals || []);
@@ -414,7 +414,7 @@ function openMealsModal(date) {
     const meals = dayData.meals || {};
     
     document.getElementById('mealsModalTitle').innerHTML = icons.utensils + ' Meals - ' + formatDayName(date);
-        `🍽️ Meals - ${getDayName(date)}, ${formatDate(date)}`;
+        `${icons.utensils} Meals - ${getDayName(date)}, ${formatDate(date)}`;
     
     // Load breakfast
     document.getElementById('breakfastPlan').value = meals.breakfastPlan || '';
@@ -895,7 +895,7 @@ function openUrgesModal(date) {
     const dayData = entries[dateKey] || {};
     
     document.getElementById('urgesModalTitle').innerHTML = icons.brain + ' Urges - ' + formatDayName(date);
-        `💭 Urges - ${getDayName(date)}, ${formatDate(date)}`;
+        `${icons.sparkles} Urges - ${getDayName(date)}, ${formatDate(date)}`;
     
     renderUrges(dayData.urges || []);
     document.getElementById('urgesModal').classList.add('show');
@@ -1136,7 +1136,7 @@ function openReflectionModal(date) {
     const reflection = dayData.reflection || {};
     
     document.getElementById('reflectionModalTitle').innerHTML = icons.sparkles + ' Daily Reflection - ' + formatDayName(date);
-        `🧠 Daily Reflection - ${getDayName(date)}, ${formatDate(date)}`;
+        `${icons.brain} Daily Reflection - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('dailyReflection').value = reflection.daily || '';
     document.getElementById('proudExplanation').value = reflection.proudExplanation || '';
@@ -1554,7 +1554,7 @@ function generateSummary(dates) {
 }
 
 function generateGoalsSection(dates) {
-  let html = '<div class="report-section"><h2>🎯 Goals & Intentions</h2>';
+  let html = '<div class="report-section"><h2>${icons.target} Goals & Intentions</h2>';
   
   for (const dateKey of dates) {
     const entry = entries[dateKey];
@@ -1586,7 +1586,7 @@ function generateGoalsSection(dates) {
 }
 
 function generateMealsSection(dates) {
-  let html = '<div class="report-section"><h2>🍽️ Meals & Eating</h2>';
+  let html = '<div class="report-section"><h2>${icons.utensils} Meals & Eating</h2>';
   
   for (const dateKey of dates) {
     const entry = entries[dateKey];
@@ -1695,7 +1695,7 @@ function generateUrgesSection(dates) {
 }
 
 function generateReflectionsSection(dates) {
-  let html = '<div class="report-section"><h2>💭 Daily Reflections</h2>';
+  let html = '<div class="report-section"><h2>${icons.sparkles} Daily Reflections</h2>';
   
   for (const dateKey of dates) {
     const entry = entries[dateKey];

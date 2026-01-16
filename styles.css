@@ -1442,3 +1442,20 @@ button.track-btn .btn-status {
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(200, 131, 94, 0.3) !important;
 }
+
+/* Style for inline SVG icons (replacing emojis) */
+.day-status svg,
+.btn-label svg {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    stroke: currentColor;
+}
+
+/* Slightly smaller icons in status indicators */
+.day-status svg {
+    width: 16px;
+    height: 16px;
+}
