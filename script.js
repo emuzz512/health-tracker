@@ -346,6 +346,12 @@ function openGoalsModal(date) {
     }
     if (document.getElementById('goalWeightGoals')) {
         document.getElementById('goalWeightGoals').value = goalWeightValue;
+    
+    // Load today's weight (specific to this day, does NOT carry over)
+    const todayWeightValue = dayData.todayWeight || '';
+    if (document.getElementById('todayWeightGoals')) {
+        document.getElementById('todayWeightGoals').value = todayWeightValue;
+    }
     }
     renderGoals(dayData.goals || []);
     document.getElementById('goalsModal').classList.add('show');
@@ -424,6 +430,7 @@ function saveGoals() {
     // Save goal weight
     if (document.getElementById('goalWeightGoals')) {
         entries[dateKey].goalWeight = document.getElementById('goalWeightGoals').value;
+        entries[dateKey].todayWeight = document.getElementById('todayWeightGoals').value;
     }
     
     saveData();
