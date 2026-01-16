@@ -1323,3 +1323,51 @@ button.track-btn .btn-status {
     color: #4a6b5c;
 }
 
+
+/* ============================================
+   TERRACOTTA BANNER HEADER
+   ============================================ */
+
+.modal-header {
+    background: linear-gradient(135deg, #c8835e 0%, #d69570 100%);
+    color: white;
+    padding: 25px 30px;
+    margin: -30px -30px 30px -30px;
+    border-radius: 12px 12px 0 0;
+    border-bottom: none;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-header h2 svg {
+    width: 28px;
+    height: 28px;
+    stroke: white;
+    flex-shrink: 0;
+}
+
+/* Close button on terracotta */
+.modal-header .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    opacity: 0.9;
+    font-size: 1.8rem;
+}
+
+.modal-header .close-btn:hover {
+    opacity: 1;
+    color: white;
+}
+

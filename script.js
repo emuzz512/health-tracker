@@ -1,4 +1,15 @@
 // Fixed syntax error - version 3 - weight tracking added
+// SVG Icon Definitions
+const icons = {
+    target: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    utensils: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>',
+    brain: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>',
+    sparkles: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>',
+    sunrise: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>',
+    sun: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
+    moon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
+};
+
 // Current week tracking
 let currentWeekStart = getWeekStart(new Date());
 let currentDay = null;
@@ -280,7 +291,7 @@ function openGoalsModal(date) {
     const dateKey = getDateKey(date);
     const dayData = entries[dateKey] || {};
     
-    document.getElementById('goalsModalTitle').textContent = 
+    document.getElementById('goalsModalTitle').innerHTML = icons.target + ' Goals & Intention - ' + formatDayName(date) + ', ' + formatDate(date);
         `🎯 Goals & Intention - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('centralThought').value = dayData.centralThought || '';
@@ -371,7 +382,7 @@ function openMealsModal(date) {
     const dayData = entries[dateKey] || {};
     const meals = dayData.meals || {};
     
-    document.getElementById('mealsModalTitle').textContent = 
+    document.getElementById('mealsModalTitle').innerHTML = icons.utensils + ' Meals - ' + formatDayName(date) + ', ' + formatDate(date);
         `🍽️ Meals - ${getDayName(date)}, ${formatDate(date)}`;
     
     // Load breakfast
@@ -852,7 +863,7 @@ function openUrgesModal(date) {
     const dateKey = getDateKey(date);
     const dayData = entries[dateKey] || {};
     
-    document.getElementById('urgesModalTitle').textContent = 
+    document.getElementById('urgesModalTitle').innerHTML = icons.brain + ' Urges - ' + formatDayName(date) + ', ' + formatDate(date);
         `💭 Urges - ${getDayName(date)}, ${formatDate(date)}`;
     
     renderUrges(dayData.urges || []);
@@ -1093,7 +1104,7 @@ function openReflectionModal(date) {
     const dayData = entries[dateKey] || {};
     const reflection = dayData.reflection || {};
     
-    document.getElementById('reflectionModalTitle').textContent = 
+    document.getElementById('reflectionModalTitle').innerHTML = icons.sparkles + ' Daily Reflection - ' + formatDayName(date) + ', ' + formatDate(date);
         `🧠 Daily Reflection - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('dailyReflection').value = reflection.daily || '';
