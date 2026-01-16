@@ -1466,3 +1466,10 @@ button.track-btn .btn-status {
     stroke: currentColor;
     flex-shrink: 0;
 }
+
+/* Hide weight tracking from reflection modal */
+/* Target the modal-body and modal-footer that are direct children of #reflectionModal, not inside modal-content */
+#reflectionModal > .modal-body,
+#reflectionModal > .modal-footer {
+    display: none !important;
+}
