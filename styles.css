@@ -1419,3 +1419,12 @@ button.track-btn .btn-status {
     /* Or use cream to match your app: */
     /* background-color: #faf7f5 !important; */
 }
+
+/* Remove white backgrounds from report container */
+.report-container {
+    background-color: transparent !important;
+}
+
+.report-content {
+    background-color: transparent !important;
+}
