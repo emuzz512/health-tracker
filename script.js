@@ -326,6 +326,27 @@ function openGoalsModal(date) {
         `${icons.target} Goals & Intention - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('centralThought').value = dayData.centralThought || '';
+    
+    // Load goal weight - with carryover from previous days
+    let goalWeightValue = '';
+    if (dayData.goalWeight) {
+        goalWeightValue = dayData.goalWeight;
+    } else {
+        // Look back for previous goal weight
+        const currentDate = new Date(date);
+        for (let i = 1; i <= 30; i++) {
+            const checkDate = new Date(currentDate);
+            checkDate.setDate(checkDate.getDate() - i);
+            const checkKey = getDateKey(checkDate);
+            if (entries[checkKey] && entries[checkKey].goalWeight) {
+                goalWeightValue = entries[checkKey].goalWeight;
+                break;
+            }
+        }
+    }
+    if (document.getElementById('goalWeightGoals')) {
+        document.getElementById('goalWeightGoals').value = goalWeightValue;
+    }
     renderGoals(dayData.goals || []);
     document.getElementById('goalsModal').classList.add('show');
 }
@@ -399,6 +420,11 @@ function saveGoals() {
     if (!entries[dateKey]) entries[dateKey] = {};
     
     entries[dateKey].centralThought = document.getElementById('centralThought').value;
+    
+    // Save goal weight
+    if (document.getElementById('goalWeightGoals')) {
+        entries[dateKey].goalWeight = document.getElementById('goalWeightGoals').value;
+    }
     
     saveData();
     closeModal('goalsModal');
