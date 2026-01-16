@@ -286,6 +286,29 @@ document.getElementById('nextWeek').addEventListener('click', () => {
 });
 
 // ========== GOALS & INTENTION MODAL ==========
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+
+function formatDayName(dateStr) {
+  const date = new Date(dateStr + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const diffTime = date - today;
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+  
+  const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+  const monthDay = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  
+  if (diffDays === 0) return `Today, ${monthDay}`;
+  if (diffDays === 1) return `Tomorrow, ${monthDay}`;
+  if (diffDays === -1) return `Yesterday, ${monthDay}`;
+  
+  return `${dayName}, ${monthDay}`;
+}
+
 function openGoalsModal(date) {
     currentDay = date;
     const dateKey = getDateKey(date);
