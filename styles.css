@@ -1445,17 +1445,26 @@ button.track-btn .btn-status {
 
 /* Style for inline SVG icons (replacing emojis) */
 .day-status svg,
-.btn-label svg {
-    width: 18px;
-    height: 18px;
+.btn-label svg,
+.modal-header svg {
+    width: 14px;
+    height: 14px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 6px;
+    margin-right: 4px;
     stroke: currentColor;
+    flex-shrink: 0;
 }
 
-/* Slightly smaller icons in status indicators */
-.day-status svg {
+/* Slightly larger in buttons */
+.btn-label svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+/* Consistent size in modal headers */
+.modal-header svg {
     width: 16px;
     height: 16px;
 }
