@@ -179,7 +179,7 @@ function generateWeekView() {
         buttonsDiv.className = 'day-buttons';
         
         const goalsBtn = createTrackingButton(
-            '${icons.target} Goals & Intention',
+            `${icons.target} Goals & Intention`,
             goalsStatus,
             () => openGoalsModal(date),
             (dayData.goals && dayData.goals.length > 0) || dayData.centralThought
@@ -187,7 +187,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(goalsBtn);
         
         const mealsBtn = createTrackingButton(
-            '${icons.utensils} Meals',
+            `${icons.utensils} Meals`,
             mealsStatus,
             () => openMealsModal(date),
             dayData.meals && Object.keys(dayData.meals).length > 0
@@ -195,7 +195,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(mealsBtn);
         
         const urgesBtn = createTrackingButton(
-            '${icons.sparkles} Urges',
+            `${icons.sparkles} Urges`,
             urgesStatus,
             () => openUrgesModal(date),
             dayData.urges && dayData.urges.length > 0
@@ -203,7 +203,7 @@ function generateWeekView() {
         buttonsDiv.appendChild(urgesBtn);
         
         const reflectionBtn = createTrackingButton(
-            '${icons.brain} Reflection',
+            `${icons.brain} Reflection`,
             reflectionStatus,
             () => openReflectionModal(date),
             dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)

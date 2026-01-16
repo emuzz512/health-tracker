@@ -1415,6 +1415,7 @@ button.track-btn .btn-status {
 
 /* Remove white banner around report buttons */
 .report-actions {
+    text-align: center;
     background-color: transparent !important;
     /* Or use cream to match your app: */
     /* background-color: #faf7f5 !important; */
