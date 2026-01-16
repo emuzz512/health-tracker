@@ -1193,3 +1193,133 @@ button.track-btn .btn-status {
     font-family: 'Inter', sans-serif !important;
 }
 
+
+/* ============================================
+   REFINED MODAL STYLING
+   ============================================ */
+
+/* Modal header with border */
+.modal-header {
+    border-bottom: 2px solid #e8ddd5;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: #4a4a4a;
+}
+
+/* Section headings in modals */
+.modal-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: #4a6b5c;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* Input fields and textareas */
+.modal-body input[type="text"],
+.modal-body input[type="time"],
+.modal-body textarea {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    padding: 12px 16px;
+    border: 1.5px solid #e8ddd5;
+    border-radius: 8px;
+    background: #fafafa;
+    color: #4a4a4a;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.modal-body input[type="text"]:focus,
+.modal-body input[type="time"]:focus,
+.modal-body textarea:focus {
+    outline: none;
+    border-color: #c8835e;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(200, 131, 94, 0.1);
+}
+
+/* Checkboxes - custom styling */
+.modal-body input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c8ddd5;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #4a6b5c;
+}
+
+/* Add buttons in modals */
+.modal-body .add-btn {
+    background: #c8835e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.modal-body .add-btn:hover {
+    background: #d69570;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(200, 131, 94, 0.25);
+}
+
+/* Goal items styling */
+.goal-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fafafa;
+    border: 1.5px solid #e8ddd5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+
+.goal-item:hover {
+    background: white;
+    border-color: #c8ddd5;
+}
+
+.goal-item input[type="checkbox"] {
+    margin: 0;
+}
+
+.goal-item span {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #4a4a4a;
+}
+
+/* Close button */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #9ba192;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #4a6b5c;
+}
+
