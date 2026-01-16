@@ -291,10 +291,18 @@ document.getElementById('nextWeek').addEventListener('click', () => {
 // UTILITY FUNCTIONS
 // ============================================================
 
-function formatDayName(dateStr) {
-  const date = new Date(dateStr + 'T00:00:00');
+function formatDayName(dateInput) {
+  // Handle both string and Date object inputs
+  let date;
+  if (typeof dateInput === 'string') {
+    date = new Date(dateInput + 'T00:00:00');
+  } else {
+    date = new Date(dateInput);
+  }
+  
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  date.setHours(0, 0, 0, 0);
   
   const diffTime = date - today;
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
@@ -314,7 +322,7 @@ function openGoalsModal(date) {
     const dateKey = getDateKey(date);
     const dayData = entries[dateKey] || {};
     
-    document.getElementById('goalsModalTitle').innerHTML = icons.target + ' Goals & Intention - ' + formatDayName(date) + ', ' + formatDate(date);
+    document.getElementById('goalsModalTitle').innerHTML = icons.target + ' Goals & Intention - ' + formatDayName(date);
         `🎯 Goals & Intention - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('centralThought').value = dayData.centralThought || '';
@@ -405,7 +413,7 @@ function openMealsModal(date) {
     const dayData = entries[dateKey] || {};
     const meals = dayData.meals || {};
     
-    document.getElementById('mealsModalTitle').innerHTML = icons.utensils + ' Meals - ' + formatDayName(date) + ', ' + formatDate(date);
+    document.getElementById('mealsModalTitle').innerHTML = icons.utensils + ' Meals - ' + formatDayName(date);
         `🍽️ Meals - ${getDayName(date)}, ${formatDate(date)}`;
     
     // Load breakfast
@@ -886,7 +894,7 @@ function openUrgesModal(date) {
     const dateKey = getDateKey(date);
     const dayData = entries[dateKey] || {};
     
-    document.getElementById('urgesModalTitle').innerHTML = icons.brain + ' Urges - ' + formatDayName(date) + ', ' + formatDate(date);
+    document.getElementById('urgesModalTitle').innerHTML = icons.brain + ' Urges - ' + formatDayName(date);
         `💭 Urges - ${getDayName(date)}, ${formatDate(date)}`;
     
     renderUrges(dayData.urges || []);
@@ -1127,7 +1135,7 @@ function openReflectionModal(date) {
     const dayData = entries[dateKey] || {};
     const reflection = dayData.reflection || {};
     
-    document.getElementById('reflectionModalTitle').innerHTML = icons.sparkles + ' Daily Reflection - ' + formatDayName(date) + ', ' + formatDate(date);
+    document.getElementById('reflectionModalTitle').innerHTML = icons.sparkles + ' Daily Reflection - ' + formatDayName(date);
         `🧠 Daily Reflection - ${getDayName(date)}, ${formatDate(date)}`;
     
     document.getElementById('dailyReflection').value = reflection.daily || '';
