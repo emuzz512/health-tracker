@@ -1428,3 +1428,17 @@ button.track-btn .btn-status {
 .report-content {
     background-color: transparent !important;
 }
+
+/* Override Close button to match Print button - Terracotta style */
+.report-btn.close {
+    background-color: #c8835e !important;
+    color: white !important;
+    border: 2px solid #c8835e !important;
+}
+
+.report-btn.close:hover {
+    background-color: #b36d4a !important;
+    border-color: #b36d4a !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.3) !important;
+}
