@@ -1332,7 +1332,7 @@ button.track-btn .btn-status {
     background: linear-gradient(135deg, #c8835e 0%, #d69570 100%);
     color: white;
     padding: 35px 30px;
-    margin: -30px -30px 30px -30px;
+    margin: 0 -30px 30px -30px;
     border-radius: 12px 12px 0 0;
     border-bottom: none;
     position: relative;
