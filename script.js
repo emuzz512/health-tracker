@@ -977,7 +977,7 @@ function openExerciseModal(date) {
     currentDay = date;
     const k = getDateKey(date);
     const d = entries[k] || {};
-    document.getElementById('exerciseModalTitle').textContent = `💪 Exercise - ${formatDayName(date)}`;
+    document.getElementById('exerciseModalTitle').innerHTML = `${icons.activity} Exercise - ${formatDayName(date)}`;
     loadPlannedExercises(d.plannedExercise || []);
     document.getElementById('exerciseModal').classList.add('show');
 }
@@ -988,7 +988,23 @@ function loadPlannedExercises(exs) {
     exs.forEach((e, i) => {
         const div = document.createElement('div');
         div.className = 'exercise-item' + (e.completed ? ' completed' : '');
-        div.innerHTML = `<div class="exercise-header"><label class="exercise-checkbox"><input type="checkbox" onchange="toggleExerciseComplete(${i})" ${e.completed ? 'checked' : ''}/><strong>${e.type || 'Exercise'}</strong></label><button onclick="removePlannedExercise(${i})" class="remove-btn">×</button></div><div class="exercise-details"><span>Duration: ${e.duration || 0} min</span><span>Intensity: ${e.intensity || 'Medium'}</span></div>${e.notes ? `<div class="exercise-notes">${e.notes}</div>` : ''}`;
+        div.innerHTML = `
+            <div class="exercise-header">
+                <strong>${e.type || 'Exercise'}</strong>
+                <button onclick="removePlannedExercise(${i})" class="remove-btn">×</button>
+            </div>
+            <div class="exercise-details">
+                <span>Duration: ${e.duration || 0} min</span>
+                <span>Intensity: ${e.intensity || 'Medium'}</span>
+            </div>
+            ${e.notes ? `<div class="exercise-notes">${e.notes}</div>` : ''}
+            <div class="exercise-complete-section">
+                <label class="exercise-complete-label">
+                    <input type="checkbox" onchange="toggleExerciseComplete(${i})" ${e.completed ? 'checked' : ''}/>
+                    <span>Mark as completed</span>
+                </label>
+            </div>
+        `;
         list.appendChild(div);
     });
 }
