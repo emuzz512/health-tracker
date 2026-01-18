@@ -1360,7 +1360,7 @@ button.track-btn .btn-status {
 .modal-header .close-btn {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 30px;
     color: white;
     opacity: 0.9;
     font-size: 1.8rem;
