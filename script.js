@@ -987,7 +987,7 @@ function loadPlannedExercises(exs) {
     list.innerHTML = '';
     exs.forEach((e, i) => {
         const div = document.createElement('div');
-        div.className = 'exercise-item' + (e.completed ? ' completed' : '';
+        div.className = 'exercise-item' + (e.completed ? ' completed' : '');
         div.innerHTML = `<div class="exercise-header"><label class="exercise-checkbox"><input type="checkbox" onchange="toggleExerciseComplete(${i})" ${e.completed ? 'checked' : ''}/><strong>${e.type || 'Exercise'}</strong></label><button onclick="removePlannedExercise(${i})" class="remove-btn">×</button></div><div class="exercise-details"><span>Duration: ${e.duration || 0} min</span><span>Intensity: ${e.intensity || 'Medium'}</span></div>${e.notes ? `<div class="exercise-notes">${e.notes}</div>` : ''}`;
         list.appendChild(div);
     });
