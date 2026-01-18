@@ -365,7 +365,7 @@ body {
 
 .modal-header {
     border-bottom: 2px solid #f4c9b3;
-    padding-bottom: 15px;
+    padding: 15px 0 15px 0;
     margin-bottom: 20px;
 }
 
