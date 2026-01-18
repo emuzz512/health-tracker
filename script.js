@@ -5,6 +5,7 @@ const icons = {
     utensils: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>',
     brain: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>',
     sparkles: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>',
+    activity: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
     sunrise: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>',
     sun: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
     moon: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
@@ -193,6 +194,14 @@ function generateWeekView() {
             dayData.meals && Object.keys(dayData.meals).length > 0
         );
         buttonsDiv.appendChild(mealsBtn);
+        
+        const exerciseBtn = createTrackingButton(
+            `${icons.activity} Exercise`,
+            "Not tracked",
+            () => openExerciseModal(date),
+            false
+        );
+        buttonsDiv.appendChild(exerciseBtn);
         
         const urgesBtn = createTrackingButton(
             `${icons.sparkles} Urges`,
@@ -420,6 +429,48 @@ document.getElementById('newGoal').addEventListener('keypress', (e) => {
         document.getElementById('addGoal').click();
     }
 });
+
+// Exercise Event Listener
+const addPlannedBtn = document.getElementById('addPlannedExercise');
+if (addPlannedBtn) {
+    addPlannedBtn.addEventListener('click', () => addPlannedExerciseForm());
+}
+
+function addPlannedExerciseForm() {
+    const list = document.getElementById('plannedExerciseList');
+    const form = document.createElement('div');
+    form.className = 'exercise-form';
+    form.innerHTML = `<input type="text" class="exercise-type-input" placeholder="Exercise type"/>
+<input type="number" class="exercise-duration-input" placeholder="Duration (min)" min="0"/>
+<div class="intensity-buttons">
+<button type="button" class="intensity-btn" data-intensity="Low">Low</button>
+<button type="button" class="intensity-btn" data-intensity="Medium">Medium</button>
+<button type="button" class="intensity-btn" data-intensity="High">High</button>
+</div>
+<textarea class="exercise-notes-input" placeholder="Notes" rows="2"></textarea>
+<div class="form-actions">
+<button type="button" class="save-exercise-btn">Save</button>
+<button type="button" class="cancel-exercise-btn">Cancel</button>
+</div>`;
+    list.appendChild(form);
+    const btns = form.querySelectorAll('.intensity-btn');
+    btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.classList.remove('selected')); b.classList.add('selected'); }));
+    form.querySelector('[data-intensity="Medium"]').classList.add('selected');
+    form.querySelector('.save-exercise-btn').addEventListener('click', () => {
+        const type = form.querySelector('.exercise-type-input').value.trim();
+        const dur = form.querySelector('.exercise-duration-input').value;
+        const int = form.querySelector('.intensity-btn.selected')?.dataset.intensity || 'Medium';
+        const notes = form.querySelector('.exercise-notes-input').value.trim();
+        if (type && dur) {
+            const k = getDateKey(currentDay);
+            if (!entries[k]) entries[k] = {};
+            if (!entries[k].plannedExercise) entries[k].plannedExercise = [];
+            entries[k].plannedExercise.push({ type, duration: dur, intensity: int, notes, completed: false });
+            loadPlannedExercises(entries[k].plannedExercise);
+        }
+    });
+    form.querySelector('.cancel-exercise-btn').addEventListener('click', () => form.remove());
+}
 
 function saveGoals() {
     const dateKey = getDateKey(currentDay);
@@ -922,6 +973,53 @@ function saveMeals() {
 
 
 // ========== URGES MODAL ==========
+function openExerciseModal(date) {
+    currentDay = date;
+    const k = getDateKey(date);
+    const d = entries[k] || {};
+    document.getElementById('exerciseModalTitle').textContent = `💪 Exercise - ${formatDayName(date)}`;
+    loadPlannedExercises(d.plannedExercise || []);
+    document.getElementById('exerciseModal').classList.add('show');
+}
+
+function loadPlannedExercises(exs) {
+    const list = document.getElementById('plannedExerciseList');
+    list.innerHTML = '';
+    exs.forEach((e, i) => {
+        const div = document.createElement('div');
+        div.className = 'exercise-item' + (e.completed ? ' completed' : '';
+        div.innerHTML = `<div class="exercise-header"><label class="exercise-checkbox"><input type="checkbox" onchange="toggleExerciseComplete(${i})" ${e.completed ? 'checked' : ''}/><strong>${e.type || 'Exercise'}</strong></label><button onclick="removePlannedExercise(${i})" class="remove-btn">×</button></div><div class="exercise-details"><span>Duration: ${e.duration || 0} min</span><span>Intensity: ${e.intensity || 'Medium'}</span></div>${e.notes ? `<div class="exercise-notes">${e.notes}</div>` : ''}`;
+        list.appendChild(div);
+    });
+}
+
+function saveExercise() {
+    const k = getDateKey(currentDay);
+    if (!entries[k]) entries[k] = {};
+    entries[k].plannedExercise = getCurrentPlannedExercises();
+    saveData();
+    closeModal('exerciseModal');
+    generateWeekView();
+}
+
+function getCurrentPlannedExercises() { return entries[getDateKey(currentDay)]?.plannedExercise || []; }
+
+function removePlannedExercise(i) {
+    const k = getDateKey(currentDay);
+    if (entries[k]?.plannedExercise) {
+        entries[k].plannedExercise.splice(i, 1);
+        loadPlannedExercises(entries[k].plannedExercise);
+    }
+}
+
+function toggleExerciseComplete(i) {
+    const k = getDateKey(currentDay);
+    if (entries[k]?.plannedExercise?.[i]) {
+        entries[k].plannedExercise[i].completed = !entries[k].plannedExercise[i].completed;
+        loadPlannedExercises(entries[k].plannedExercise);
+    }
+}
+
 function openUrgesModal(date) {
     currentDay = date;
     const dateKey = getDateKey(date);

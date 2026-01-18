@@ -1495,3 +1495,25 @@ button.track-btn .btn-status {
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(74, 107, 92, 0.3) !important;
 }
+
+/* Exercise */
+.exercise-item{background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:10px;border-left:4px solid #5d7d6e}
+.exercise-item.completed{opacity:0.7;background:#e8f5e9;border-left-color:#7d8a7a}
+.exercise-item.completed strong{text-decoration:line-through;color:#7d8a7a}
+.exercise-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.exercise-checkbox{display:flex;align-items:center;gap:10px;cursor:pointer}
+.exercise-checkbox input[type="checkbox"]{width:20px;height:20px;cursor:pointer}
+.exercise-details{display:flex;gap:15px;font-size:14px;color:#666}
+.exercise-notes{margin-top:8px;font-size:13px;color:#888;font-style:italic}
+.exercise-form{background:#fff;padding:15px;border-radius:8px;border:2px solid #5d7d6e;margin-bottom:15px}
+.exercise-type-input,.exercise-duration-input,.exercise-notes-input{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;font-family:'Inter',sans-serif}
+.intensity-buttons{display:flex;gap:10px;margin-bottom:10px}
+.intensity-btn{flex:1;padding:10px;border:2px solid #ddd;background:white;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:all 0.3s ease}
+.intensity-btn:hover{border-color:#5d7d6e;background:#f0f4f2}
+.intensity-btn.selected{background:#5d7d6e;color:white;border-color:#5d7d6e}
+.form-actions{display:flex;gap:10px}
+.save-exercise-btn,.cancel-exercise-btn{flex:1;padding:10px;border-radius:6px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer}
+.save-exercise-btn{background:#5d7d6e;color:white;border:2px solid #5d7d6e}
+.save-exercise-btn:hover{background:#4a6b5c}
+.cancel-exercise-btn{background:white;color:#666;border:2px solid #ddd}
+.cancel-exercise-btn:hover{background:#f5f5f5}

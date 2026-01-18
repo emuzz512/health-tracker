@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Health & Food Tracker</title>
-    <link rel="stylesheet" href="styles.css?v=108">
+    <link rel="stylesheet" href="styles.css?v=113">
 </head>
 <body>
     <!-- Login Screen -->
@@ -198,6 +198,26 @@
         </div>
     </div>
 
+    <!-- Exercise Modal -->
+    <div id="exerciseModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="exerciseModalTitle">💪 Exercise</h2>
+                <button class="close-btn" onclick="closeModal('exerciseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h3>📝 Planned Exercise</h3>
+                    <div id="plannedExerciseList"></div>
+                    <button id="addPlannedExercise" class="add-btn">+ Add Planned Exercise</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveExercise()" class="save-btn">💾 Save Exercise</button>
+            </div>
+        </div>
+    </div>
+
     <div id="urgesModal" class="modal">
         <div class="modal-content large">
             <div class="modal-header">
@@ -366,7 +386,7 @@
         });
     </script>
     
-    <script src="script.js?v=11"></script>
+    <script src="script.js?v=19"></script>
   <!-- PDF Report Container -->
   <div id="reportContainer" class="report-container">
     <div class="report-actions">
