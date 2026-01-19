@@ -1695,3 +1695,43 @@ button.track-btn .btn-status {
     flex: 1;
     margin-bottom: 0;
 }
+
+/* ===== AUTH BUTTONS (Login/Sign Up) ===== */
+.auth-btn {
+    padding: 12px 32px !important;
+    border-radius: 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    margin: 0 8px !important;
+}
+
+/* Primary login button - Terracotta filled */
+.auth-btn:not(.secondary) {
+    background-color: #c8835e !important;
+    color: white !important;
+    border: 2px solid #c8835e !important;
+}
+
+.auth-btn:not(.secondary):hover {
+    background-color: #b36d4a !important;
+    border-color: #b36d4a !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.3) !important;
+}
+
+/* Secondary sign up button - Sage outlined */
+.auth-btn.secondary {
+    background-color: transparent !important;
+    color: #5d7d6e !important;
+    border: 2px solid #5d7d6e !important;
+}
+
+.auth-btn.secondary:hover {
+    background-color: #f0f4f2 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(93, 125, 110, 0.2) !important;
+}
