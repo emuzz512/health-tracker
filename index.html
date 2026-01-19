@@ -84,6 +84,29 @@
                 </div>
                 </div>
 
+                <!-- Weight Goals Section -->
+                <div class="collapsible-weight">
+                    <div class="weight-header" onclick="toggleWeightSection()">
+                        <h3><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Weight Goals</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="weight-content">
+                        <div class="goal-item">
+                            <label class="goal-label">Long-Term Weight Goal</label>
+                            <input type="text" class="goal-input" id="longTermWeightInput" placeholder="Your ultimate weight goal...">
+                        </div>
+                        <div class="goal-item">
+                            <label class="goal-label">Next Milestone</label>
+                            <input type="text" class="goal-input" id="milestoneWeightInput" placeholder="Your next milestone...">
+                        </div>
+                        <div class="goal-item">
+                            <label class="goal-label">This Week's Weight Goal</label>
+                            <input type="text" class="goal-input" id="weeklyWeightInput" placeholder="This week's target...">
+                        </div>
+                        <button class="save-goals-btn" onclick="saveWeightGoals()">Save</button>
+                    </div>
+                </div>
+
                 <div id="weekView" class="week-view">
                     <!-- Days will be generated here -->
                 </div>

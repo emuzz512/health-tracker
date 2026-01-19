@@ -1735,3 +1735,47 @@ button.track-btn .btn-status {
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(93, 125, 110, 0.2) !important;
 }
+
+/* ===== COLLAPSIBLE WEIGHT GOALS SECTION ===== */
+.collapsible-weight {
+    background: #f4e4d7; /* Same peachy background */
+    border-left: 4px solid #c8835e;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.weight-header {
+    background: #c8835e; /* Terracotta header */
+    color: white;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weight-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.weight-content {
+    padding: 15px 20px;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+/* Collapsed state */
+.weight-content.collapsed {
+    max-height: 0;
+    padding: 0 20px;
+}

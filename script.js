@@ -250,6 +250,7 @@ function generateWeekView() {
 
     // Load grounding focus data for current week
     loadGroundingFocus();
+    loadWeightGoals();
 }
 function createTrackingButton(label, status, onClick, hasData) {
     const btn = document.createElement('button');
@@ -1944,6 +1945,17 @@ function toggleGoalsSection() {
     }
 }
 
+// Toggle Weight Goals section
+function toggleWeightSection() {
+    const content = document.querySelector('.weight-content');
+    const icon = document.querySelector('.weight-header .toggle-icon');
+    
+    if (content && icon) {
+        content.classList.toggle('collapsed');
+        icon.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
+    }
+}
+
 // Placeholder functions for edit buttons
 function openOverallGoalModal() {
     alert('Overall Goal editor coming soon!');
@@ -2044,5 +2056,80 @@ async function loadGroundingFocus() {
         }
     } catch (error) {
         console.error("Error loading grounding focus:", error);
+    }
+}
+
+// ========== WEIGHT GOALS SAVE/LOAD ==========
+async function saveWeightGoals() {
+    if (!window.currentUser || !window.firebaseDb) {
+        alert("Please log in to save your weight goals.");
+        return;
+    }
+
+    const longTermWeight = document.getElementById("longTermWeightInput").value;
+    const milestoneWeight = document.getElementById("milestoneWeightInput").value;
+    const weeklyWeight = document.getElementById("weeklyWeightInput").value;
+
+    const weekKey = getWeekKey(currentWeekStart);
+
+    try {
+        const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+
+        const userDocRef = doc(window.firebaseDb, "users", window.currentUser.uid);
+
+        // Prepare weekly weight goals object
+        const weeklyWeightGoalsUpdate = {};
+        weeklyWeightGoalsUpdate[weekKey] = weeklyWeight;
+
+        // Save to Firebase
+        await setDoc(userDocRef, {
+            longTermWeightGoal: longTermWeight,
+            milestoneWeightGoal: milestoneWeight,
+            weeklyWeightGoals: weeklyWeightGoalsUpdate
+        }, { merge: true });
+
+        console.log("✅ Weight Goals saved successfully!");
+
+        // Show success message
+        const saveBtn = document.querySelector(".collapsible-weight .save-goals-btn");
+        const successMsg = document.createElement("span");
+        successMsg.textContent = "✓ Saved!";
+        successMsg.style.cssText = "color: #5d7d6e; font-weight: 500; margin-left: 10px; opacity: 0; transition: opacity 0.3s ease;";
+        saveBtn.parentNode.appendChild(successMsg);
+
+        setTimeout(() => { successMsg.style.opacity = "1"; }, 10);
+        setTimeout(() => {
+            successMsg.style.opacity = "0";
+            setTimeout(() => successMsg.remove(), 300);
+        }, 2000);
+    } catch (error) {
+        console.error("Error saving weight goals:", error);
+        alert("Error saving. Please try again.");
+    }
+}
+
+async function loadWeightGoals() {
+    if (!window.currentUser || !window.firebaseDb) return;
+
+    try {
+        const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+
+        const userDocRef = doc(window.firebaseDb, "users", window.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+
+            // Load long-term and milestone goals
+            document.getElementById("longTermWeightInput").value = data.longTermWeightGoal || "";
+            document.getElementById("milestoneWeightInput").value = data.milestoneWeightGoal || "";
+
+            // Load weekly weight goal for current week
+            const weekKey = getWeekKey(currentWeekStart);
+            const weeklyWeightGoals = data.weeklyWeightGoals || {};
+            document.getElementById("weeklyWeightInput").value = weeklyWeightGoals[weekKey] || "";
+        }
+    } catch (error) {
+        console.error("Error loading weight goals:", error);
     }
 }
