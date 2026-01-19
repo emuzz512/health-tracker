@@ -467,6 +467,29 @@ function addPlannedExerciseForm() {
     form.querySelector('.cancel-exercise-btn').addEventListener('click', () => form.remove());
 }
 
+// Skip Today's Weight
+function skipTodayWeight() {
+    const todayWeightInput = document.getElementById('todayWeightGoals');
+    const progressDiv = document.getElementById('weeklyWeightProgress');
+    
+    // Clear the input
+    todayWeightInput.value = '';
+    
+    // Hide the progress display
+    progressDiv.style.display = 'none';
+    
+    // Show a brief confirmation
+    const skipBtn = document.getElementById('skipWeightBtn');
+    const originalText = skipBtn.textContent;
+    skipBtn.textContent = '✓ Skipped';
+    skipBtn.style.background = '#e8f0ec';
+    
+    setTimeout(() => {
+        skipBtn.textContent = originalText;
+        skipBtn.style.background = '#e8ddd5';
+    }, 2000);
+}
+
 function saveGoals() {
     const dateKey = getDateKey(currentDay);
     if (!entries[dateKey]) entries[dateKey] = {};

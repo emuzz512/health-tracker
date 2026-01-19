@@ -141,8 +141,10 @@
                     <h3>⚖️ Weight Tracking</h3>
                     
                     <label>Today's Weight (lbs):</label>
-                    <input type="number" id="todayWeightGoals" step="0.1" placeholder="Enter today's weight">
-                    
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" id="todayWeightGoals" step="0.1" placeholder="Enter today's weight" style="flex: 1;">
+                        <button id="skipWeightBtn" onclick="skipTodayWeight()" style="padding: 8px 16px; background-color: #e8ddd5; color: #6b5d54; border: 1px solid #d4c4b8; border-radius: 6px; font-size: 13px; cursor: pointer; white-space: nowrap;">Skip Today</button>
+                    </div>
                     <div id="weeklyWeightProgress" style="margin-top: 12px; padding: 10px; border-radius: 6px; text-align: center; font-size: 13px; display: none;">
                         <span id="weeklyWeightProgressText"></span>
                     </div>
