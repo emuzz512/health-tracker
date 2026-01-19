@@ -1779,3 +1779,38 @@ button.track-btn .btn-status {
     max-height: 0;
     padding: 0 20px;
 }
+
+/* Compact weight goals row */
+.weight-goals-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.weight-goal-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.goal-input-compact {
+    width: 80px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: white;
+    text-align: center;
+}
+
+.goal-input-compact:focus {
+    outline: none;
+    border-color: #c8835e;
+}
+
+.goal-input-compact::placeholder {
+    color: #ccc;
+    font-size: 13px;
+}

@@ -91,19 +91,21 @@
                         <span class="toggle-icon">▼</span>
                     </div>
                     <div class="weight-content">
-                        <div class="goal-item">
-                            <label class="goal-label">Long-Term Weight Goal</label>
-                            <input type="text" class="goal-input" id="longTermWeightInput" placeholder="Your ultimate weight goal...">
-                        </div>
-                        <div class="goal-item">
-                            <label class="goal-label">Next Milestone</label>
-                            <input type="text" class="goal-input" id="milestoneWeightInput" placeholder="Your next milestone...">
-                        </div>
-                        <div class="goal-item">
-                            <label class="goal-label">This Week's Weight Goal</label>
-                            <input type="text" class="goal-input" id="weeklyWeightInput" placeholder="This week's target...">
-                        </div>
-                        <button class="save-goals-btn" onclick="saveWeightGoals()">Save</button>
+                        <div class="weight-goals-row">
+                            <div class="weight-goal-compact">
+                                <label class="goal-label">Long-Term Goal</label>
+                                <input type="number" class="goal-input-compact" id="longTermWeightInput" placeholder="150" step="0.1">
+                            </div>
+                            <div class="weight-goal-compact">
+                                <label class="goal-label">Milestone</label>
+                                <input type="number" class="goal-input-compact" id="milestoneWeightInput" placeholder="145" step="0.1">
+                            </div>
+                            <div class="weight-goal-compact">
+                                <label class="goal-label">This Week</label>
+                                <input type="number" class="goal-input-compact" id="weeklyWeightInput" placeholder="142" step="0.1">
+                            </div>
+                            <button class="save-goals-btn" onclick="saveWeightGoals()">Save</button>
+                    </div>
                     </div>
                 </div>
 
