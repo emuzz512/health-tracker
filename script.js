@@ -1997,6 +1997,22 @@ async function saveGroundingFocus() {
         }, { merge: true });
 
         console.log("✅ Grounding Focus saved successfully!");
+        
+        // Show success message
+        const saveBtn = document.querySelector(".save-goals-btn");
+        const successMsg = document.createElement("span");
+        successMsg.textContent = "✓ Saved!";
+        successMsg.style.cssText = "color: #5d7d6e; font-weight: 500; margin-left: 10px; opacity: 0; transition: opacity 0.3s ease;";
+        saveBtn.parentNode.appendChild(successMsg);
+        
+        // Fade in
+        setTimeout(() => { successMsg.style.opacity = "1"; }, 10);
+        
+        // Fade out and remove after 2 seconds
+        setTimeout(() => {
+            successMsg.style.opacity = "0";
+            setTimeout(() => successMsg.remove(), 300);
+        }, 2000);
     } catch (error) {
         console.error("Error saving grounding focus:", error);
         alert("Error saving. Please try again.");
