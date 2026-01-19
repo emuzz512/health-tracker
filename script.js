@@ -1945,14 +1945,20 @@ function openWeeklyThoughtModal() {
 }
 
 // Save Grounding Focus data
+
+// ===== TODO: GROUNDING FOCUS - FIREBASE INTEGRATION NEEDED =====
+// Save Grounding Focus data
+// TODO: Connect to Firebase to persist data
+// - Overall Goal: Save permanently, carries over forever
+// - This Week's Weight: Save with week date, resets each Monday
+// - Grounding Thought: Save with week date, resets each Monday
 function saveGroundingFocus() {
-    // For now, just show an alert - we can connect to Firebase later
     const overallGoal = document.getElementById('overallGoalInput').value;
     const weeklyWeight = document.getElementById('weeklyWeightInput').value;
     const weeklyThought = document.getElementById('weeklyThoughtInput').value;
     
     // TODO: Save to Firebase
-    console.log('Saving:', { overallGoal, weeklyWeight, weeklyThought });
+    console.log('TODO: Save to Firebase:', { overallGoal, weeklyWeight, weeklyThought });
     
-    alert('Grounding Focus saved! (Firebase integration coming soon)');
+    alert('⚠️ Note: Data is not saved yet!\n\nThis feature needs Firebase integration.\nYour entries will be lost on page refresh.');
 }
