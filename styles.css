@@ -1633,6 +1633,7 @@ button.track-btn .btn-status {
     color: #7d8a7a;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    text-align: left;
     margin: 0;
 }
 
