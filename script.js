@@ -350,33 +350,14 @@ function openGoalsModal(date) {
     
     document.getElementById('centralThought').value = dayData.centralThought || '';
     
-    // Load goal weight - with carryover from previous days
-    let goalWeightValue = '';
-    if (dayData.goalWeight) {
-        goalWeightValue = dayData.goalWeight;
-    } else {
-        // Look back for previous goal weight
-        const currentDate = new Date(date);
-        for (let i = 1; i <= 30; i++) {
-            const checkDate = new Date(currentDate);
-            checkDate.setDate(checkDate.getDate() - i);
-            const checkKey = getDateKey(checkDate);
-            if (entries[checkKey] && entries[checkKey].goalWeight) {
-                goalWeightValue = entries[checkKey].goalWeight;
-                break;
-            }
-        }
-    }
-    if (document.getElementById('goalWeightGoals')) {
-        document.getElementById('goalWeightGoals').value = goalWeightValue;
-    
     // Load today's weight (specific to this day, does NOT carry over)
     const todayWeightValue = dayData.todayWeight || '';
     if (document.getElementById('todayWeightGoals')) {
         document.getElementById('todayWeightGoals').value = todayWeightValue;
     }
-    }
-    renderGoals(dayData.goals || []);
+    
+    // Show comparison to this week's weight goal
+    updateWeeklyWeightComparison(todayWeightValue);
     document.getElementById('goalsModal').classList.add('show');
 }
 
@@ -492,12 +473,10 @@ function saveGoals() {
     
     entries[dateKey].centralThought = document.getElementById('centralThought').value;
     
-    // Save goal weight
-    if (document.getElementById('goalWeightGoals')) {
-        entries[dateKey].goalWeight = document.getElementById('goalWeightGoals').value;
+    // Save today's weight
+    if (document.getElementById('todayWeightGoals')) {
         entries[dateKey].todayWeight = document.getElementById('todayWeightGoals').value;
     }
-    
     saveData();
     closeModal('goalsModal');
     generateWeekView();
@@ -2133,3 +2112,78 @@ async function loadWeightGoals() {
         console.error("Error loading weight goals:", error);
     }
 }
+
+// Update weekly weight comparison with supportive language
+async function updateWeeklyWeightComparison(todayWeight) {
+    const progressDiv = document.getElementById("weeklyWeightProgress");
+    const progressText = document.getElementById("weeklyWeightProgressText");
+    
+    if (!todayWeight || !progressDiv || !progressText) {
+        if (progressDiv) progressDiv.style.display = "none";
+        return;
+    }
+    
+    // Get this week's weight goal from the Weight Goals section
+    try {
+        const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+        
+        if (!window.currentUser || !window.firebaseDb) {
+            progressDiv.style.display = "none";
+            return;
+        }
+        
+        const userDocRef = doc(window.firebaseDb, "users", window.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+            const weekKey = getWeekKey(currentWeekStart);
+            const weeklyWeightGoals = data.weeklyWeightGoals || {};
+            const weeklyGoal = weeklyWeightGoals[weekKey];
+            
+            if (!weeklyGoal) {
+                progressDiv.style.display = "none";
+                return;
+            }
+            
+            const today = parseFloat(todayWeight);
+            const goal = parseFloat(weeklyGoal);
+            const difference = Math.abs(today - goal);
+            
+            if (Math.abs(today - goal) < 0.1) {
+                // At goal (within 0.1 lbs)
+                progressText.textContent = "🎯 Right on track with this week's goal!";
+                progressDiv.style.background = "#d4e7df";
+                progressDiv.style.color = "#2d5a3d";
+            } else if (today < goal) {
+                // Below goal
+                progressText.textContent = `💪 ${difference.toFixed(1)} lbs below this week's goal`;
+                progressDiv.style.background = "#e3f2fd";
+                progressDiv.style.color = "#1565c0";
+            } else {
+                // Above goal - neutral, supportive
+                progressText.textContent = `📊 Tracking progress (${difference.toFixed(1)} lbs from this week's goal)`;
+                progressDiv.style.background = "#fff3e0";
+                progressDiv.style.color = "#e65100";
+            }
+            
+            progressDiv.style.display = "block";
+        } else {
+            progressDiv.style.display = "none";
+        }
+    } catch (error) {
+        console.error("Error loading weekly weight goal:", error);
+        progressDiv.style.display = "none";
+    }
+}
+
+// Add event listener for real-time weight comparison
+document.addEventListener('DOMContentLoaded', function() {
+    const todayWeightInput = document.getElementById('todayWeightGoals');
+    
+    if (todayWeightInput) {
+        todayWeightInput.addEventListener('input', function() {
+            updateWeeklyWeightComparison(this.value);
+        });
+    }
+});

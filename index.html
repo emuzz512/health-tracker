@@ -140,12 +140,12 @@
                 <div class="section">
                     <h3>⚖️ Weight Tracking</h3>
                     
-                    <label>Goal Weight (lbs):</label>
-                    <input type="number" id="goalWeightGoals" step="0.1" placeholder="Your target weight" style="margin-bottom: 5px;">
-                    <small style="color: #888; display: block; margin-bottom: 15px;">This will carry over to future days</small>
-                    
                     <label>Today's Weight (lbs):</label>
                     <input type="number" id="todayWeightGoals" step="0.1" placeholder="Enter today's weight">
+                    
+                    <div id="weeklyWeightProgress" style="margin-top: 12px; padding: 10px; border-radius: 6px; text-align: center; font-size: 13px; display: none;">
+                        <span id="weeklyWeightProgressText"></span>
+                    </div>
                 </div>
                 
             </div>
@@ -430,7 +430,7 @@
         });
     </script>
     
-    <script src="script.js?v=21"></script>
+    <script src="script.js?v=22"></script>
   <!-- PDF Report Container -->
   <div id="reportContainer" class="report-container">
     <div class="report-actions">
