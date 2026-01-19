@@ -1556,3 +1556,103 @@ button.track-btn .btn-status {
 .exercise-item.completed .exercise-complete-label span {
     font-weight: 600;
 }
+
+/* ===== COLLAPSIBLE GROUNDING FOCUS SECTION ===== */
+.collapsible-goals {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.goals-header {
+    background: #5d7d6e;
+    color: white;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+    border-radius: 8px 8px 0 0;
+}
+
+.goals-header:hover {
+    background: #4a6b5c;
+}
+
+.goals-header h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.toggle-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.collapsible-goals.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.goals-content {
+    padding: 15px 20px;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.collapsible-goals.collapsed .goals-content {
+    max-height: 0;
+    padding: 0 20px;
+}
+
+.goal-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e8ddd5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.goal-item:last-child {
+    border-bottom: none;
+}
+
+.goal-item strong {
+    color: #5d7d6e;
+    font-size: 13px;
+    min-width: 140px;
+    flex-shrink: 0;
+}
+
+.goal-item p {
+    flex: 1;
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.edit-goals-btn {
+    background: #c8835e;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.edit-goals-btn:hover {
+    background: #b36d4a;
+    transform: translateY(-1px);
+}

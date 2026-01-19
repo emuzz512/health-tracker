@@ -1922,3 +1922,24 @@ document.querySelectorAll('.menu-item').forEach(item => {
         document.getElementById('dropdownMenu').style.display = 'none';
     });
 });
+
+// ===== COLLAPSIBLE GOALS SECTION TOGGLE =====
+function toggleGoalsSection() {
+    const section = document.querySelector('.collapsible-goals');
+    if (section) {
+        section.classList.toggle('collapsed');
+    }
+}
+
+// Placeholder functions for edit buttons
+function openOverallGoalModal() {
+    alert('Overall Goal editor coming soon!');
+}
+
+function openWeeklyWeightModal() {
+    alert('Weekly Weight editor coming soon!');
+}
+
+function openWeeklyThoughtModal() {
+    alert('Weekly Thought editor coming soon!');
+}
