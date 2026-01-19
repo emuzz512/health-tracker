@@ -1682,3 +1682,15 @@ button.track-btn .btn-status {
     background: #b36d4a;
     transform: translateY(-1px);
 }
+
+/* Side-by-side layout for weekly goals */
+.goal-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.goal-row .goal-item {
+    flex: 1;
+    margin-bottom: 0;
+}
