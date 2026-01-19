@@ -755,13 +755,13 @@ body {
 
 /* Past days styling */
 .day-card.past-day {
-    background: #f9f6f3;
+    background: #fcfbfa;
     opacity: 0.85;
 }
 
 .day-card.past-day:hover {
     opacity: 1;
-    background: #f5f0eb;
+    background: #ffffff;
 }
 
 .day-card.past-day .day-name {
