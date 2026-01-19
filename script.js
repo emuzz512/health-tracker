@@ -1972,7 +1972,6 @@ async function saveGroundingFocus() {
     }
 
     const anchorGoal = document.getElementById("overallGoalInput").value;
-    const weeklyWeight = document.getElementById("weeklyWeightInput").value;
     const weeklyThought = document.getElementById("weeklyThoughtInput").value;
 
     const weekKey = getWeekKey(currentWeekStart);
@@ -1986,7 +1985,6 @@ async function saveGroundingFocus() {
         // Prepare weekly goals object
         const weeklyGoalsUpdate = {};
         weeklyGoalsUpdate[weekKey] = {
-            weight: weeklyWeight,
             thought: weeklyThought
         };
 
@@ -2042,7 +2040,6 @@ async function loadGroundingFocus() {
             const weeklyGoals = data.weeklyGoals || {};
             const thisWeekGoals = weeklyGoals[weekKey] || {};
 
-            document.getElementById("weeklyWeightInput").value = thisWeekGoals.weight || "";
             document.getElementById("weeklyThoughtInput").value = thisWeekGoals.thought || "";
         }
     } catch (error) {
