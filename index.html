@@ -73,21 +73,18 @@
                     </div>
                     <div class="goals-content">
                         <div class="goal-item">
-                            <strong>Overall Goal:</strong>
-                            <p id="overallGoalDisplay">Set your overall goal...</p>
-                            <button class="edit-goals-btn" onclick="openOverallGoalModal()">Edit</button>
+                            <label class="goal-label">Overall Goal</label>
+                            <input type="text" class="goal-input" id="overallGoalInput" placeholder="Set your overall goal...">
                         </div>
                         <div class="goal-item">
-                            <strong>This Week's Weight:</strong>
-                            <p id="weeklyWeightDisplay">Set this week's weight goal...</p>
-                            <button class="edit-goals-btn" onclick="openWeeklyWeightModal()">Edit</button>
+                            <label class="goal-label">This Week's Weight</label>
+                            <input type="text" class="goal-input" id="weeklyWeightInput" placeholder="Set this week's weight goal...">
                         </div>
                         <div class="goal-item">
-                            <strong>Grounding Thought:</strong>
-                            <p id="weeklyThoughtDisplay">Set this week's grounding thought...</p>
-                            <button class="edit-goals-btn" onclick="openWeeklyThoughtModal()">Edit</button>
+                            <label class="goal-label">Grounding Thought</label>
+                            <input type="text" class="goal-input" id="weeklyThoughtInput" placeholder="Set this week's grounding thought...">
                         </div>
-                    </div>
+                        <button class="save-goals-btn" onclick="saveGroundingFocus()">Save</button>
                 </div>
 
                 <div id="weekView" class="week-view">

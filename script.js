@@ -1943,3 +1943,16 @@ function openWeeklyWeightModal() {
 function openWeeklyThoughtModal() {
     alert('Weekly Thought editor coming soon!');
 }
+
+// Save Grounding Focus data
+function saveGroundingFocus() {
+    // For now, just show an alert - we can connect to Firebase later
+    const overallGoal = document.getElementById('overallGoalInput').value;
+    const weeklyWeight = document.getElementById('weeklyWeightInput').value;
+    const weeklyThought = document.getElementById('weeklyThoughtInput').value;
+    
+    // TODO: Save to Firebase
+    console.log('Saving:', { overallGoal, weeklyWeight, weeklyThought });
+    
+    alert('Grounding Focus saved! (Firebase integration coming soon)');
+}

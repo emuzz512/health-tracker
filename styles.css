@@ -1613,43 +1613,66 @@ button.track-btn .btn-status {
 }
 
 .goal-item {
-    padding: 10px 0;
-    border-bottom: 1px solid #e8ddd5;
+    background: #faf7f5;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .goal-item:last-child {
-    border-bottom: none;
+    margin-bottom: 15px;
 }
 
-.goal-item strong {
-    color: #5d7d6e;
-    font-size: 13px;
-    min-width: 140px;
-    flex-shrink: 0;
-}
-
-.goal-item p {
-    flex: 1;
+.goal-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7d8a7a;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     margin: 0;
-    color: #666;
+}
+
+.goal-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
     font-size: 14px;
+    color: #666;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.goal-input::placeholder {
+    color: #999;
     font-style: italic;
 }
 
-.edit-goals-btn {
+.goal-input:focus {
+    color: #333;
+}
+
+.save-goals-btn {
     background: #c8835e;
     color: white;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 4px;
     font-size: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    flex-shrink: 0;
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+.save-goals-btn:hover {
+    background: #b36d4a;
+    transform: translateY(-1px);
+}
 }
 
 .edit-goals-btn:hover {
