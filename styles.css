@@ -1814,3 +1814,34 @@ button.track-btn .btn-status {
     color: #ccc;
     font-size: 13px;
 }
+
+/* ===== GOAL DELETE BUTTON STYLING ===== */
+/* Style the delete/remove button (X) for goals */
+.delete-btn {
+    background-color: transparent !important;
+    color: #c8835e !important;
+    border: 1px solid #e8ddd5 !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    line-height: 1 !important;
+}
+
+.delete-btn:hover {
+    background-color: #fef5f0 !important;
+    border-color: #c8835e !important;
+    transform: scale(1.1) !important;
+}
+
+/* ===== GOALS MODAL SPACING ===== */
+/* Reduce white space at top of Goals modal (before Goals heading) */
+#goalsModal .modal-body > .section:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+#goalsModal .modal-body {
+    padding-top: 15px !important;
+}
