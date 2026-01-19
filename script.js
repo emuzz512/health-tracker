@@ -74,6 +74,16 @@ function getDateKey(date) {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
+// Get week key for grounding focus storage (ISO week format)
+function getWeekKey(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const weekStart = getWeekStart(d);
+    const yearStart = new Date(year, 0, 1);
+    const weekNum = Math.ceil((((weekStart - yearStart) / 86400000) + 1) / 7);
+    return `${year}-W${String(weekNum).padStart(2, "0")}`;
+}
+
 // Format date for display
 function formatDate(date) {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -237,6 +247,9 @@ function generateWeekView() {
         
         weekView.appendChild(dayCard);
     }
+
+    // Load grounding focus data for current week
+    loadGroundingFocus();
 }
 function createTrackingButton(label, status, onClick, hasData) {
     const btn = document.createElement('button');
@@ -1952,13 +1965,71 @@ function openWeeklyThoughtModal() {
 // - Overall Goal: Save permanently, carries over forever
 // - This Week's Weight: Save with week date, resets each Monday
 // - Grounding Thought: Save with week date, resets each Monday
-function saveGroundingFocus() {
-    const overallGoal = document.getElementById('overallGoalInput').value;
-    const weeklyWeight = document.getElementById('weeklyWeightInput').value;
-    const weeklyThought = document.getElementById('weeklyThoughtInput').value;
-    
-    // TODO: Save to Firebase
-    console.log('TODO: Save to Firebase:', { overallGoal, weeklyWeight, weeklyThought });
-    
+async function saveGroundingFocus() {
+    if (!window.currentUser || !window.firebaseDb) {
+        alert("Please log in to save your goals.");
+        return;
+    }
+
+    const anchorGoal = document.getElementById("overallGoalInput").value;
+    const weeklyWeight = document.getElementById("weeklyWeightInput").value;
+    const weeklyThought = document.getElementById("weeklyThoughtInput").value;
+
+    const weekKey = getWeekKey(currentWeekStart);
+
+    try {
+        // Import Firestore functions
+        const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+
+        const userDocRef = doc(window.firebaseDb, "users", window.currentUser.uid);
+
+        // Prepare weekly goals object
+        const weeklyGoalsUpdate = {};
+        weeklyGoalsUpdate[weekKey] = {
+            weight: weeklyWeight,
+            thought: weeklyThought
+        };
+
+        // Save to Firebase
+        await setDoc(userDocRef, {
+            anchorGoal: anchorGoal,
+            weeklyGoals: weeklyGoalsUpdate
+        }, { merge: true });
+
+        console.log("✅ Grounding Focus saved successfully!");
+    } catch (error) {
+        console.error("Error saving grounding focus:", error);
+        alert("Error saving. Please try again.");
+
+// Load Grounding Focus data
+async function loadGroundingFocus() {
+    if (!window.currentUser || !window.firebaseDb) return;
+
+    try {
+        // Import Firestore functions
+        const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+
+        const userDocRef = doc(window.firebaseDb, "users", window.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+
+            // Load anchor goal (global)
+            const anchorGoal = data.anchorGoal || "";
+            document.getElementById("overallGoalInput").value = anchorGoal;
+
+            // Load weekly goals for current week
+            const weekKey = getWeekKey(currentWeekStart);
+            const weeklyGoals = data.weeklyGoals || {};
+            const thisWeekGoals = weeklyGoals[weekKey] || {};
+
+            document.getElementById("weeklyWeightInput").value = thisWeekGoals.weight || "";
+            document.getElementById("weeklyThoughtInput").value = thisWeekGoals.thought || "";
+        }
+    } catch (error) {
+        console.error("Error loading grounding focus:", error);
+    }
+}
     alert('⚠️ Note: Data is not saved yet!\n\nThis feature needs Firebase integration.\nYour entries will be lost on page refresh.');
 }
