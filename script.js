@@ -2000,6 +2000,8 @@ async function saveGroundingFocus() {
     } catch (error) {
         console.error("Error saving grounding focus:", error);
         alert("Error saving. Please try again.");
+    }
+}
 
 // Load Grounding Focus data
 async function loadGroundingFocus() {
