@@ -2033,5 +2033,3 @@ async function loadGroundingFocus() {
         console.error("Error loading grounding focus:", error);
     }
 }
-    alert('⚠️ Note: Data is not saved yet!\n\nThis feature needs Firebase integration.\nYour entries will be lost on page refresh.');
-}
