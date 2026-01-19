@@ -2152,19 +2152,18 @@ async function updateWeeklyWeightComparison(todayWeight) {
             
             if (Math.abs(today - goal) < 0.1) {
                 // At goal (within 0.1 lbs)
-                progressText.textContent = "🎯 Right on track with this week's goal!";
-                progressDiv.style.background = "#d4e7df";
-                progressDiv.style.color = "#2d5a3d";
-            } else if (today < goal) {
+                progressText.textContent = "Right on track with this week's goal!";
+                progressDiv.style.background = "#e8f0ec";
+                progressDiv.style.color = "#4a6b5c";
                 // Below goal
-                progressText.textContent = `💪 ${difference.toFixed(1)} lbs below this week's goal`;
-                progressDiv.style.background = "#e3f2fd";
-                progressDiv.style.color = "#1565c0";
+                progressText.textContent = `${difference.toFixed(1)} lbs below this week's goal`;
+                progressDiv.style.background = "#f9ede5";
+                progressDiv.style.color = "#8b6f47";
             } else {
                 // Above goal - neutral, supportive
-                progressText.textContent = `📊 Tracking progress (${difference.toFixed(1)} lbs from this week's goal)`;
-                progressDiv.style.background = "#fff3e0";
-                progressDiv.style.color = "#e65100";
+                progressText.textContent = `Tracking progress (${difference.toFixed(1)} lbs from this week's goal)`;
+                progressDiv.style.background = "#f4e4d7";
+                progressDiv.style.color = "#a0694b";
             }
             
             progressDiv.style.display = "block";
