@@ -1845,3 +1845,13 @@ button.track-btn .btn-status {
 #goalsModal .modal-body {
     padding-top: 15px !important;
 }
+
+/* Use Inter font for all input fields and textareas */
+input[type="text"],
+input[type="number"],
+input[type="time"],
+input[type="date"],
+textarea,
+select {
+    font-family: 'Inter', sans-serif !important;
+}
