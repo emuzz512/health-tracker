@@ -216,9 +216,9 @@ function generateWeekView() {
         
         const exerciseBtn = createTrackingButton(
             `${icons.activity} Exercise`,
-            "Not tracked",
+            exerciseStatus,
             () => openExerciseModal(date),
-            false
+            dayData.plannedExercise && dayData.plannedExercise.length > 0
         );
         buttonsDiv.appendChild(exerciseBtn);
         
