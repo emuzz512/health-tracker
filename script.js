@@ -304,11 +304,11 @@ function getReflectionStatus(dayData) {
 }
 
 function getExerciseStatus(dayData) {
-    if (!dayData.exercise || !dayData.exercise.planned || dayData.exercise.planned.length === 0) {
+    if (!dayData.plannedExercise || dayData.plannedExercise.length === 0) {
         return 'Not tracked';
     }
-    const completed = dayData.exercise.planned.filter(e => e.completed).length;
-    const total = dayData.exercise.planned.length;
+    const completed = dayData.plannedExercise.filter(e => e.completed).length;
+    const total = dayData.plannedExercise.length;
     return `${completed}/${total} completed`;
 }
 
