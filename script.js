@@ -153,6 +153,7 @@ function generateWeekView() {
         const goalsStatus = getGoalsStatus(dayData);
         const mealsStatus = getMealsStatus(dayData);
         const urgesStatus = getUrgesStatus(dayData);
+        const exerciseStatus = getExerciseStatus(dayData);
         const reflectionStatus = getReflectionStatus(dayData);
         
         if (goalsStatus !== 'Not set') {
@@ -166,6 +167,14 @@ function generateWeekView() {
             const indicator = document.createElement('span');
             indicator.className = 'status-indicator' + (mealsStatus.includes('3/3') ? ' complete' : ' partial');
             indicator.innerHTML = `${icons.utensils} ${mealsStatus}`;
+            statusDiv.appendChild(indicator);
+        }
+        
+        if (exerciseStatus !== "Not tracked") {
+            const indicator = document.createElement("span");
+            const isComplete = exerciseStatus.includes("/") && exerciseStatus.split("/")[0] === exerciseStatus.split("/")[1].split(" ")[0];
+            indicator.className = "status-indicator" + (isComplete ? " complete" : " partial");
+            indicator.innerHTML = `${icons.activity} ${exerciseStatus}`;
             statusDiv.appendChild(indicator);
         }
         
@@ -292,6 +301,15 @@ function getReflectionStatus(dayData) {
     if (dayData.reflection.proud) parts.push('proud');
     if (dayData.reflection.learn) parts.push('lessons');
     return parts.length > 0 ? '✓ ' + parts.join(', ') : 'Not filled';
+}
+
+function getExerciseStatus(dayData) {
+    if (!dayData.exercise || !dayData.exercise.planned || dayData.exercise.planned.length === 0) {
+        return 'Not tracked';
+    }
+    const completed = dayData.exercise.planned.filter(e => e.completed).length;
+    const total = dayData.exercise.planned.length;
+    return `${completed}/${total} completed`;
 }
 
 function closeModal(modalId) {
