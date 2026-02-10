@@ -567,6 +567,32 @@ function openMealsModal(date) {
     document.getElementById('dinnerActual').value = meals.dinnerActual || '';
     document.getElementById('dinnerActual').style.display = meals.dinnerDifferent ? 'block' : 'none';
     
+    // Load macro goals
+    document.getElementById('breakfastProtein').checked = meals.breakfastProtein || false;
+    document.getElementById('breakfastFat').checked = meals.breakfastFat || false;
+    document.getElementById('breakfastProduce').checked = meals.breakfastProduce || false;
+    document.getElementById('breakfastCarbs').checked = meals.breakfastCarbs || false;
+    
+    document.getElementById('lunchProtein').checked = meals.lunchProtein || false;
+    document.getElementById('lunchFat').checked = meals.lunchFat || false;
+    document.getElementById('lunchProduce').checked = meals.lunchProduce || false;
+    document.getElementById('lunchCarbs').checked = meals.lunchCarbs || false;
+    
+    document.getElementById('dinnerProtein').checked = meals.dinnerProtein || false;
+    document.getElementById('dinnerFat').checked = meals.dinnerFat || false;
+    document.getElementById('dinnerProduce').checked = meals.dinnerProduce || false;
+    document.getElementById('dinnerCarbs').checked = meals.dinnerCarbs || false;
+    
+    // Show macro sections if meal has details
+    ['breakfast', 'lunch', 'dinner'].forEach(meal => {
+        const actualTextarea = document.getElementById(`${meal}Actual`);
+        const macroSection = actualTextarea.nextElementSibling;
+        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
+            const hasMealDetails = actualTextarea.value.trim() !== '' || meals[`${meal}Different`];
+            macroSection.style.display = hasMealDetails ? 'block' : 'none';
+        }
+    });
+    
     // Load snacks
     renderSnacks();
     
@@ -601,6 +627,27 @@ function openMealsModal(date) {
         }
     });
 });
+
+
+// Show/hide macro goals sections when meal details are entered
+['breakfast', 'lunch', 'dinner'].forEach(meal => {
+    // Show macro section when "ate something different" is checked
+    document.getElementById(`${meal}Different`).addEventListener('change', function() {
+        const macroSection = document.querySelector(`#${meal}Actual`).nextElementSibling;
+        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
+            macroSection.style.display = this.checked ? 'block' : 'none';
+        }
+    });
+    
+    // Also show when there's text in the actual meal textarea
+    document.getElementById(`${meal}Actual`).addEventListener('input', function() {
+        const macroSection = this.nextElementSibling;
+        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
+            macroSection.style.display = this.value.trim() !== '' ? 'block' : 'none';
+        }
+    });
+});
+
 
 // Toggle overeating section
 document.getElementById('didOvereat').addEventListener('change', function() {
@@ -990,6 +1037,22 @@ function saveMeals() {
         dinnerEarly: document.getElementById('dinnerEarly').checked,
         dinnerLate: document.getElementById('dinnerLate').checked,
         dinnerActual: document.getElementById('dinnerActual').value,
+        
+        // Save macro goals
+        breakfastProtein: document.getElementById('breakfastProtein').checked,
+        breakfastFat: document.getElementById('breakfastFat').checked,
+        breakfastProduce: document.getElementById('breakfastProduce').checked,
+        breakfastCarbs: document.getElementById('breakfastCarbs').checked,
+        
+        lunchProtein: document.getElementById('lunchProtein').checked,
+        lunchFat: document.getElementById('lunchFat').checked,
+        lunchProduce: document.getElementById('lunchProduce').checked,
+        lunchCarbs: document.getElementById('lunchCarbs').checked,
+        
+        dinnerProtein: document.getElementById('dinnerProtein').checked,
+        dinnerFat: document.getElementById('dinnerFat').checked,
+        dinnerProduce: document.getElementById('dinnerProduce').checked,
+        dinnerCarbs: document.getElementById('dinnerCarbs').checked,
         
         snacks: snacks.filter(s => s.plan || s.actual),
         
