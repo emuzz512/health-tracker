@@ -583,15 +583,6 @@ function openMealsModal(date) {
     document.getElementById('dinnerProduce').checked = meals.dinnerProduce || false;
     document.getElementById('dinnerCarbs').checked = meals.dinnerCarbs || false;
     
-    // Show macro sections if meal has details
-    ['breakfast', 'lunch', 'dinner'].forEach(meal => {
-        const actualTextarea = document.getElementById(`${meal}Actual`);
-        const macroSection = actualTextarea.nextElementSibling;
-        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
-            const hasMealDetails = actualTextarea.value.trim() !== '' || meals[`${meal}Different`];
-            macroSection.style.display = hasMealDetails ? 'block' : 'none';
-        }
-    });
     
     // Load snacks
     renderSnacks();
@@ -624,26 +615,6 @@ function openMealsModal(date) {
         if (this.checked) {
             document.getElementById(`${meal}Different`).checked = false;
             document.getElementById(`${meal}Actual`).style.display = 'none';
-        }
-    });
-});
-
-
-// Show/hide macro goals sections when meal details are entered
-['breakfast', 'lunch', 'dinner'].forEach(meal => {
-    // Show macro section when "ate something different" is checked
-    document.getElementById(`${meal}Different`).addEventListener('change', function() {
-        const macroSection = document.querySelector(`#${meal}Actual`).nextElementSibling;
-        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
-            macroSection.style.display = this.checked ? 'block' : 'none';
-        }
-    });
-    
-    // Also show when there's text in the actual meal textarea
-    document.getElementById(`${meal}Actual`).addEventListener('input', function() {
-        const macroSection = this.nextElementSibling;
-        if (macroSection && macroSection.classList.contains('macro-goals-section')) {
-            macroSection.style.display = this.value.trim() !== '' ? 'block' : 'none';
         }
     });
 });

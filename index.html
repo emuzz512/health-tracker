@@ -167,18 +167,7 @@
                 <div class="meal-section">
                     <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>Breakfast</h3>
                     <input type="text" id="breakfastPlan" placeholder="What's the plan?">
-                    <input type="time" id="breakfastTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    <div class="meal-options">
-                        <label><input type="checkbox" id="breakfastAsPlanned"> Ate as planned</label>
-                        <label><input type="checkbox" id="breakfastDifferent"> Ate something different</label>
-                    </div>
-                    <div class="meal-options" style="margin-top: 5px;">
-                        <label><input type="checkbox" id="breakfastOnTime"> Ate on time</label>
-                        <label><input type="checkbox" id="breakfastEarly"> Ate early</label>
-                        <label><input type="checkbox" id="breakfastLate"> Ate late</label>
-                    </div>
-                    <textarea id="breakfastActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px; display:none;">
+                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px;">
                         <h4 style="margin: 0 0 10px 0; color: #8b6f47; font-size: 14px; font-weight: 600;">Macro Goals</h4>
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="display: flex; align-items: flex-start; cursor: pointer;">
@@ -199,23 +188,24 @@
                             </label>
                         </div>
                     </div>
+                    <input type="time" id="breakfastTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <div class="meal-options">
+                        <label><input type="checkbox" id="breakfastAsPlanned"> Ate as planned</label>
+                        <label><input type="checkbox" id="breakfastDifferent"> Ate something different</label>
+                    </div>
+                    <div class="meal-options" style="margin-top: 5px;">
+                        <label><input type="checkbox" id="breakfastOnTime"> Ate on time</label>
+                        <label><input type="checkbox" id="breakfastEarly"> Ate early</label>
+                        <label><input type="checkbox" id="breakfastLate"> Ate late</label>
+                    </div>
+                    <textarea id="breakfastActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
+                    </div>
                 </div>
 
                 <div class="meal-section">
                     <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:8px"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>Lunch</h3>
                     <input type="text" id="lunchPlan" placeholder="What's the plan?">
-                    <input type="time" id="lunchTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    <div class="meal-options">
-                        <label><input type="checkbox" id="lunchAsPlanned"> Ate as planned</label>
-                        <label><input type="checkbox" id="lunchDifferent"> Ate something different</label>
-                    </div>
-                    <div class="meal-options" style="margin-top: 5px;">
-                        <label><input type="checkbox" id="lunchOnTime"> Ate on time</label>
-                        <label><input type="checkbox" id="lunchEarly"> Ate early</label>
-                        <label><input type="checkbox" id="lunchLate"> Ate late</label>
-                    </div>
-                    <textarea id="lunchActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px; display:none;">
+                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px;">
                         <h4 style="margin: 0 0 10px 0; color: #8b6f47; font-size: 14px; font-weight: 600;">Macro Goals</h4>
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="display: flex; align-items: flex-start; cursor: pointer;">
@@ -236,23 +226,24 @@
                             </label>
                         </div>
                     </div>
+                    <input type="time" id="lunchTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <div class="meal-options">
+                        <label><input type="checkbox" id="lunchAsPlanned"> Ate as planned</label>
+                        <label><input type="checkbox" id="lunchDifferent"> Ate something different</label>
+                    </div>
+                    <div class="meal-options" style="margin-top: 5px;">
+                        <label><input type="checkbox" id="lunchOnTime"> Ate on time</label>
+                        <label><input type="checkbox" id="lunchEarly"> Ate early</label>
+                        <label><input type="checkbox" id="lunchLate"> Ate late</label>
+                    </div>
+                    <textarea id="lunchActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
+                    </div>
                 </div>
 
                 <div class="meal-section">
                     <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Dinner</h3>
                     <input type="text" id="dinnerPlan" placeholder="What's the plan?">
-                    <input type="time" id="dinnerTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    <div class="meal-options">
-                        <label><input type="checkbox" id="dinnerAsPlanned"> Ate as planned</label>
-                        <label><input type="checkbox" id="dinnerDifferent"> Ate something different</label>
-                    </div>
-                    <div class="meal-options" style="margin-top: 5px;">
-                        <label><input type="checkbox" id="dinnerOnTime"> Ate on time</label>
-                        <label><input type="checkbox" id="dinnerEarly"> Ate early</label>
-                        <label><input type="checkbox" id="dinnerLate"> Ate late</label>
-                    </div>
-                    <textarea id="dinnerActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px; display:none;">
+                    <div class="macro-goals-section" style="margin-top: 15px; padding: 15px; background-color: #f9ede5; border-radius: 8px;">
                         <h4 style="margin: 0 0 10px 0; color: #8b6f47; font-size: 14px; font-weight: 600;">Macro Goals</h4>
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                             <label style="display: flex; align-items: flex-start; cursor: pointer;">
@@ -272,6 +263,18 @@
                                 <span style="font-size: 13px; line-height: 1.4;">Carbs: ~30-45g, chosen intentionally</span>
                             </label>
                         </div>
+                    </div>
+                    <input type="time" id="dinnerTime" placeholder="Planned time" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <div class="meal-options">
+                        <label><input type="checkbox" id="dinnerAsPlanned"> Ate as planned</label>
+                        <label><input type="checkbox" id="dinnerDifferent"> Ate something different</label>
+                    </div>
+                    <div class="meal-options" style="margin-top: 5px;">
+                        <label><input type="checkbox" id="dinnerOnTime"> Ate on time</label>
+                        <label><input type="checkbox" id="dinnerEarly"> Ate early</label>
+                        <label><input type="checkbox" id="dinnerLate"> Ate late</label>
+                    </div>
+                    <textarea id="dinnerActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
                     </div>
                 </div>
 
