@@ -169,7 +169,7 @@ body {
     box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     padding: 8px;
     min-width: 220px;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 .menu-item {
@@ -335,7 +335,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
@@ -2253,5 +2253,38 @@ select {
     .day-detail-sidebar {
         position: static;
     }
+}
+
+
+/* Ensure modal body is scrollable */
+.modal-body {
+    max-height: calc(90vh - 140px);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Ensure save button is always visible */
+.save-btn {
+    position: sticky;
+    bottom: 0;
+    background: #c8835e;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.3);
+    transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+    background: #b37350;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(200, 131, 94, 0.4);
 }
 
