@@ -355,7 +355,7 @@ body {
     border-radius: 16px;
     width: 90%;
     max-width: 600px;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
     box-shadow: 0 12px 48px rgba(0,0,0,0.15);
 }
@@ -394,7 +394,7 @@ body {
 }
 
 .modal-body {
-    padding: 32px;
+    padding: 32px 32px 100px 32px;
 }
 
 .modal-footer {
@@ -2255,36 +2255,4 @@ select {
     }
 }
 
-
-/* Ensure modal body is scrollable */
-.modal-body {
-    max-height: calc(90vh - 140px);
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-/* Ensure save button is always visible */
-.save-btn {
-    position: sticky;
-    bottom: 0;
-    background: #c8835e;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 20px;
-    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.3);
-    transition: all 0.2s ease;
-}
-
-.save-btn:hover {
-    background: #b37350;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(200, 131, 94, 0.4);
-}
 
