@@ -1385,30 +1385,11 @@ function saveReflection() {
         }
     });
     
-    
-    let overeatValue = '';
-    const overeatRadios = document.querySelectorAll('input[name="didOvereat"]');
-    overeatRadios.forEach(radio => {
-        if (radio.checked) overeatValue = radio.value;
-    });
-    
-    let bingeValue = '';
-    const bingeRadios = document.querySelectorAll('input[name="didBinge"]');
-    bingeRadios.forEach(radio => {
-        if (radio.checked) bingeValue = radio.value;
-    });
-    
     entries[dateKey].reflection = {
         daily: document.getElementById('dailyReflection').value,
         proud: proudValue,
         proudExplanation: document.getElementById('proudExplanation').value,
-        learn: document.getElementById('learnTomorrow').value,
-        didOvereat: overeatValue,
-        overeatEntries: entries[dateKey].meals?.overeatEntries || [],
-        didBinge: bingeValue,
-        bingeEntries: entries[dateKey].meals?.bingeEntries || []
-    };
-        bingeEntries: entries[dateKey].meals?.bingeEntries || []
+        learn: document.getElementById('learnTomorrow').value
     };
     
     saveData();
@@ -2272,9 +2253,6 @@ async function updateWeeklyWeightComparison(todayWeight) {
 
 // Add event listener for real-time weight comparison
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize week view
-    generateWeekView();
-    
     const todayWeightInput = document.getElementById('todayWeightGoals');
     
     if (todayWeightInput) {

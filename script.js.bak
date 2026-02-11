@@ -2272,9 +2272,6 @@ async function updateWeeklyWeightComparison(todayWeight) {
 
 // Add event listener for real-time weight comparison
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize week view
-    generateWeekView();
-    
     const todayWeightInput = document.getElementById('todayWeightGoals');
     
     if (todayWeightInput) {
