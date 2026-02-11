@@ -15,6 +15,9 @@ const icons = {
 let currentWeekStart = getWeekStart(new Date());
 let currentDay = null;
 let entries = {};
+let currentView = 'week'; // 'week' or 'day'
+let currentCalendarMonth = new Date();
+
 
 // Load data from Firestore
 async function loadData() {
@@ -621,15 +624,6 @@ function openMealsModal(date) {
 
 
 // Toggle overeating section
-document.getElementById('didOvereat').addEventListener('change', function() {
-    document.getElementById('overeatSection').style.display = this.checked ? 'block' : 'none';
-});
-
-// Toggle binge section
-document.getElementById('didBinge').addEventListener('change', function() {
-    document.getElementById('bingeSection').style.display = this.checked ? 'block' : 'none';
-});
-
 function renderSnacks() {
     const dateKey = getDateKey(currentDay);
     const entry = entries[dateKey] || {};
@@ -1370,6 +1364,40 @@ function openReflectionModal(date) {
         });
     }
     
+    
+    // Load overeat/binge data
+    if (reflection.didOvereat === 'yes') {
+        document.getElementById('didOvereatYes').checked = true;
+        document.getElementById('overeatSection').style.display = 'block';
+    } else if (reflection.didOvereat === 'no') {
+        document.getElementById('didOvereatNo').checked = true;
+        document.getElementById('overeatSection').style.display = 'none';
+    }
+    
+    if (reflection.didBinge === 'yes') {
+        document.getElementById('didBingeYes').checked = true;
+        document.getElementById('bingeSection').style.display = 'block';
+    } else if (reflection.didBinge === 'no') {
+        document.getElementById('didBingeNo').checked = true;
+        document.getElementById('bingeSection').style.display = 'none';
+    }
+    
+    // Add event listeners for toggling sections
+    const didOvereatRadios = document.querySelectorAll('input[name="didOvereat"]');
+    didOvereatRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('overeatSection').style.display = 
+                document.getElementById('didOvereatYes').checked ? 'block' : 'none';
+        });
+    });
+    
+    const didBingeRadios = document.querySelectorAll('input[name="didBinge"]');
+    didBingeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('bingeSection').style.display = 
+                document.getElementById('didBingeYes').checked ? 'block' : 'none';
+        });
+    });
     document.getElementById('reflectionModal').classList.add('show');
 }
 
@@ -2292,9 +2320,6 @@ function switchToWeekView() {
     document.getElementById('calendarContainer').style.display = 'none';
     document.getElementById('weekViewBtn').classList.add('active');
     document.getElementById('dayViewBtn').classList.remove('active');
-}
-
-function switchToDayView() {
     currentView = 'day';
     document.getElementById('weekView').style.display = 'none';
     document.getElementById('calendarContainer').style.display = 'block';
