@@ -2318,6 +2318,9 @@ function switchToWeekView() {
     document.getElementById('calendarContainer').style.display = 'none';
     document.getElementById('weekViewBtn').classList.add('active');
     document.getElementById('dayViewBtn').classList.remove('active');
+}
+
+function switchToDayView() {
     currentView = 'day';
     document.getElementById('weekView').style.display = 'none';
     document.getElementById('calendarContainer').style.display = 'block';
@@ -2327,7 +2330,6 @@ function switchToWeekView() {
     // Generate calendar for current month
     generateCalendar(currentCalendarMonth);
 }
-
 function previousMonth() {
     currentCalendarMonth.setMonth(currentCalendarMonth.getMonth() - 1);
     generateCalendar(currentCalendarMonth);
