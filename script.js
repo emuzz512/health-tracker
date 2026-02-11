@@ -1385,11 +1385,30 @@ function saveReflection() {
         }
     });
     
+    
+    let overeatValue = '';
+    const overeatRadios = document.querySelectorAll('input[name="didOvereat"]');
+    overeatRadios.forEach(radio => {
+        if (radio.checked) overeatValue = radio.value;
+    });
+    
+    let bingeValue = '';
+    const bingeRadios = document.querySelectorAll('input[name="didBinge"]');
+    bingeRadios.forEach(radio => {
+        if (radio.checked) bingeValue = radio.value;
+    });
+    
     entries[dateKey].reflection = {
         daily: document.getElementById('dailyReflection').value,
         proud: proudValue,
         proudExplanation: document.getElementById('proudExplanation').value,
-        learn: document.getElementById('learnTomorrow').value
+        learn: document.getElementById('learnTomorrow').value,
+        didOvereat: overeatValue,
+        overeatEntries: entries[dateKey].meals?.overeatEntries || [],
+        didBinge: bingeValue,
+        bingeEntries: entries[dateKey].meals?.bingeEntries || []
+    };
+        bingeEntries: entries[dateKey].meals?.bingeEntries || []
     };
     
     saveData();

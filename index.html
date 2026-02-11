@@ -360,27 +360,6 @@
                     <button id="addSnack" class="add-btn">+ Add Snack</button>
                 </div>
 
-                <div class="meal-flags-section">
-                    <div class="flag-header">
-                        <label><input type="checkbox" id="didOvereat"> Did I overeat?</label>
-                    </div>
-                    <div id="overeatSection" style="display:none;">
-                        <div id="overeatList"></div>
-                        <button id="addOvereat" class="add-btn-small">+ Add Overeating Entry</button>
-                    </div>
-                </div>
-
-                <div class="meal-flags-section">
-                    <div class="flag-header">
-                        <label><input type="checkbox" id="didBinge"> Did I binge?</label>
-                    </div>
-                    <div id="bingeSection" style="display:none;">
-                        <div id="bingeList"></div>
-                        <button id="addBinge" class="add-btn-small">+ Add Binge Entry</button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
                 <button onclick="saveMeals()" class="save-btn">💾 Save Meals</button>
             </div>
         </div>
@@ -450,6 +429,31 @@
                 </div>
             </div>
             <div class="modal-footer">
+                
+                <div class="section">
+                    <h3><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Did I overeat?</h3>
+                    <div class="radio-group" style="margin-bottom: 10px;">
+                        <label><input type="radio" name="didOvereat" value="yes" id="overeatYes"> Yes</label>
+                        <label><input type="radio" name="didOvereat" value="no" id="overeatNo"> No</label>
+                    </div>
+                    <div id="overeatSection" style="display:none;">
+                        <div id="overeatList"></div>
+                        <button id="addOvereat" class="add-btn-small">+ Add Overeating Entry</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3><svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:8px"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Did I binge?</h3>
+                    <div class="radio-group" style="margin-bottom: 10px;">
+                        <label><input type="radio" name="didBinge" value="yes" id="bingeYes"> Yes</label>
+                        <label><input type="radio" name="didBinge" value="no" id="bingeNo"> No</label>
+                    </div>
+                    <div id="bingeSection" style="display:none;">
+                        <div id="bingeList"></div>
+                        <button id="addBinge" class="add-btn-small">+ Add Binge Entry</button>
+                    </div>
+                </div>
+
                 <button onclick="saveReflection()" class="save-btn">💾 Save Reflection</button>
             </div>
         </div>
