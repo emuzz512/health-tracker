@@ -2033,3 +2033,225 @@ select {
     stroke: white;
 }
 
+
+/* ========== DAY DETAIL VIEW ========== */
+.day-detail-view {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.day-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.back-to-calendar-btn {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    border: 2px solid #c8835e;
+    border-radius: 8px;
+    color: #c8835e;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-to-calendar-btn:hover {
+    background: #c8835e;
+    color: white;
+}
+
+.back-to-calendar-btn svg {
+    stroke: currentColor;
+}
+
+.day-detail-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #6b5d54;
+    margin: 0;
+}
+
+.day-detail-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Sidebar */
+.day-detail-sidebar {
+    background: white;
+    border: 2px solid #e8ddd5;
+    border-radius: 12px;
+    padding: 24px;
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #6b5d54;
+    margin: 0 0 16px 0;
+}
+
+.add-entry-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: white;
+    border: 2px solid #e8ddd5;
+    border-radius: 8px;
+    color: #6b5d54;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.add-entry-btn:last-child {
+    margin-bottom: 0;
+}
+
+.add-entry-btn:hover {
+    background: #f9ede5;
+    border-color: #c8835e;
+    transform: translateX(4px);
+}
+
+.add-entry-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: #c8835e;
+    flex-shrink: 0;
+}
+
+.add-entry-btn span {
+    text-align: left;
+}
+
+/* Timeline Content */
+.day-detail-content {
+    background: white;
+    border: 2px solid #e8ddd5;
+    border-radius: 12px;
+    padding: 30px;
+    min-height: 400px;
+}
+
+#dayEntriesTimeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.timeline-entry {
+    background: #faf7f5;
+    border: 2px solid #e8ddd5;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+.timeline-entry:hover {
+    border-color: #c8835e;
+    box-shadow: 0 4px 12px rgba(200, 131, 94, 0.1);
+}
+
+.timeline-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.timeline-entry-icon {
+    width: 32px;
+    height: 32px;
+    background: #c8835e;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-entry-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+}
+
+.timeline-entry-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: #6b5d54;
+    margin: 0;
+}
+
+.timeline-entry-content {
+    margin-left: 44px;
+    color: #6b5d54;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.timeline-entry-content p {
+    margin: 8px 0;
+}
+
+.timeline-entry-content strong {
+    color: #8b6f47;
+    font-weight: 600;
+}
+
+.timeline-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #a89889;
+}
+
+.timeline-empty svg {
+    width: 64px;
+    height: 64px;
+    stroke: #d4c4b8;
+    margin-bottom: 16px;
+}
+
+.timeline-empty h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #8b6f47;
+    margin: 0 0 8px 0;
+}
+
+.timeline-empty p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .day-detail-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-detail-sidebar {
+        position: static;
+    }
+}
+

@@ -2473,3 +2473,246 @@ function openDayDetail(date) {
     alert(`Day detail view coming in Phase 2! Selected: ${formatDate(date)}`);
 }
 
+
+// ========== DAY DETAIL VIEW ==========
+let currentDayDetailDate = null;
+
+function openDayDetail(date) {
+    currentDayDetailDate = date;
+    
+    // Hide calendar, show day detail
+    document.getElementById('calendarContainer').style.display = 'none';
+    document.getElementById('dayDetailView').style.display = 'block';
+    
+    // Update title
+    const dayName = getDayName(date);
+    const formattedDate = formatDate(date);
+    document.getElementById('dayDetailTitle').textContent = `${dayName}, ${formattedDate}`;
+    
+    // Generate timeline entries
+    generateDayTimeline(date);
+}
+
+function backToCalendar() {
+    // Hide day detail, show calendar
+    document.getElementById('dayDetailView').style.display = 'none';
+    document.getElementById('calendarContainer').style.display = 'block';
+    
+    // Refresh calendar to show any new data
+    generateCalendar(currentCalendarMonth);
+}
+
+function generateDayTimeline(date) {
+    const dateKey = getDateKey(date);
+    const dayData = entries[dateKey] || {};
+    const timeline = document.getElementById('dayEntriesTimeline');
+    
+    timeline.innerHTML = '';
+    
+    let hasEntries = false;
+    
+    // Goals & Intention
+    if (dayData.goals && (dayData.goals.goals?.length > 0 || dayData.goals.centralThought)) {
+        hasEntries = true;
+        timeline.appendChild(createTimelineEntry('goals', dayData.goals));
+    }
+    
+    // Meals
+    if (dayData.meals && (dayData.meals.breakfastPlan || dayData.meals.lunchPlan || dayData.meals.dinnerPlan)) {
+        hasEntries = true;
+        timeline.appendChild(createTimelineEntry('meals', dayData.meals));
+    }
+    
+    // Exercise
+    if (dayData.plannedExercise && dayData.plannedExercise.length > 0) {
+        hasEntries = true;
+        timeline.appendChild(createTimelineEntry('exercise', dayData.plannedExercise));
+    }
+    
+    // Urges
+    if (dayData.urges && dayData.urges.length > 0) {
+        hasEntries = true;
+        timeline.appendChild(createTimelineEntry('urges', dayData.urges));
+    }
+    
+    // Reflection
+    if (dayData.reflection && (dayData.reflection.howWasDay || dayData.reflection.whatWentWell || dayData.reflection.whatCouldImprove)) {
+        hasEntries = true;
+        timeline.appendChild(createTimelineEntry('reflection', dayData.reflection));
+    }
+    
+    // Show empty state if no entries
+    if (!hasEntries) {
+        timeline.innerHTML = `
+            <div class="timeline-empty">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                    <line x1="16" x2="16" y1="2" y2="6"/>
+                    <line x1="8" x2="8" y1="2" y2="6"/>
+                    <line x1="3" x2="21" y1="10" y2="10"/>
+                </svg>
+                <h3>No entries yet</h3>
+                <p>Use the sidebar to add your first entry for this day</p>
+            </div>
+        `;
+    }
+}
+
+function createTimelineEntry(type, data) {
+    const entry = document.createElement('div');
+    entry.className = 'timeline-entry';
+    
+    let icon = '';
+    let title = '';
+    let content = '';
+    
+    switch(type) {
+        case 'goals':
+            icon = '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>';
+            title = 'Goals & Intention';
+            content = '<div>';
+            if (data.goals && data.goals.length > 0) {
+                content += '<p><strong>Goals:</strong></p><ul style="margin: 4px 0; padding-left: 20px;">';
+                data.goals.forEach(goal => {
+                    content += `<li>${goal.text}</li>`;
+                });
+                content += '</ul>';
+            }
+            if (data.centralThought) {
+                content += `<p><strong>Central Thought:</strong> ${data.centralThought}</p>`;
+            }
+            if (data.todayWeight) {
+                content += `<p><strong>Weight:</strong> ${data.todayWeight} lbs</p>`;
+            }
+            content += '</div>';
+            break;
+            
+        case 'meals':
+            icon = '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>';
+            title = 'Meals';
+            content = '<div>';
+            if (data.breakfastPlan) {
+                content += `<p><strong>Breakfast:</strong> ${data.breakfastPlan}`;
+                if (data.breakfastTime) content += ` (${data.breakfastTime})`;
+                content += '</p>';
+                if (data.breakfastActual) {
+                    content += `<p style="margin-left: 16px; color: #8b6f47;">Actually ate: ${data.breakfastActual}</p>`;
+                }
+            }
+            if (data.lunchPlan) {
+                content += `<p><strong>Lunch:</strong> ${data.lunchPlan}`;
+                if (data.lunchTime) content += ` (${data.lunchTime})`;
+                content += '</p>';
+                if (data.lunchActual) {
+                    content += `<p style="margin-left: 16px; color: #8b6f47;">Actually ate: ${data.lunchActual}</p>`;
+                }
+            }
+            if (data.dinnerPlan) {
+                content += `<p><strong>Dinner:</strong> ${data.dinnerPlan}`;
+                if (data.dinnerTime) content += ` (${data.dinnerTime})`;
+                content += '</p>';
+                if (data.dinnerActual) {
+                    content += `<p style="margin-left: 16px; color: #8b6f47;">Actually ate: ${data.dinnerActual}</p>`;
+                }
+            }
+            content += '</div>';
+            break;
+            
+        case 'exercise':
+            icon = '<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>';
+            title = 'Exercise';
+            content = '<div>';
+            data.forEach(ex => {
+                content += `<p><strong>${ex.type || 'Exercise'}</strong>`;
+                if (ex.duration) content += ` - ${ex.duration} min`;
+                if (ex.intensity) content += ` (${ex.intensity})`;
+                if (ex.completed) content += ' ✓';
+                content += '</p>';
+                if (ex.notes) content += `<p style="margin-left: 16px; color: #8b6f47;">${ex.notes}</p>`;
+            });
+            content += '</div>';
+            break;
+            
+        case 'urges':
+            icon = '<path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>';
+            title = 'Urges';
+            content = '<div>';
+            data.forEach(urge => {
+                content += `<p><strong>${urge.time || 'Urge'}</strong></p>`;
+                if (urge.what) content += `<p style="margin-left: 16px;">What: ${urge.what}</p>`;
+                if (urge.intensity) content += `<p style="margin-left: 16px;">Intensity: ${urge.intensity}/10</p>`;
+                if (urge.didGiveIn !== undefined) {
+                    content += `<p style="margin-left: 16px;">${urge.didGiveIn ? 'Gave in' : 'Resisted'}</p>`;
+                }
+            });
+            content += '</div>';
+            break;
+            
+        case 'reflection':
+            icon = '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>';
+            title = 'Reflection';
+            content = '<div>';
+            if (data.howWasDay) {
+                content += `<p><strong>How was your day?</strong> ${data.howWasDay}</p>`;
+            }
+            if (data.whatWentWell) {
+                content += `<p><strong>What went well:</strong> ${data.whatWentWell}</p>`;
+            }
+            if (data.whatCouldImprove) {
+                content += `<p><strong>What could improve:</strong> ${data.whatCouldImprove}</p>`;
+            }
+            content += '</div>';
+            break;
+    }
+    
+    entry.innerHTML = `
+        <div class="timeline-entry-header">
+            <div class="timeline-entry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    ${icon}
+                </svg>
+            </div>
+            <h3 class="timeline-entry-title">${title}</h3>
+        </div>
+        <div class="timeline-entry-content">
+            ${content}
+        </div>
+    `;
+    
+    return entry;
+}
+
+// Functions to open modals from day view
+function openMealsFromDay() {
+    openMealsModal(currentDayDetailDate);
+}
+
+function openGoalsFromDay() {
+    openGoalsModal(currentDayDetailDate);
+}
+
+function openExerciseFromDay() {
+    openExerciseModal(currentDayDetailDate);
+}
+
+function openUrgesFromDay() {
+    openUrgesModal(currentDayDetailDate);
+}
+
+function openReflectionFromDay() {
+    openReflectionModal(currentDayDetailDate);
+}
+
+// Override the existing modal close functions to refresh day view if open
+const originalCloseModal = window.closeModal;
+window.closeModal = function(modalId) {
+    originalCloseModal(modalId);
+    
+    // If day detail view is open, refresh the timeline
+    if (document.getElementById('dayDetailView').style.display === 'block') {
+        generateDayTimeline(currentDayDetailDate);
+        // Also refresh the calendar to show updated indicators
+        generateCalendar(currentCalendarMonth);
+    }
+};
+
