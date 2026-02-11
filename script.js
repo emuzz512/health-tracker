@@ -1408,8 +1408,6 @@ function saveReflection() {
         didBinge: bingeValue,
         bingeEntries: entries[dateKey].meals?.bingeEntries || []
     };
-        bingeEntries: entries[dateKey].meals?.bingeEntries || []
-    };
     
     saveData();
     closeModal('reflectionModal');
