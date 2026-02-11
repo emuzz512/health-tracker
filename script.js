@@ -2311,8 +2311,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ========== VIEW SWITCHING ==========
-let currentView = 'week'; // 'week' or 'day'
-let currentCalendarMonth = new Date();
 
 function switchToWeekView() {
     currentView = 'week';
