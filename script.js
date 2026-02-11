@@ -2512,9 +2512,9 @@ function generateDayTimeline(date) {
     let hasEntries = false;
     
     // Goals & Intention
-    if (dayData.goals && (dayData.goals.goals?.length > 0 || dayData.goals.centralThought)) {
+    if ((dayData.goals && dayData.goals.length > 0) || dayData.centralThought || dayData.todayWeight) {
         hasEntries = true;
-        timeline.appendChild(createTimelineEntry('goals', dayData.goals));
+        timeline.appendChild(createTimelineEntry('goals', { goals: dayData.goals, centralThought: dayData.centralThought, todayWeight: dayData.todayWeight }));
     }
     
     // Meals
