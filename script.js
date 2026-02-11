@@ -2261,3 +2261,215 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ========== VIEW SWITCHING ==========
+let currentView = 'week'; // 'week' or 'day'
+let currentCalendarMonth = new Date();
+
+function switchToWeekView() {
+    currentView = 'week';
+    document.getElementById('weekView').style.display = 'grid';
+    document.getElementById('calendarContainer').style.display = 'none';
+    document.getElementById('weekViewBtn').classList.add('active');
+    document.getElementById('dayViewBtn').classList.remove('active');
+}
+
+function switchToDayView() {
+    currentView = 'day';
+    document.getElementById('weekView').style.display = 'none';
+    document.getElementById('calendarContainer').style.display = 'block';
+    document.getElementById('weekViewBtn').classList.remove('active');
+    document.getElementById('dayViewBtn').classList.add('active');
+    
+    // Generate calendar for current month
+    generateCalendar(currentCalendarMonth);
+}
+
+function previousMonth() {
+    currentCalendarMonth.setMonth(currentCalendarMonth.getMonth() - 1);
+    generateCalendar(currentCalendarMonth);
+}
+
+function nextMonth() {
+    currentCalendarMonth.setMonth(currentCalendarMonth.getMonth() + 1);
+    generateCalendar(currentCalendarMonth);
+}
+
+function generateCalendar(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    
+    // Update header
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    document.getElementById('calendarMonthYear').textContent = `${monthNames[month]} ${year}`;
+    
+    // Get first day of month and number of days
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday
+    
+    // Get days from previous month to fill in
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    
+    const grid = document.getElementById('calendarGrid');
+    grid.innerHTML = '';
+    
+    // Add day headers
+    const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayHeaders.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'calendar-day-header';
+        header.textContent = day;
+        grid.appendChild(header);
+    });
+    
+    // Add days from previous month
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+        const dayNum = prevMonthLastDay - i;
+        const dayDiv = createCalendarDay(dayNum, true, new Date(year, month - 1, dayNum));
+        grid.appendChild(dayDiv);
+    }
+    
+    // Add days of current month
+    const today = new Date();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDate = new Date(year, month, day);
+        const isToday = currentDate.toDateString() === today.toDateString();
+        const dayDiv = createCalendarDay(day, false, currentDate, isToday);
+        grid.appendChild(dayDiv);
+    }
+    
+    // Add days from next month to fill grid
+    const totalCells = grid.children.length - 7; // Subtract headers
+    const remainingCells = 42 - totalCells - 7; // 6 weeks * 7 days - headers
+    for (let day = 1; day <= remainingCells; day++) {
+        const dayDiv = createCalendarDay(day, true, new Date(year, month + 1, day));
+        grid.appendChild(dayDiv);
+    }
+}
+
+function createCalendarDay(dayNumber, isOtherMonth, date, isToday = false) {
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'calendar-day';
+    if (isOtherMonth) dayDiv.classList.add('other-month');
+    if (isToday) dayDiv.classList.add('today');
+    
+    const dayNumDiv = document.createElement('div');
+    dayNumDiv.className = 'calendar-day-number';
+    dayNumDiv.textContent = dayNumber;
+    dayDiv.appendChild(dayNumDiv);
+    
+    // Add indicators if there's data for this day
+    if (!isOtherMonth) {
+        const indicators = getIndicatorsForDate(date);
+        if (indicators.length > 0) {
+            const indicatorsDiv = document.createElement('div');
+            indicatorsDiv.className = 'calendar-day-indicators';
+            indicators.forEach(indicator => {
+                indicatorsDiv.appendChild(indicator);
+            });
+            dayDiv.appendChild(indicatorsDiv);
+        }
+        
+        // Make clickable only for current month days
+        dayDiv.onclick = () => openDayDetail(date);
+    }
+    
+    return dayDiv;
+}
+
+function getIndicatorsForDate(date) {
+    const dateKey = getDateKey(date);
+    const dayData = entries[dateKey] || {};
+    const indicators = [];
+    
+    // Goals indicator
+    if (dayData.goals && (dayData.goals.goals?.length > 0 || dayData.goals.centralThought)) {
+        indicators.push(createIndicator('goals', dayData.goals));
+    }
+    
+    // Meals indicator
+    if (dayData.meals && (dayData.meals.breakfastPlan || dayData.meals.lunchPlan || dayData.meals.dinnerPlan)) {
+        indicators.push(createIndicator('meals', dayData.meals));
+    }
+    
+    // Exercise indicator
+    if (dayData.plannedExercise && dayData.plannedExercise.length > 0) {
+        indicators.push(createIndicator('exercise', dayData.plannedExercise));
+    }
+    
+    // Urges indicator
+    if (dayData.urges && dayData.urges.length > 0) {
+        indicators.push(createIndicator('urges', dayData.urges));
+    }
+    
+    // Reflection indicator
+    if (dayData.reflection) {
+        indicators.push(createIndicator('reflection', dayData.reflection));
+    }
+    
+    return indicators;
+}
+
+function createIndicator(type, data) {
+    const indicator = document.createElement('div');
+    indicator.className = 'calendar-indicator';
+    
+    // Check if there's actual data
+    let hasData = false;
+    if (type === 'goals') {
+        hasData = (data.goals && data.goals.length > 0) || data.centralThought;
+    } else if (type === 'meals') {
+        hasData = data.breakfastPlan || data.lunchPlan || data.dinnerPlan;
+    } else if (type === 'exercise') {
+        hasData = data.length > 0;
+    } else if (type === 'urges') {
+        hasData = data.length > 0;
+    } else if (type === 'reflection') {
+        hasData = data.howWasDay || data.whatWentWell || data.whatCouldImprove;
+    }
+    
+    if (hasData) {
+        indicator.classList.add('has-data');
+    }
+    
+    // Add appropriate SVG icon
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    
+    let path = '';
+    switch(type) {
+        case 'goals':
+            path = '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>';
+            break;
+        case 'meals':
+            path = '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>';
+            break;
+        case 'exercise':
+            path = '<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>';
+            break;
+        case 'urges':
+            path = '<path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>';
+            break;
+        case 'reflection':
+            path = '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>';
+            break;
+    }
+    
+    svg.innerHTML = path;
+    indicator.appendChild(svg);
+    
+    return indicator;
+}
+
+function openDayDetail(date) {
+    // For now, just log - we'll implement the full day view in Phase 2
+    console.log('Opening day detail for:', date);
+    alert(`Day detail view coming in Phase 2! Selected: ${formatDate(date)}`);
+}
+
