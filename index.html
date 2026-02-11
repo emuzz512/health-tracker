@@ -8,7 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Health & Food Tracker</title>
-    <link rel="stylesheet" href="styles.css?v=121">
+    <link rel="stylesheet" href="styles.css?v=118">
 </head>
 <body>
     <!-- Login Screen -->
@@ -141,53 +141,6 @@
                 </div>
 
 
-                <!-- Day Detail View -->
-                <div id="dayDetailView" class="day-detail-view" style="display:none;">
-                    <div class="day-detail-header">
-                        <button class="back-to-calendar-btn" onclick="backToCalendar()">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;margin-right:8px"><polyline points="15 18 9 12 15 6"/></svg>
-                            Back to Calendar
-                        </button>
-                        <h1 id="dayDetailTitle">Monday, February 10, 2026</h1>
-                    </div>
-                    
-                    <div class="day-detail-container">
-                        <!-- Sidebar with Add Buttons -->
-                        <div class="day-detail-sidebar">
-                            <h3 class="sidebar-title">Add Entry</h3>
-                            <button class="add-entry-btn" onclick="openMealsFromDay()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-                                <span>Meals</span>
-                            </button>
-                            <button class="add-entry-btn" onclick="openGoalsFromDay()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                                <span>Goals & Intention</span>
-                            </button>
-                            <button class="add-entry-btn" onclick="openExerciseFromDay()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
-                                <span>Exercise</span>
-                            </button>
-                            <button class="add-entry-btn" onclick="openUrgesFromDay()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                <span>Urges</span>
-                            </button>
-                            <button class="add-entry-btn" onclick="openReflectionFromDay()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                <span>Reflection</span>
-                            </button>
-                        </div>
-                        
-                        <!-- Main Content Area - Timeline of Entries -->
-                        <div class="day-detail-content">
-                            <div id="dayEntriesTimeline">
-                                <!-- Entries will be generated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
                 <div id="weekView" class="week-view">
                     <!-- Days will be generated here -->
                 </div>
@@ -278,7 +231,6 @@
                         <label><input type="checkbox" id="breakfastLate"> Ate late</label>
                     </div>
                     <textarea id="breakfastActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    </div>
                 </div>
 
                 <div class="meal-section">
@@ -316,7 +268,6 @@
                         <label><input type="checkbox" id="lunchLate"> Ate late</label>
                     </div>
                     <textarea id="lunchActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    </div>
                 </div>
 
                 <div class="meal-section">
@@ -354,7 +305,6 @@
                         <label><input type="checkbox" id="dinnerLate"> Ate late</label>
                     </div>
                     <textarea id="dinnerActual" placeholder="What did you actually eat?" style="display:none;"></textarea>
-                    </div>
                 </div>
 
                 <div class="meal-section">
@@ -577,7 +527,7 @@
         });
     </script>
     
-    <script src="script.js?v=27"></script>
+    <script src="script.js?v=26"></script>
   <!-- PDF Report Container -->
   <div id="reportContainer" class="report-container">
     <div class="report-actions">
