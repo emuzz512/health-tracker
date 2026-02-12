@@ -271,7 +271,10 @@ function createTrackingButton(label, status, onClick, hasData) {
         <span class="btn-label">${label}</span>
         <span class="btn-status">${status}</span>
     `;
-    btn.onclick = onClick;
+    btn.onclick = (e) => {
+        e.stopPropagation(); // Prevent card from toggling
+        onClick();
+    };
     return btn;
 }
 
