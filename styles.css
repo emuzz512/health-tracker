@@ -2144,21 +2144,23 @@ select {
 }
 
 .add-entry-btn.has-data {
-    background: #e8f5e9;
-    border-color: #81c784;
+    background: #e8f0e8;
+    border-color: #8b9d83;
 }
 
 .add-entry-btn.has-data:hover {
-    background: #c8e6c9;
-    border-color: #66bb6a;
+    background: #d8e5d8;
+    border-color: #7a8c72;
 }
+
 
 .add-entry-btn .checkmark {
     margin-left: auto;
-    color: #4caf50;
+    color: #6b7d63;
     font-size: 18px;
     font-weight: bold;
 }
+
 
 /* Timeline Content */
 .day-detail-content {
