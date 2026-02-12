@@ -2421,9 +2421,10 @@ function getIndicatorsForDate(date) {
     const indicators = [];
     
     // Goals indicator
-    if (dayData.goals && (dayData.goals.goals?.length > 0 || dayData.goals.centralThought)) {
-        indicators.push(createIndicator('goals', dayData.goals));
+    if ((dayData.goals && dayData.goals.length > 0) || dayData.centralThought) {
+        indicators.push(createIndicator('goals', { goals: dayData.goals, centralThought: dayData.centralThought }));
     }
+
     
     // Meals indicator
     if (dayData.meals && (dayData.meals.breakfastPlan || dayData.meals.lunchPlan || dayData.meals.dinnerPlan)) {
