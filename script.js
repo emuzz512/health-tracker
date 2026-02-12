@@ -593,6 +593,9 @@ function openMealsModal(date) {
     // Load snacks
     renderSnacks();
     
+    
+    document.getElementById('mealsModal').classList.add('show');
+
 }
 
 // Toggle actual food textarea visibility
