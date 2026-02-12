@@ -1016,11 +1016,6 @@ function saveMeals() {
         
         snacks: snacks.filter(s => s.plan || s.actual),
         
-        didOvereat: document.getElementById('didOvereat').checked,
-        overeatEntries: overeatEntries.filter(e => e.what.trim() !== '' || e.feeling.trim() !== ''),
-        
-        didBinge: document.getElementById('didBinge').checked,
-        bingeEntries: bingeEntries.filter(e => e.what.trim() !== '' || e.feeling.trim() !== '')
     };
     
     saveData();
