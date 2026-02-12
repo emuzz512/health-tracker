@@ -2503,11 +2503,6 @@ function createIndicator(type, data) {
     return indicator;
 }
 
-function openDayDetail(date) {
-    // For now, just log - we'll implement the full day view in Phase 2
-    console.log('Opening day detail for:', date);
-    alert(`Day detail view coming in Phase 2! Selected: ${formatDate(date)}`);
-}
 
 
 // ========== DAY DETAIL VIEW ==========
@@ -2526,6 +2521,50 @@ function openDayDetail(date) {
     document.getElementById('dayDetailTitle').textContent = `${dayName}, ${formattedDate}`;
     
     // Generate timeline entries
+    
+    // Update sidebar buttons to show which have data
+    const dateKey = getDateKey(date);
+    const dayData = entries[dateKey] || {};
+    
+    // Get all sidebar buttons
+    const buttons = document.querySelectorAll('.add-entry-btn');
+    
+    // Check each button and add checkmark if it has data
+    buttons.forEach(button => {
+        const buttonText = button.textContent.trim();
+        let hasData = false;
+        
+        if (buttonText.includes('Meals')) {
+            hasData = dayData.meals && (dayData.meals.breakfastPlan || dayData.meals.lunchPlan || dayData.meals.dinnerPlan);
+        } else if (buttonText.includes('Goals')) {
+            hasData = (dayData.goals && dayData.goals.length > 0) || dayData.centralThought;
+        } else if (buttonText.includes('Exercise')) {
+            hasData = dayData.plannedExercise && dayData.plannedExercise.length > 0;
+        } else if (buttonText.includes('Urges')) {
+            hasData = dayData.urges && dayData.urges.length > 0;
+        } else if (buttonText.includes('Reflection')) {
+            hasData = dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn);
+        }
+        
+        // Add or remove the has-data class
+        if (hasData) {
+            button.classList.add('has-data');
+            // Add checkmark if not already there
+            if (!button.querySelector('.checkmark')) {
+                const checkmark = document.createElement('span');
+                checkmark.className = 'checkmark';
+                checkmark.innerHTML = '✓';
+                button.appendChild(checkmark);
+            }
+        } else {
+            button.classList.remove('has-data');
+            // Remove checkmark if present
+            const checkmark = button.querySelector('.checkmark');
+            if (checkmark) {
+                checkmark.remove();
+            }
+        }
+    });
     generateDayTimeline(date);
 }
 
