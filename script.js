@@ -590,17 +590,6 @@ function openMealsModal(date) {
     // Load snacks
     renderSnacks();
     
-    // Load overeating
-    document.getElementById('didOvereat').checked = meals.didOvereat || false;
-    document.getElementById('overeatSection').style.display = meals.didOvereat ? 'block' : 'none';
-    renderOvereatEntries(meals.overeatEntries || []);
-    
-    // Load binge
-    document.getElementById('didBinge').checked = meals.didBinge || false;
-    document.getElementById('bingeSection').style.display = meals.didBinge ? 'block' : 'none';
-    renderBingeEntries(meals.bingeEntries || []);
-    
-    document.getElementById('mealsModal').classList.add('show');
 }
 
 // Toggle actual food textarea visibility
