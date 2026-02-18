@@ -237,7 +237,7 @@ function generateWeekView() {
             `${icons.brain} Reflection`,
             reflectionStatus,
             () => openReflectionModal(date),
-            dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)
+            dayData.reflection && (dayData.reflection.daily || dayData.reflection.proudExplanation || dayData.reflection.learn)
         );
         buttonsDiv.appendChild(reflectionBtn);
         
@@ -304,7 +304,7 @@ function getReflectionStatus(dayData) {
     if (!dayData.reflection) return 'Not filled';
     const parts = [];
     if (dayData.reflection.daily) parts.push('reflection');
-    if (dayData.reflection.proud) parts.push('proud');
+    if (dayData.reflection.proudExplanation) parts.push('proud');
     if (dayData.reflection.learn) parts.push('lessons');
     return parts.length > 0 ? '✓ ' + parts.join(', ') : 'Not filled';
 }
@@ -2464,7 +2464,7 @@ function createIndicator(type, data) {
     } else if (type === 'urges') {
         hasData = data.length > 0;
     } else if (type === 'reflection') {
-        hasData = data.daily || data.proud || data.learn;
+        hasData = data.daily || data.proudExplanation || data.learn;
     }
     
     if (hasData) {
@@ -2543,7 +2543,7 @@ function openDayDetail(date) {
         } else if (buttonText.includes('Urges')) {
             hasData = dayData.urges && dayData.urges.length > 0;
         } else if (buttonText.includes('Reflection')) {
-            hasData = dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn);
+            hasData = dayData.reflection && (dayData.reflection.daily || dayData.reflection.proudExplanation || dayData.reflection.learn);
         }
         
         // Add or remove the has-data class
@@ -2611,7 +2611,7 @@ function generateDayTimeline(date) {
     }
     
     // Reflection
-    if (dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)) {
+    if (dayData.reflection && (dayData.reflection.daily || dayData.reflection.proudExplanation || dayData.reflection.learn)) {
         hasEntries = true;
         timeline.appendChild(createTimelineEntry('reflection', dayData.reflection));
     }
