@@ -1405,6 +1405,23 @@ function openReflectionModal(date) {
             document.getElementById('bingeSection').style.display = 
                 document.getElementById('didBingeYes').checked ? 'block' : 'none';
         });
+    
+    // Load and display overeat entries
+    if (!entries[dateKey].meals) entries[dateKey].meals = {};
+    if (reflection.overeatEntries && reflection.overeatEntries.length > 0) {
+        entries[dateKey].meals.overeatEntries = reflection.overeatEntries;
+        renderOvereatEntries(reflection.overeatEntries);
+    } else {
+        renderOvereatEntries([]);
+    }
+    
+    // Load and display binge entries
+    if (reflection.bingeEntries && reflection.bingeEntries.length > 0) {
+        entries[dateKey].meals.bingeEntries = reflection.bingeEntries;
+        renderBingeEntries(reflection.bingeEntries);
+    } else {
+        renderBingeEntries([]);
+    }
     });
     document.getElementById('reflectionModal').classList.add('show');
 }
