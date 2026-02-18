@@ -2464,7 +2464,7 @@ function createIndicator(type, data) {
     } else if (type === 'urges') {
         hasData = data.length > 0;
     } else if (type === 'reflection') {
-        hasData = data.howWasDay || data.whatWentWell || data.whatCouldImprove;
+        hasData = data.daily || data.proud || data.learn;
     }
     
     if (hasData) {
@@ -2611,7 +2611,7 @@ function generateDayTimeline(date) {
     }
     
     // Reflection
-    if (dayData.reflection && (dayData.reflection.howWasDay || dayData.reflection.whatWentWell || dayData.reflection.whatCouldImprove)) {
+    if (dayData.reflection && (dayData.reflection.daily || dayData.reflection.proud || dayData.reflection.learn)) {
         hasEntries = true;
         timeline.appendChild(createTimelineEntry('reflection', dayData.reflection));
     }
@@ -2727,14 +2727,14 @@ function createTimelineEntry(type, data) {
             icon = '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>';
             title = 'Reflection';
             content = '<div>';
-            if (data.howWasDay) {
-                content += `<p><strong>How was your day?</strong> ${data.howWasDay}</p>`;
+            if (data.daily) {
+                content += `<p><strong>How was your day?</strong> ${data.daily}</p>`;
             }
-            if (data.whatWentWell) {
-                content += `<p><strong>What went well:</strong> ${data.whatWentWell}</p>`;
+            if (data.proudExplanation) {
+                content += `<p><strong>Proud of:</strong> ${data.proudExplanation}</p>`;
             }
-            if (data.whatCouldImprove) {
-                content += `<p><strong>What could improve:</strong> ${data.whatCouldImprove}</p>`;
+            if (data.learn) {
+                content += `<p><strong>Learn for tomorrow:</strong> ${data.learn}</p>`;
             }
             content += '</div>';
             break;
