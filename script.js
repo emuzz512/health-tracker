@@ -863,6 +863,7 @@ document.getElementById('addSnack').addEventListener('click', () => {
 });
 
 // Render overeating entries
+// Render binge entries
 function renderOvereatEntries(entries) {
     const overeatList = document.getElementById('overeatList');
     overeatList.innerHTML = '';
@@ -878,7 +879,7 @@ function renderOvereatEntries(entries) {
             </div>
             <div class="entry-field">
                 <label>What did you eat?</label>
-                <textarea onchange="updateOvereatEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
+                <textarea id="overeat-what-${index}" onchange="updateOvereatEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
             </div>
             <div class="entry-field">
                 <label>How do you feel about it?</label>
@@ -888,9 +889,16 @@ function renderOvereatEntries(entries) {
         
         overeatList.appendChild(entryDiv);
     });
+    
+    // Auto-focus the first textarea of the last entry
+    if (entries.length > 0) {
+        setTimeout(() => {
+            const lastTextarea = document.getElementById(`overeat-what-${entries.length - 1}`);
+            if (lastTextarea) lastTextarea.focus();
+        }, 100);
+    }
 }
-
-// Render binge entries
+// Update functions
 function renderBingeEntries(entries) {
     const bingeList = document.getElementById('bingeList');
     bingeList.innerHTML = '';
@@ -906,7 +914,7 @@ function renderBingeEntries(entries) {
             </div>
             <div class="entry-field">
                 <label>What did you eat?</label>
-                <textarea onchange="updateBingeEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
+                <textarea id="binge-what-${index}" onchange="updateBingeEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
             </div>
             <div class="entry-field">
                 <label>How do you feel about it?</label>
@@ -916,39 +924,15 @@ function renderBingeEntries(entries) {
         
         bingeList.appendChild(entryDiv);
     });
+    
+    // Auto-focus the first textarea of the last entry
+    if (entries.length > 0) {
+        setTimeout(() => {
+            const lastTextarea = document.getElementById(`binge-what-${entries.length - 1}`);
+            if (lastTextarea) lastTextarea.focus();
+        }, 100);
+    }
 }
-
-// Add overeating entry
-document.getElementById('addOvereat').addEventListener('click', () => {
-    const dateKey = getDateKey(currentDay);
-    if (!entries[dateKey]) entries[dateKey] = {};
-    if (!entries[dateKey].meals) entries[dateKey].meals = {};
-    if (!entries[dateKey].meals.overeatEntries) entries[dateKey].meals.overeatEntries = [];
-    
-    entries[dateKey].meals.overeatEntries.push({
-        what: '',
-        feeling: ''
-    });
-    
-    renderOvereatEntries(entries[dateKey].meals.overeatEntries);
-});
-
-// Add binge entry
-document.getElementById('addBinge').addEventListener('click', () => {
-    const dateKey = getDateKey(currentDay);
-    if (!entries[dateKey]) entries[dateKey] = {};
-    if (!entries[dateKey].meals) entries[dateKey].meals = {};
-    if (!entries[dateKey].meals.bingeEntries) entries[dateKey].meals.bingeEntries = [];
-    
-    entries[dateKey].meals.bingeEntries.push({
-        what: '',
-        feeling: ''
-    });
-    
-    renderBingeEntries(entries[dateKey].meals.bingeEntries);
-});
-
-// Update functions
 function updateOvereatEntry(index, field, value) {
     const dateKey = getDateKey(currentDay);
     if (entries[dateKey] && entries[dateKey].meals && entries[dateKey].meals.overeatEntries) {
