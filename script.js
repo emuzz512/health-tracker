@@ -864,75 +864,6 @@ document.getElementById('addSnack').addEventListener('click', () => {
 
 // Render overeating entries
 // Render binge entries
-function renderOvereatEntries(entries) {
-    const overeatList = document.getElementById('overeatList');
-    overeatList.innerHTML = '';
-    
-    entries.forEach((entry, index) => {
-        const entryDiv = document.createElement('div');
-        entryDiv.className = 'overeat-entry';
-        
-        entryDiv.innerHTML = `
-            <div class="entry-header">
-                <h4>Entry #${index + 1}</h4>
-                <button class="delete-btn" onclick="deleteOvereatEntry(${index})">Delete</button>
-            </div>
-            <div class="entry-field">
-                <label>What did you eat?</label>
-                <textarea id="overeat-what-${index}" onchange="updateOvereatEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
-            </div>
-            <div class="entry-field">
-                <label>How do you feel about it?</label>
-                <textarea onchange="updateOvereatEntry(${index}, 'feeling', this.value)">${entry.feeling || ''}</textarea>
-            </div>
-        `;
-        
-        overeatList.appendChild(entryDiv);
-    });
-    
-    // Auto-focus the first textarea of the last entry
-    if (entries.length > 0) {
-        setTimeout(() => {
-            const lastTextarea = document.getElementById(`overeat-what-${entries.length - 1}`);
-            if (lastTextarea) lastTextarea.focus();
-        }, 100);
-    }
-}
-// Update functions
-function renderBingeEntries(entries) {
-    const bingeList = document.getElementById('bingeList');
-    bingeList.innerHTML = '';
-    
-    entries.forEach((entry, index) => {
-        const entryDiv = document.createElement('div');
-        entryDiv.className = 'binge-entry';
-        
-        entryDiv.innerHTML = `
-            <div class="entry-header">
-                <h4>Entry #${index + 1}</h4>
-                <button class="delete-btn" onclick="deleteBingeEntry(${index})">Delete</button>
-            </div>
-            <div class="entry-field">
-                <label>What did you eat?</label>
-                <textarea id="binge-what-${index}" onchange="updateBingeEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
-            </div>
-            <div class="entry-field">
-                <label>How do you feel about it?</label>
-                <textarea onchange="updateBingeEntry(${index}, 'feeling', this.value)">${entry.feeling || ''}</textarea>
-            </div>
-        `;
-        
-        bingeList.appendChild(entryDiv);
-    });
-    
-    // Auto-focus the first textarea of the last entry
-    if (entries.length > 0) {
-        setTimeout(() => {
-            const lastTextarea = document.getElementById(`binge-what-${entries.length - 1}`);
-            if (lastTextarea) lastTextarea.focus();
-        }, 100);
-    }
-}
 function updateOvereatEntry(index, field, value) {
     const dateKey = getDateKey(currentDay);
     if (entries[dateKey] && entries[dateKey].meals && entries[dateKey].meals.overeatEntries) {
@@ -952,7 +883,7 @@ function deleteOvereatEntry(index) {
     const dateKey = getDateKey(currentDay);
     if (entries[dateKey] && entries[dateKey].meals && entries[dateKey].meals.overeatEntries) {
         entries[dateKey].meals.overeatEntries.splice(index, 1);
-        renderOvereatEntries(entries[dateKey].meals.overeatEntries);
+        displayOvereatEntries(entries[dateKey].meals.overeatEntries);
     }
 }
 
@@ -960,7 +891,7 @@ function deleteBingeEntry(index) {
     const dateKey = getDateKey(currentDay);
     if (entries[dateKey] && entries[dateKey].meals && entries[dateKey].meals.bingeEntries) {
         entries[dateKey].meals.bingeEntries.splice(index, 1);
-        renderBingeEntries(entries[dateKey].meals.bingeEntries);
+        displayBingeEntries(entries[dateKey].meals.bingeEntries);
     }
 }
 
@@ -1394,17 +1325,17 @@ function openReflectionModal(date) {
     if (!entries[dateKey].meals) entries[dateKey].meals = {};
     if (reflection.overeatEntries && reflection.overeatEntries.length > 0) {
         entries[dateKey].meals.overeatEntries = reflection.overeatEntries;
-        renderOvereatEntries(reflection.overeatEntries);
+        displayOvereatEntries(reflection.overeatEntries);
     } else {
-        renderOvereatEntries([]);
+        displayOvereatEntries([]);
     }
     
     // Load and display binge entries
     if (reflection.bingeEntries && reflection.bingeEntries.length > 0) {
         entries[dateKey].meals.bingeEntries = reflection.bingeEntries;
-        renderBingeEntries(reflection.bingeEntries);
+        displayBingeEntries(reflection.bingeEntries);
     } else {
-        renderBingeEntries([]);
+        displayBingeEntries([]);
     }
     });
     document.getElementById('reflectionModal').classList.add('show');
@@ -2824,3 +2755,191 @@ window.closeModal = function(modalId) {
     }
 };
 
+
+
+// Track if we're in edit mode
+let overeatEditMode = false;
+let bingeEditMode = false;
+
+// Display overeat entries (smart - shows summary or edit based on mode)
+function displayOvereatEntries(entries, editMode = false) {
+    const overeatList = document.getElementById('overeatList');
+    overeatList.innerHTML = '';
+    
+    if (!entries || entries.length === 0) {
+        if (!editMode) {
+            overeatList.innerHTML = '<p style="color: #999; font-style: italic; margin: 10px 0;">No entries yet</p>';
+        }
+        return;
+    }
+    
+    if (editMode) {
+        // EDIT MODE: Show editable forms
+        entries.forEach((entry, index) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'overeat-entry';
+            
+            entryDiv.innerHTML = `
+                <div class="entry-header">
+                    <h4>Entry #${index + 1}</h4>
+                    <button class="delete-btn" onclick="deleteOvereatEntry(${index})">Delete</button>
+                </div>
+                <div class="entry-field">
+                    <label>What did you eat?</label>
+                    <textarea id="overeat-what-${index}" onchange="updateOvereatEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
+                </div>
+                <div class="entry-field">
+                    <label>How do you feel about it?</label>
+                    <textarea onchange="updateOvereatEntry(${index}, 'feeling', this.value)">${entry.feeling || ''}</textarea>
+                </div>
+            `;
+            
+            overeatList.appendChild(entryDiv);
+        });
+        
+        // Auto-focus the last entry
+        if (entries.length > 0) {
+            setTimeout(() => {
+                const lastTextarea = document.getElementById(`overeat-what-${entries.length - 1}`);
+                if (lastTextarea) lastTextarea.focus();
+            }, 100);
+        }
+    } else {
+        // VIEW MODE: Show summary cards
+        entries.forEach((entry, index) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'overeat-entry-summary';
+            
+            entryDiv.innerHTML = `
+                <div class="entry-summary-header">
+                    <strong>Entry #${index + 1}</strong>
+                </div>
+                <div class="entry-summary-content">
+                    <p><strong>What:</strong> ${entry.what || 'Not specified'}</p>
+                    <p><strong>Feeling:</strong> ${entry.feeling || 'Not specified'}</p>
+                </div>
+            `;
+            
+            overeatList.appendChild(entryDiv);
+        });
+        
+        // Add an "Edit entries" button
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-entries-btn';
+        editBtn.textContent = '✏️ Edit Entries';
+        editBtn.onclick = () => {
+            overeatEditMode = true;
+            const dateKey = getDateKey(currentDay);
+            displayOvereatEntries(entries[dateKey].meals?.overeatEntries || [], true);
+        };
+        overeatList.appendChild(editBtn);
+    }
+}
+
+// Display binge entries (smart - shows summary or edit based on mode)
+function displayBingeEntries(entries, editMode = false) {
+    const bingeList = document.getElementById('bingeList');
+    bingeList.innerHTML = '';
+    
+    if (!entries || entries.length === 0) {
+        if (!editMode) {
+            bingeList.innerHTML = '<p style="color: #999; font-style: italic; margin: 10px 0;">No entries yet</p>';
+        }
+        return;
+    }
+    
+    if (editMode) {
+        // EDIT MODE: Show editable forms
+        entries.forEach((entry, index) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'binge-entry';
+            
+            entryDiv.innerHTML = `
+                <div class="entry-header">
+                    <h4>Entry #${index + 1}</h4>
+                    <button class="delete-btn" onclick="deleteBingeEntry(${index})">Delete</button>
+                </div>
+                <div class="entry-field">
+                    <label>What did you eat?</label>
+                    <textarea id="binge-what-${index}" onchange="updateBingeEntry(${index}, 'what', this.value)">${entry.what || ''}</textarea>
+                </div>
+                <div class="entry-field">
+                    <label>How do you feel about it?</label>
+                    <textarea onchange="updateBingeEntry(${index}, 'feeling', this.value)">${entry.feeling || ''}</textarea>
+                </div>
+            `;
+            
+            bingeList.appendChild(entryDiv);
+        });
+        
+        // Auto-focus the last entry
+        if (entries.length > 0) {
+            setTimeout(() => {
+                const lastTextarea = document.getElementById(`binge-what-${entries.length - 1}`);
+                if (lastTextarea) lastTextarea.focus();
+            }, 100);
+        }
+    } else {
+        // VIEW MODE: Show summary cards
+        entries.forEach((entry, index) => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'binge-entry-summary';
+            
+            entryDiv.innerHTML = `
+                <div class="entry-summary-header">
+                    <strong>Entry #${index + 1}</strong>
+                </div>
+                <div class="entry-summary-content">
+                    <p><strong>What:</strong> ${entry.what || 'Not specified'}</p>
+                    <p><strong>Feeling:</strong> ${entry.feeling || 'Not specified'}</p>
+                </div>
+            `;
+            
+            bingeList.appendChild(entryDiv);
+        });
+        
+        // Add an "Edit entries" button
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-entries-btn';
+        editBtn.textContent = '✏️ Edit Entries';
+        editBtn.onclick = () => {
+            bingeEditMode = true;
+            const dateKey = getDateKey(currentDay);
+            displayBingeEntries(entries[dateKey].meals?.bingeEntries || [], true);
+        };
+        bingeList.appendChild(editBtn);
+    }
+}
+
+
+// Update add overeat entry button
+document.getElementById('addOvereat').addEventListener('click', () => {
+    const dateKey = getDateKey(currentDay);
+    if (!entries[dateKey]) entries[dateKey] = {};
+    if (!entries[dateKey].meals) entries[dateKey].meals = {};
+    if (!entries[dateKey].meals.overeatEntries) entries[dateKey].meals.overeatEntries = [];
+    
+    entries[dateKey].meals.overeatEntries.push({
+        what: '',
+        feeling: ''
+    });
+    
+    overeatEditMode = true;
+    displayOvereatEntries(entries[dateKey].meals.overeatEntries, true);
+});
+
+// Update add binge entry button
+document.getElementById('addBinge').addEventListener('click', () => {
+    const dateKey = getDateKey(currentDay);
+    if (!entries[dateKey]) entries[dateKey] = {};
+    if (!entries[dateKey].meals) entries[dateKey].meals = {};
+    if (!entries[dateKey].meals.bingeEntries) entries[dateKey].meals.bingeEntries = [];
+    
+    entries[dateKey].meals.bingeEntries.push({
+        what: '',
+        feeling: ''
+    });
+    
+    bingeEditMode = true;
+    displayBingeEntries(entries[dateKey].meals.bingeEntries, true);
+});

@@ -2351,3 +2351,49 @@ select {
     box-shadow: 0 0 0 2px rgba(139, 111, 71, 0.1);
 }
 
+
+/* Summary view for overeat/binge entries */
+.overeat-entry-summary,
+.binge-entry-summary {
+    background: #f9f7f4;
+    border: 1px solid #d4c5b9;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+}
+
+.entry-summary-header {
+    color: #8b6f47;
+    font-size: 14px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e8ddd2;
+}
+
+.entry-summary-content p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #6b5d52;
+}
+
+.entry-summary-content p strong {
+    color: #8b6f47;
+    margin-right: 6px;
+}
+
+.edit-entries-btn {
+    background: #8b6f47;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.edit-entries-btn:hover {
+    background: #6b5437;
+}
+
