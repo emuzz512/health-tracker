@@ -2275,3 +2275,79 @@ select {
 }
 
 
+
+/* ========== OVEREAT/BINGE ENTRY STYLING ========== */
+.overeat-entry,
+.binge-entry {
+    background: #f9f7f4;
+    border: 1px solid #d4c5b9;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d4c5b9;
+}
+
+.entry-header h4 {
+    margin: 0;
+    color: #8b6f47;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.entry-header .delete-btn {
+    background: #c17767;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.entry-header .delete-btn:hover {
+    background: #a85d4d;
+}
+
+.entry-field {
+    margin-bottom: 12px;
+}
+
+.entry-field:last-child {
+    margin-bottom: 0;
+}
+
+.entry-field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #6b5d52;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.entry-field textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #d4c5b9;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    background: white;
+}
+
+.entry-field textarea:focus {
+    outline: none;
+    border-color: #8b6f47;
+    box-shadow: 0 0 0 2px rgba(139, 111, 71, 0.1);
+}
+
