@@ -110,7 +110,6 @@ function hasReflectionData(reflection) {
            (reflection.bingeEntries && reflection.bingeEntries.length > 0);
 }
 
-}
 
 // Generate weekly view
 function generateWeekView() {
