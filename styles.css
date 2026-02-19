@@ -2397,3 +2397,34 @@ select {
     background: #6b5437;
 }
 
+
+/* Snack Entry Summary Cards */
+.snack-entry-summary {
+    background: #f9f5f0;
+    border: 1px solid #d4c4b0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.snack-entry-summary .entry-summary-content {
+    color: #5a4a3a;
+}
+
+.snack-entry-summary .entry-summary-content strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #3d2f1f;
+    font-size: 15px;
+}
+
+.snack-entry-summary .entry-summary-content p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.snack-entry-summary .entry-meta {
+    font-size: 13px;
+    color: #8b7355;
+    font-style: italic;
+}

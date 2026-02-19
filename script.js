@@ -609,7 +609,7 @@ function openMealsModal(date) {
     
     
     // Load snacks
-    renderSnacks();
+    const entry = entries[dateKey] || {}; displaySnacksSummary(entry.meals?.snacks || []);
     
     
     document.getElementById('mealsModal').classList.add('show');
@@ -637,6 +637,51 @@ function openMealsModal(date) {
 
 
 // Toggle overeating section
+function renderSingleSnack(index) {
+// Display snacks in summary view (default)
+function displaySnacksSummary(snacks) {
+    const container = document.getElementById('snacksList');
+    container.innerHTML = '';
+    
+    if (!snacks || snacks.length === 0) {
+        container.innerHTML = '<p style="color: #999; font-style: italic;">No snacks added yet</p>';
+        return;
+    }
+    
+    // Create summary cards
+    snacks.forEach((snack, index) => {
+        const card = document.createElement('div');
+        card.className = 'snack-entry-summary';
+        card.innerHTML = `
+            <div class="entry-summary-content">
+                <strong>Snack ${index + 1}</strong>
+                <p>${snack.plan || 'No plan specified'}</p>
+                ${snack.time ? `<p class="entry-meta">Time: ${snack.time}</p>` : ''}
+                ${snack.timing ? `<p class="entry-meta">Timing: ${snack.timing}</p>` : ''}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+    
+    // Add edit button
+    const editBtn = document.createElement('button');
+    editBtn.className = 'edit-entries-btn';
+    editBtn.textContent = '✏️ Edit Entries';
+    editBtn.onclick = () => displaySnacksEdit(snacks);
+    container.appendChild(editBtn);
+}
+
+// Display snacks in edit mode
+function displaySnacksEdit(snacks) {
+    const container = document.getElementById('snacksList');
+    container.innerHTML = '';
+    
+    snacks.forEach((snack, index) => {
+        renderSingleSnack(index);
+    });
+}
+
+// Original renderSnacks for backwards compatibility
 function renderSnacks() {
     const dateKey = getDateKey(currentDay);
     const entry = entries[dateKey] || {};
@@ -650,7 +695,6 @@ function renderSnacks() {
     });
 }
 
-function renderSingleSnack(index) {
     const dateKey = getDateKey(currentDay);
     const entry = entries[dateKey] || {};
     const snacks = entry.meals?.snacks || [];
@@ -858,8 +902,11 @@ document.getElementById('addSnack').addEventListener('click', () => {
     const newIndex = entries[dateKey].meals.snacks.length;
     entries[dateKey].meals.snacks.push({ plan: '', asPlanned: false, different: false, actual: '' });
     
-    // Render just the new snack instead of all snacks
-    renderSingleSnack(newIndex);
+    displaySnacksEdit(entries[dateKey].meals.snacks);
+    setTimeout(() => {
+        const inputs = document.querySelectorAll("#snacksList input[placeholder=\"What's the plan?\"]");
+        if (inputs[newIndex]) inputs[newIndex].focus();
+    }, 100);
 });
 
 // Render overeating entries
