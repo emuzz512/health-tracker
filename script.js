@@ -51,7 +51,7 @@ function displaySnacksSummary(snacks) {
         // "Ate as planned" button
         const asPlannedBtn = document.createElement('button');
         asPlannedBtn.className = 'quick-action-btn' + (snack.asPlanned ? ' active' : '');
-        asPlannedBtn.innerHTML = (snack.asPlanned ? '✓ ' : '') + 'As Planned';
+        asPlannedBtn.innerHTML = snack.asPlanned ? '✓ As Planned' : 'As Planned?';
         asPlannedBtn.onclick = (e) => {
             e.stopPropagation();
             if (!entries[dateKey].meals.snacks) return;
@@ -64,7 +64,7 @@ function displaySnacksSummary(snacks) {
         // "On time" button
         const onTimeBtn = document.createElement('button');
         onTimeBtn.className = 'quick-action-btn' + (snack.timing === 'on-time' ? ' active' : '');
-        onTimeBtn.innerHTML = (snack.timing === 'on-time' ? '✓ ' : '') + 'On Time';
+        onTimeBtn.innerHTML = snack.timing === 'on-time' ? '✓ On Time' : 'On Time?';
         onTimeBtn.onclick = (e) => {
             e.stopPropagation();
             if (!entries[dateKey].meals.snacks) return;
