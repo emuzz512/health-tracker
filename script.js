@@ -17,7 +17,8 @@ let currentDay = null;
 let entries = {};
 let currentView = 'week'; // 'week' or 'day'
 let currentCalendarMonth = new Date();
-function displaySnacksEdit(snacks) {
+
+// Display snacks in summary view (default)
 function displaySnacksSummary(snacks) {
     const dateKey = getDateKey(currentDay);
     const container = document.getElementById('snacksList');
@@ -84,6 +85,23 @@ function displaySnacksSummary(snacks) {
     editBtn.onclick = () => displaySnacksEdit(snacks);
     container.appendChild(editBtn);
 }
+
+// Display snacks in edit mode
+function displaySnacksEdit(snacks) {
+    const container = document.getElementById('snacksList');
+    container.innerHTML = '';
+    
+    snacks.forEach((snack, index) => {
+        renderSingleSnack(index);
+    });
+}
+
+// Original renderSnacks for backwards compatibility
+function renderSnacks() {
+    const dateKey = getDateKey(currentDay);
+    const entry = entries[dateKey] || {};
+    const snacks = entry.meals?.snacks || [];
+    
     const container = document.getElementById('snacksList');
     container.innerHTML = '';
     
