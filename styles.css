@@ -2428,3 +2428,40 @@ select {
     color: #8b7355;
     font-style: italic;
 }
+
+/* Snack Quick Action Buttons */
+.snack-quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e8dcc8;
+}
+
+.quick-action-btn {
+    flex: 1;
+    padding: 8px 12px;
+    background: #f5f0e8;
+    color: #5a4a3a;
+    border: 1px solid #d4c4b0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.quick-action-btn:hover {
+    background: #ebe3d5;
+    border-color: #c4b4a0;
+}
+
+.quick-action-btn.active {
+    background: #8b9d83;
+    color: white;
+    border-color: #7a8c72;
+    font-weight: 500;
+}
+
+.quick-action-btn.active:hover {
+    background: #7a8c72;
+}

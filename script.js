@@ -17,7 +17,9 @@ let currentDay = null;
 let entries = {};
 let currentView = 'week'; // 'week' or 'day'
 let currentCalendarMonth = new Date();
+function displaySnacksEdit(snacks) {
 function displaySnacksSummary(snacks) {
+    const dateKey = getDateKey(currentDay);
     const container = document.getElementById('snacksList');
     container.innerHTML = '';
     
@@ -30,14 +32,48 @@ function displaySnacksSummary(snacks) {
     snacks.forEach((snack, index) => {
         const card = document.createElement('div');
         card.className = 'snack-entry-summary';
-        card.innerHTML = `
-            <div class="entry-summary-content">
-                <strong>Snack ${index + 1}</strong>
-                <p>${snack.plan || 'No plan specified'}</p>
-                ${snack.time ? `<p class="entry-meta">Time: ${snack.time}</p>` : ''}
-                ${snack.timing ? `<p class="entry-meta">Timing: ${snack.timing}</p>` : ''}
-            </div>
+        
+        const content = document.createElement('div');
+        content.className = 'entry-summary-content';
+        content.innerHTML = `
+            <strong>Snack ${index + 1}</strong>
+            <p>${snack.plan || 'No plan specified'}</p>
+            ${snack.time ? `<p class="entry-meta">Time: ${snack.time}</p>` : ''}
+            ${snack.timing ? `<p class="entry-meta">Timing: ${snack.timing}</p>` : ''}
         `;
+        card.appendChild(content);
+        
+        // Add quick action buttons
+        const actions = document.createElement('div');
+        actions.className = 'snack-quick-actions';
+        
+        // "Ate as planned" button
+        const asPlannedBtn = document.createElement('button');
+        asPlannedBtn.className = 'quick-action-btn' + (snack.asPlanned ? ' active' : '');
+        asPlannedBtn.innerHTML = (snack.asPlanned ? '✓ ' : '') + 'As Planned';
+        asPlannedBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (!entries[dateKey].meals.snacks) return;
+            entries[dateKey].meals.snacks[index].asPlanned = !entries[dateKey].meals.snacks[index].asPlanned;
+            saveData();
+            displaySnacksSummary(entries[dateKey].meals.snacks);
+        };
+        actions.appendChild(asPlannedBtn);
+        
+        // "On time" button
+        const onTimeBtn = document.createElement('button');
+        onTimeBtn.className = 'quick-action-btn' + (snack.timing === 'on-time' ? ' active' : '');
+        onTimeBtn.innerHTML = (snack.timing === 'on-time' ? '✓ ' : '') + 'On Time';
+        onTimeBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (!entries[dateKey].meals.snacks) return;
+            entries[dateKey].meals.snacks[index].timing = entries[dateKey].meals.snacks[index].timing === 'on-time' ? '' : 'on-time';
+            saveData();
+            displaySnacksSummary(entries[dateKey].meals.snacks);
+        };
+        actions.appendChild(onTimeBtn);
+        
+        card.appendChild(actions);
         container.appendChild(card);
     });
     
@@ -48,9 +84,6 @@ function displaySnacksSummary(snacks) {
     editBtn.onclick = () => displaySnacksEdit(snacks);
     container.appendChild(editBtn);
 }
-
-// Display snacks in edit mode
-function displaySnacksEdit(snacks) {
     const container = document.getElementById('snacksList');
     container.innerHTML = '';
     
